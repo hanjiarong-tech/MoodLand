@@ -16,9 +16,9 @@
 ## 项目运行
 ```
 # 安装项目依赖
-npm install 
+npm install（–legacy-peer-deps忽略项目中引入的各个modules之间的相同modules但不同版本的问题并继续安装） 
 
-# 启动服务（–legacy-peer-deps忽略项目中引入的各个modules之间的相同modules但不同版本的问题并继续安装）
+# 启动服务
 npm run dev –legacy-peer-deps
 
 # 编译打包
