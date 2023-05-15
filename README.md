@@ -18,8 +18,8 @@
 # 安装项目依赖
 npm install 
 
-# 启动服务
-npm run dev
+# 启动服务（–legacy-peer-deps忽略项目中引入的各个modules之间的相同modules但不同版本的问题并继续安装）
+npm run dev –legacy-peer-deps
 
 # 编译打包
 npm run build
