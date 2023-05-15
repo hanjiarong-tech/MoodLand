@@ -19,7 +19,7 @@
 npm install –legacy-peer-deps
 
 # 启动服务
-npm run dev –legacy-peer-deps
+npm run dev 
 
 # 编译打包
 npm run build
