@@ -22,8 +22,6 @@ export default {
  @import './fon/iconfont.css';
 body{
   background: #dcf8e1;
-}
-.app{
   height:100vh;
 }
 .mint-swipe-indicator{

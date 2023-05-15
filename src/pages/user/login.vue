@@ -9,7 +9,6 @@
         <span>账号</span>
         <input type="text" v-model="user.id" placeholder="请输入手机号">
       </label>
-
       <label for>
         <span>密码</span>
         <input type="password" v-model="user.password" placeholder="请输入密码">
@@ -55,7 +54,7 @@ export default {
         });
         return false;
       }
-      let self=this;
+      let self = this;
       axios.post('http://10.128.211.2:5000/moodland/user/login/' + this.user.id, {
         id: this.user.id,
         password: this.user.password,

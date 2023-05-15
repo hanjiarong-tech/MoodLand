@@ -10,7 +10,7 @@ import VueCalendarHeatmap from 'vue-calendar-heatmap'
 import echarts from 'echarts'
 // 滑动特效插件
 import VueSwiper from 'vue-awesome-swiper';
-import 'swiper/swiper-bundle.css';
+// import 'swiper/swiper-bundle.css';
 import { Navbar, TabItem } from 'mint-ui';
 import { Grid, GridItem,Card } from 'vant';
 import { Switch } from 'vant';
@@ -18,11 +18,12 @@ import { Dialog } from 'vant';
 import { Cell, CellGroup } from 'vant';
 import { Popup } from 'vant';
 import { showConfirmDialog } from 'vant';
-import { Field } from 'vant';
+import { Field,Picker} from 'vant';
+
 import { ImagePreview } from 'vant';
 //注册
 //icon
-Vue.use(Field,ImagePreview)
+Vue.use(Field,ImagePreview,Picker)
 Vue.use(Popup)
 Vue.use(VueCalendarHeatmap)
 Vue.use(Grid);

@@ -1,3 +1,4 @@
+// 接口文档
 import request from '@/api/request'
 
 export function getComment() {

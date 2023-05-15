@@ -1,11 +1,10 @@
 <template>
   <div class="file">
-    <van-popup class="filePop" v-model="show">
+    <van-popup v-model="show" round position="bottom" :style="{ height: '15%' }" >
       <div class="updateAva">
         <div @click="openFile">从相册中选择</div>
         <input @change="changImg" ref="inputFileRef" type="file" style="display: none;">
         <div class="borderDiv">拍照</div>
-        <div>取消</div>
       </div>
     </van-popup>
   </div>
@@ -26,12 +25,12 @@ export default {
   props: {
   },
   methods: {
-    // 评论关闭
     openFile() {
       this.$refs.inputFileRef.click()
     },
     changImg(){
       this.show=false
+      let that=this
       const file=this.$refs.inputFileRef.files[0]
       var reader=new FileReader()
       reader.readAsDataURL(file)
@@ -40,7 +39,8 @@ export default {
           images:[
             reader.result
           ],
-          onClose:this.closeProcess
+          closeable: true,
+          onClose:that.closeProcess,
         })
       })
     },
@@ -65,8 +65,9 @@ export default {
       // }).then(function (response) {
       //   //成功时服务器返回 response 数据
       //   this.$toast.success('修改成功')
+      //   this.$parent.userData.photo=response.data.photo //修改setting显示的头像
       // }).catch(function (error) {
-      //   this.$toast.success('修改失败')
+      //   this.$toast.success('修改失败') 
       // });
 
       })
@@ -78,5 +79,11 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-
+.updateAva{
+  height:100%;
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content:space-around;
+}
 </style>
