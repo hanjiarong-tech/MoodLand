@@ -116,7 +116,7 @@ export default {
 
 <style lang="less" scoped>
 .fight {
-  top: 10%;
+  top: 100%;
   position: absolute;
   width: 100%;
   overflow: hidden;

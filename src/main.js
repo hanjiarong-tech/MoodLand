@@ -20,10 +20,10 @@ import { Popup } from 'vant';
 import { showConfirmDialog } from 'vant';
 import { Field,Picker} from 'vant';
 import { Badge } from 'vant';
-import { ImagePreview } from 'vant';
+import { ImagePreview, Tab, Tabs} from 'vant';
 //注册
 //icon
-Vue.use(Field,ImagePreview,Picker,Badge)
+Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs)
 Vue.use(Popup)
 Vue.use(VueCalendarHeatmap)
 Vue.use(Grid);
