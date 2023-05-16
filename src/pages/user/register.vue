@@ -5,24 +5,24 @@
         src="https://accountstatic.vivo.com.cn/accountstatic.vivo.com.cn/static/img/logo.3c33210.png.webp"
         alt
       /> -->
-      <p>账号注册</p>
+      <!-- <p>账号注册</p> -->
     </div>
     <div class="register-2">
       <label for>
-        <span>昵称</span>
-        <input type="text" v-model="user.name" placeholder="请输入昵称" />
+        <!-- <span>昵称</span> -->
+        <input type="text" v-model="user.name" placeholder="昵称" />
       </label>
       <label for>
-        <span>电话</span>
-        <input type="number" v-model="user.id" placeholder="请输入电话号码" />
+        <!-- <span>电话</span> -->
+        <input type="number" v-model="user.id" placeholder="手机号码" />
       </label>
       <label for>
-        <span>密码</span>
-        <input type="password" v-model="user.password" placeholder="请输入密码" />
+        <!-- <span>密码</span> -->
+        <input type="password" v-model="user.password" placeholder="密码" />
       </label>
       <label for>
-        <span>确认密码</span>
-        <input type="password" v-model="nextpassword" placeholder="请输入密码" />
+        <!-- <span>确认密码</span> -->
+        <input type="password" v-model="nextpassword" placeholder="确认密码" />
       </label>
       <!-- <label for>
         <span>性别</span>
@@ -36,6 +36,9 @@
     <div class="register-3">
       <input type="button" class="btn" @click="regusterUser" value="注册" />
     </div>
+    <div class="register-3">
+      <input type="button" class="textbtn" @click="jumpLogin" value="已有账号？去登录">
+    </div>
   </div>
 </template>
 
@@ -43,6 +46,7 @@
 import { Toast } from "mint-ui";
 import { RadioGroup, Radio } from 'vant';
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -102,6 +106,9 @@ export default {
               console.log(error);
             });
       }
+    },
+    jumpLogin() {
+      this.$router.push('/')
     }
   }
 };
@@ -117,7 +124,7 @@ export default {
 }
 
 .register-1 {
-  margin-top: 2rem;
+  margin-top: 15vh
 }
 
 .register-1 img {
@@ -132,53 +139,73 @@ export default {
   font-size: 0.5rem;
 }
 
+
 .register-2 {
   margin-top: 0.6rem;
   margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .register-2 label {
-  width: 90%;
-  margin: auto;
-  height: 1.5rem;
-  border-bottom: 0.03rem solid #f2f2f2;
-  display: flex;
+  width: 8.5rem;
+  font-size: 0.4rem;
+  line-height: 1.1rem;
+  margin-bottom: 0.6rem;
+  border-radius: 0.2rem;
 }
 
+
 .register-2 label span {
-  width: 16vw;
-  font-size: 0.4rem;
+  width: 20%;
+  font-size: 0.5rem;
   line-height: 1.5rem;
   display: block;
   float: left;
+}
+
+.register-2 label input {
+    width: 100%;
+    font-size: 0.4rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.2rem;
+    background: rgb(248,248,248);
+}
+
+.register-3 {
+  display: flex;
+  margin-top:1.5rem;
+}
+
+.btn {
+  width: 8.5rem;
+    height: 1.1rem;
+    margin: 0 auto;
+    /* margin-top: 0.72rem; */
+    margin-bottom: 0.3rem;
+    text-align: center;
+    line-height: 1.1rem;
+    font-size: 0.45rem;
+    color: #fff;
+    border-radius: 0.2rem;
+    background-color: var(--mydarkblue);
+
+  /* background-image: linear-gradient(90deg, #418eff, #4566ff); */
+}
+.textbtn{
+  text-align: center;
+    line-height: 0.5rem;
+    color: #888;
+    margin: 0 auto;
+    font-size: 0.4rem;
+    background: transparent;
 }
 
 .van-radio {
   font-size: 14px;
 }
 
-.register-2 label input {
-  width: 80%;
-  font-size: 0.4rem;
-  padding-left: 0.3rem;
-}
 
-.register-3 {
-  display: flex;
-}
-
-.btn {
-  width: 9rem;
-  height: 1.1rem;
-  margin: 0 auto;
-  margin-bottom: 0.3rem;
-  text-align: center;
-  line-height: 1.1rem;
-  font-size: 0.45rem;
-  color: #fff;
-  border-radius: 0.6rem;
-  background-color: #46a1fa;
-  background-image: linear-gradient(90deg, #418eff, #4566ff);
-}
 </style>
 

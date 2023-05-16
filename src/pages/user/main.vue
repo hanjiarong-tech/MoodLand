@@ -31,7 +31,7 @@
       <div>
         <!-- <calendar-heatmap start-date="2023-03-01" :vertical="true" end-date="2023-04-01" :values="timeValue" :range-color='rangeColor' tooltip-unit="こんとりびゅーと" @day-click="someMethod"/> -->
         <!-- <div ref="chartColumn" style="width:100%; height:400px;"></div> -->
-        <calendar-heatmap end-date="2023-04-28" :values="timeValue" :vertical="true" :range-color="colors" :max="10" />
+        <calendar-heatmap end-date="2023-05-16" :values="timeValue" :vertical="false" :range-color="colors" :max="10"/>
       </div>
     </div>
     <v-footer></v-footer>

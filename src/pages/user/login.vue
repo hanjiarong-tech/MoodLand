@@ -2,23 +2,23 @@
   <div class="register">
     <div class="register-1">
       <!-- <img src="https://accountstatic.vivo.com.cn/accountstatic.vivo.com.cn/static/img/logo.3c33210.png.webp" alt> -->
-      <p>账号登陆</p>
+      <!-- <p>账号登陆</p> -->
     </div>
     <div class="register-2">
-      <label for>
-        <span>账号</span>
+      <label>
+        <!-- <span>账号</span> -->
         <input type="text" v-model="user.id" placeholder="请输入手机号">
       </label>
-      <label for>
-        <span>密码</span>
+      <label>
+        <!-- <span>密码</span> -->
         <input type="password" v-model="user.password" placeholder="请输入密码">
       </label>
     </div>
     <div class="register-3">
-      <input type="button" class="btn" @click="login" value="登陆">
+      <input type="button" class="btn" @click="login" value="登录">
     </div>
     <div class="register-3">
-      <input type="button" class="btn" @click="jumpRegister" value="注册">
+      <input type="button" class="textbtn" @click="jumpRegister" value="没有账号？去注册">
     </div>
   </div>
 </template>
@@ -98,7 +98,7 @@ export default {
 }
 
 .register-1 {
-  margin-top: 2rem
+  margin-top: 25vh
 }
 
 .register-1 img {
@@ -113,20 +113,23 @@ export default {
   font-size: 0.5rem;
 }
 
+
 .register-2 {
-  /* display: flex;
-  flex-direction: column; */
   margin-top: 0.6rem;
-  margin-bottom: 0.6rem
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .register-2 label {
-  width: 90%;
-  margin: auto;
-  height: 1.5rem;
-  border-bottom: 0.03rem solid #f2f2f2;
-  display: flex;
+  width: 8.5rem;
+  font-size: 0.4rem;
+  line-height: 1.1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.2rem;
 }
+
 
 .register-2 label span {
   width: 20%;
@@ -137,28 +140,40 @@ export default {
 }
 
 .register-2 label input {
-  width: 80%;
-  font-size: 0.4rem;
-  padding-left: 0.3rem;
+    width: 100%;
+    font-size: 0.4rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.2rem;
+    background: rgb(248,248,248);
 }
 
 .register-3 {
   display: flex;
+  margin-top:2rem;
 }
 
 .btn {
-  width: 9rem;
-  height: 1.1rem;
-  margin: 0 auto;
-  /* margin-top: 0.72rem; */
-  margin-bottom: 0.3rem;
+  width: 8.5rem;
+    height: 1.1rem;
+    margin: 0 auto;
+    /* margin-top: 0.72rem; */
+    margin-bottom: 0.3rem;
+    text-align: center;
+    line-height: 1.1rem;
+    font-size: 0.45rem;
+    color: #fff;
+    border-radius: 0.2rem;
+    background-color: var(--mygreen);
+
+  /* background-image: linear-gradient(90deg, #418eff, #4566ff); */
+}
+.textbtn{
   text-align: center;
-  line-height: 1.1rem;
-  font-size: 0.45rem;
-  color: #fff;
-  border-radius: 0.6rem;
-  background-color: #46a1fa;
-  background-image: linear-gradient(90deg, #418eff, #4566ff);
+    line-height: 0.5rem;
+    color: #888;
+    margin: 0 auto;
+    font-size: 0.4rem;
+    background: transparent;
 }
 </style>
 
