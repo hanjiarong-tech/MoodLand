@@ -3,7 +3,7 @@
     <!-- 挑战功能 -->
     <div class="container-order">
       <div class="container-order-2">
-        <div v-for="list in container">
+        <div v-for="list in container" @click="jumpTo(list.link)">
           <i :class="list.img"></i>
           <span>{{ list.name }}</span>
         </div>
@@ -38,15 +38,18 @@ export default {
       container: [
         {
           img: "iconfont icon-shouye",
-          name: "发布挑战"
+          name: "发布挑战",
+          link:"/ftorelease"
         },
         {
           img: "iconfont icon-shouye",
-          name: "我发布的"
+          name: "我发布的",
+          link:"/freleased"
         },
         {
           img: "iconfont icon-shouye",
-          name: "我参与的"
+          name: "我参与的",
+          link:"/finvolved"
         },
       ],
       detail: [
@@ -96,6 +99,10 @@ export default {
   methods: {
     tryon() {
       router.push("/main");
+    },
+    jumpTo(link){
+      console.log(link);
+      router.push(link);
     }
   },
   mounted() {

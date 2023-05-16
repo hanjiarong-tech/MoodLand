@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <van-nav-bar title="好友列表" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="我参与的" left-arrow @click-left="$router.back()" />
     <div class="container" v-for="list2 in detail">
       <div class="container-bj">
         <div class="bj-left">
@@ -19,43 +19,49 @@
 <script>
 import footer from '@/components/footer/index'
 export default {
+  name: 'freleased',
   data() {
     return {
       detail: [
         {
           img: "../../../static/img/头像.jpg",
-          name: "名字",
-          describe: "描述"
+          name: "挑战名称",
+          describe: "挑战描述"
         },
         {
           img: "../../../static/img/头像.jpg",
-          name: "名字",
-          describe: "描述"
+          name: "挑战名称",
+          describe: "挑战描述"
         },
         {
           img: "../../../static/img/头像.jpg",
-          name: "名字",
-          describe: "描述"
+          name: "挑战名称",
+          describe: "挑战描述"
         },
         {
           img: "../../../static/img/头像.jpg",
-          name: "名字",
-          describe: "描述"
+          name: "挑战名称",
+          describe: "挑战描述"
         },
         {
           img: "../../../static/img/头像.jpg",
-          name: "名字",
-          describe: "描述"
+          name: "挑战名称",
+          describe: "挑战描述"
         },
         {
           img: "../../../static/img/头像.jpg",
-          name: "名字",
-          describe: "描述"
+          name: "挑战名称",
+          describe: "挑战描述"
         },
-                {
+        {
           img: "../../../static/img/头像.jpg",
-          name: "名字",
-          describe: "描述"
+          name: "挑战名称",
+          describe: "挑战描述"
+        },
+        {
+          img: "../../../static/img/头像.jpg",
+          name: "挑战名称",
+          describe: "挑战描述"
         },
       ],
     };
@@ -72,12 +78,59 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.container {
+.fight {
+  top: 10%;
+  position: absolute;
   width: 100%;
+  overflow: hidden;
+  padding: 0 0 100px 0;
+}
+
+.container-order {
+  width: 90%;
+  height: 2.5rem;
+  background: rgb(255, 255, 255);
+  display: block;
+  margin: 0.15rem auto;
+  font-size: 0.35rem;
+
+  .container-order-2 {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    div {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+
+      i {
+        width: 0.8rem;
+        height: 0.8rem;
+        margin: auto;
+      }
+
+      span {
+        text-align: center;
+        padding-top: 0.3rem;
+      }
+    }
+  }
+
+
+
+}
+
+.container {
+  width: 95%;
   height: 2rem;
+  border-radius: 5%;
   top: 1.45rem;
   background-color: white;
-  border-bottom:1px solid rgba(0, 0, 0, 0.679);
+  margin: 10px auto;
 
   .container-bj {
     width: 100%;

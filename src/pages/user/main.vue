@@ -10,18 +10,28 @@
           <span>{{ user.user_name }}</span>
         </div>
       </div>
+
       <div class="container-order">
         <div class="container-order-2">
-          <p v-for="list in container" @click="jumpToOthers(list.link)">
-            <img :src="list.img">
-            <span>{{ list.name }}</span>
+          <p @click="jumpToOthers('/friend')">
+            <img src="/static/img/111.png">
+            <span>我的好友</span>
+          </p>
+          <p @click="jumpToOthers('/notice')">
+            <van-badge :content="200" max="99" class="message"/>
+              <img src="/static/img/222.png">
+            <span>消息通知</span>
+          </p>
+          <p @click="jumpToOthers('/setting')">
+            <img src="/static/img/333.png">
+            <span>个人设置</span>
           </p>
         </div>
       </div>
       <div>
         <!-- <calendar-heatmap start-date="2023-03-01" :vertical="true" end-date="2023-04-01" :values="timeValue" :range-color='rangeColor' tooltip-unit="こんとりびゅーと" @day-click="someMethod"/> -->
         <!-- <div ref="chartColumn" style="width:100%; height:400px;"></div> -->
-        <calendar-heatmap end-date="2023-04-28" :values="timeValue" :vertical="true" :range-color="colors" :max="10"/>
+        <calendar-heatmap end-date="2023-04-28" :values="timeValue" :vertical="true" :range-color="colors" :max="10" />
       </div>
     </div>
     <v-footer></v-footer>
@@ -38,23 +48,6 @@ import * as echarts from "echarts";
 export default {
   data() {
     return {
-      container: [
-        {
-          img: "/static/img/111.png",
-          name: "我的好友",
-          link:"/friend"
-        },
-        {
-          img: "/static/img/222.png",
-          name: "消息通知",
-          link:"/notice"
-        },
-        {
-          img: "/static/img/333.png",
-          name: "个人设置",
-          link:"/setting"
-        },
-      ],
       chartColumn: null,
       colors: ['#ebedf0',
         'rgba(255,202,43,0.4)',
@@ -130,7 +123,7 @@ export default {
         { date: "2021-05-12", count: 6 },
         { date: "2021-05-15", count: 6 },
       ],
-      user:localStorage.getItem("user"),
+      user: localStorage.getItem("user"),
       headerLeftStatus: false
     };
   },
@@ -142,10 +135,10 @@ export default {
   },
   methods: {
     searchInfoData() {
-      let self=this;
-      axios.get('http://10.128.211.2:5000/moodland/user/user/'+123456).then(function (response) {
+      let self = this;
+      axios.get('http://10.128.211.2:5000/moodland/user/user/' + 123456).then(function (response) {
         //成功时服务器返回 response 数据
-        self.user=response.data;
+        self.user = response.data;
         localStorage.setItem("user", JSON.stringify(self.user))
         console.log(response.data)
         console.log(localStorage.getItem("user"))
@@ -153,7 +146,7 @@ export default {
         console.log(error);
       });
     },
-    jumpToOthers(link){
+    jumpToOthers(link) {
       router.push(link);
     }
   },
@@ -337,6 +330,10 @@ export default {
           span {
             text-align: center;
             padding-top: 0.3rem;
+          }
+          .message{
+            position:absolute;
+            left:50%;
           }
         }
       }

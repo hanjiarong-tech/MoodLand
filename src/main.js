@@ -19,11 +19,11 @@ import { Cell, CellGroup } from 'vant';
 import { Popup } from 'vant';
 import { showConfirmDialog } from 'vant';
 import { Field,Picker} from 'vant';
-
+import { Badge } from 'vant';
 import { ImagePreview } from 'vant';
 //注册
 //icon
-Vue.use(Field,ImagePreview,Picker)
+Vue.use(Field,ImagePreview,Picker,Badge)
 Vue.use(Popup)
 Vue.use(VueCalendarHeatmap)
 Vue.use(Grid);

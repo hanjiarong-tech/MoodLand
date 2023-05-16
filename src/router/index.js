@@ -9,6 +9,9 @@ import friend from "@/pages/user/friend"
 import photo from "@/pages/photo/photo"
 import explore from '@/pages/explore/explore'
 import fight from '@/pages/fight/fight'
+import finvolved from '@/pages/fight/involved'
+import released from '@/pages/fight/released'
+import ftorelease from '@/pages/fight/torelease'
 import game from '@/pages/game/game'
 import gift from '@/pages/gift/gift'
 Vue.use(Router)
@@ -40,17 +43,18 @@ export default new Router({
       component: explore,
       children: [
         {
-          path: 'fight', // 视频页面路由
+          path: 'fight', 
           name: 'fight',
           component: fight,
         },
+
         {
-          path: 'game', // 视频页面路由
+          path: 'game', 
           name: 'game',
           component: game,
         },
         {
-          path: 'gift', // 视频页面路由
+          path: 'gift', 
           name: 'gift',
           component: gift,
         },
@@ -58,22 +62,37 @@ export default new Router({
       ],
     },
     {
+      path: '/freleased', 
+      name: 'freleased',
+      component: released,
+    },
+    {
+      path: '/finvolved', 
+      name: 'finvolved',
+      component: finvolved,
+    },
+    {
+      path: '/ftorelease', 
+      name: 'ftorelease',
+      component: ftorelease,
+    },
+    {
       path: '/main',
       name: 'main',
       component: main,
     },
     {
-      path: '/notice', // 视频页面路由
+      path: '/notice', 
       name: 'notice',
       component: notice,
     },
     {
-      path: '/setting', // 视频页面路由
+      path: '/setting', 
       name: 'setting',
       component: setting,
     },
     {
-      path: '/friend', // 视频页面路由
+      path: '/friend', 
       name: 'friend',
       component: friend,
     },
