@@ -20,7 +20,7 @@ import { Popup } from 'vant';
 import { showConfirmDialog } from 'vant';
 import { Field,Picker} from 'vant';
 import { Badge } from 'vant';
-import { ImagePreview, Tab, Tabs} from 'vant';
+import { ImagePreview} from 'vant';
 //注册
 //icon
 Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs)
