@@ -13,25 +13,20 @@
 
       <div class="container-order">
         <div class="container-order-2">
-          <p @click="jumpToOthers('/friend')">
-            <img src="/static/img/111.png">
-            <span>我的好友</span>
-          </p>
-          <p @click="jumpToOthers('/notice')">
-            <van-badge :content="200" max="99" class="message"/>
-              <img src="/static/img/222.png">
-            <span>消息通知</span>
-          </p>
-          <p @click="jumpToOthers('/setting')">
-            <img src="/static/img/333.png">
-            <span>个人设置</span>
+          <p v-for="list in container" @click="jumpToOthers(list.link)">
+            <i :class="list.class" :style = "list.style"></i>
+            <span>{{ list.name }}</span>
           </p>
         </div>
       </div>
       <div>
         <!-- <calendar-heatmap start-date="2023-03-01" :vertical="true" end-date="2023-04-01" :values="timeValue" :range-color='rangeColor' tooltip-unit="こんとりびゅーと" @day-click="someMethod"/> -->
         <!-- <div ref="chartColumn" style="width:100%; height:400px;"></div> -->
-        <calendar-heatmap end-date="2023-05-16" :values="timeValue" :vertical="false" :range-color="colors" :max="10" :tooltip="true"/>
+        <van-cell-group inset>
+          <van-cell title="心情日历" is-link to="setting" icon="calendar-o"  style="font-weight: bold;" />
+          <calendar-heatmap end-date="2023-05-16" :values="timeValue" :vertical="false" :range-color="colors" :max="10" style="margin:0.3rem 0"/>
+        </van-cell-group>
+        
       </div>
     </div>
     <v-footer></v-footer>
@@ -48,6 +43,26 @@ import * as echarts from "echarts";
 export default {
   data() {
     return {
+      container: [
+        {
+          class: "iconfont icon--",
+          name: "我的好友",
+          link:"/friend",
+          style:"font-size:0.8rem;color:var(--mygreen)"
+        },
+        {
+          class:"iconfont icon-haoyoutixing",
+          name: "消息通知",
+          link:"/notice",
+          style:"font-size:0.9rem;color:var(--mygreen)"
+        },
+        {
+          class: "iconfont icon-shezhi1",
+          name: "个人设置",
+          link:"/setting",
+          style:"font-size:0.8rem;color:var(--mygreen)"
+        },
+      ],
       chartColumn: null,
       colors: ['#ebedf0',
         'rgba(255,202,43,0.4)',
@@ -285,8 +300,9 @@ export default {
       height: 2.5rem;
       background: rgb(255, 255, 255);
       display: block;
-      margin: 0.15rem auto;
+      margin: 0.3rem auto;
       font-size: 0.35rem;
+      border-radius: 8px;
 
       .container-order-1 {
         width: 100%;
@@ -320,6 +336,7 @@ export default {
           width: 25%;
           display: flex;
           flex-direction: column;
+          align-items: center;
 
           img {
             width: 0.8rem;

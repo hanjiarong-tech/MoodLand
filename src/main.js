@@ -12,7 +12,7 @@ import echarts from 'echarts'
 import VueSwiper from 'vue-awesome-swiper';
 // import 'swiper/swiper-bundle.css';
 import { Navbar, TabItem } from 'mint-ui';
-import { Grid, GridItem,Card } from 'vant';
+import { Grid, GridItem,Card,Tab, Tabs } from 'vant';
 import { Switch } from 'vant';
 import { Dialog } from 'vant';
 import { Cell, CellGroup } from 'vant';
@@ -36,6 +36,8 @@ Vue.component(Navbar.name, Navbar,Switch);
 Vue.component(TabItem.name, TabItem);
 Vue.use(VueSwiper);
 Vue.use(Vant);
+Vue.use(Tab);
+Vue.use(Tabs);
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
 Vue.use(VueLazyLoad,{

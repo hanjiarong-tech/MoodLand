@@ -1,10 +1,45 @@
 {
   "id": "4040302",
-  "name": "123",
+  "name": "栖地",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
+    {
+      "icon_id": "1256460",
+      "name": "设置",
+      "font_class": "shezhi1",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "8923934",
+      "name": "好友",
+      "font_class": "-",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "10691035",
+      "name": "好友提醒",
+      "font_class": "haoyoutixing",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "1727422",
+      "name": "205设置",
+      "font_class": "shezhi",
+      "unicode": "e8b8",
+      "unicode_decimal": 59576
+    },
+    {
+      "icon_id": "630095",
+      "name": "向左箭头",
+      "font_class": "xiangzuojiantou",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
     {
       "icon_id": "4118038",
       "name": "关闭",

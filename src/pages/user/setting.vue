@@ -1,7 +1,7 @@
 <template>
   <div class="setting">
     <!-- <v-header title="设置" :headerLeftStatus="headerLeftStatus" :save="save" /> -->
-    <van-nav-bar title="个人信息" right-text="保存" left-arrow @click-left="$router.back()" @click-right="save" />
+    <van-nav-bar title="个人信息" left-arrow @click-left="$router.back()"  />
     <div class="content">
       <van-cell @click="openAvatar" title="头像" is-link>
         <template #default>
@@ -36,7 +36,6 @@
         </template>
       </van-cell>
     </div>
-    <v-footer></v-footer>
   </div>
 </template>
 
@@ -132,9 +131,14 @@ export default {
 
 <style scoped>
 .content {
-  top: 2rem;
+  top: auto;
   position: absolute;
   width: 100%;
+}
+.setting{
+  background-color: white;
+  height:100vh
+
 }
 </style>
 

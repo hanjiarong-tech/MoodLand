@@ -9,19 +9,26 @@
         </div>
       </div>
     </div>
-    <p style="font-size: 20px;">发现挑战</p>
+    
     <!-- 发现挑战 -->
-    <div class="container" v-for="list2 in detail">
-      <div class="container-bj">
-        <div class="bj-left">
-          <img :src="list2.img">
-        </div>
-        <div class="bj-right">
-          <p class="title">{{ list2.name }}</p>
-          <p>{{ list2.describe }}</p>
+    <van-cell-group inset>
+      <van-cell title="单元格" value="内容" />
+      <van-cell title="单元格" value="内容" label="描述信息" />
+    </van-cell-group>
+
+      <p style="font-size: 20px;">发现挑战</p>
+      <div class="container" v-for="list2 in detail">
+        <div class="container-bj">
+          <div class="bj-left">
+            <img :src="list2.img">
+          </div>
+          <div class="bj-right">
+            <p class="title">{{ list2.name }}</p>
+            <p>{{ list2.describe }}</p>
+          </div>
         </div>
       </div>
-    </div>
+    
   </div>
 </template>
 
@@ -153,11 +160,13 @@ export default {
 
 
 }
-
+.listcontainer{
+  margin:1rem;
+}
 .container {
   width: 95%;
   height: 2rem;
-  border-radius: 5%;
+  border-radius: 5px;
   top: 1.45rem;
   background-color: white;
   margin: 10px auto;
