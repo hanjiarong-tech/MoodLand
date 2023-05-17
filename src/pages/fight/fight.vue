@@ -3,13 +3,14 @@
     <!-- 挑战功能 -->
     <div class="container-order">
       <div class="container-order-2">
-        <div v-for="list in container" @click="jumpTo(list.link)">
+        <div v-for="list in container" @click="jumpTo(list.link)" :style = "list.style">
           <i :class="list.img"></i>
           <span>{{ list.name }}</span>
         </div>
       </div>
     </div>
-    <p style="font-size: 20px;">发现挑战</p>
+    <van-cell title="发现挑战" icon="search" style="font-weight: bold;background-color: transparent;" />
+    <!-- <p style="font-size: 20px;">发现挑战</p> -->
     <!-- 发现挑战 -->
     <div class="container" v-for="list2 in detail">
       <div class="container-bj">
@@ -18,7 +19,7 @@
         </div>
         <div class="bj-right">
           <p class="title">{{ list2.name }}</p>
-          <p>{{ list2.describe }}</p>
+          <p style="color:var(--deep-gray)">{{ list2.describe }}</p>
         </div>
       </div>
     </div>
@@ -37,18 +38,21 @@ export default {
       news: [],
       container: [
         {
-          img: "iconfont icon-shouye",
+          img: "iconfont icon-fabuguanli",
           name: "发布挑战",
+          style: "background-color:var(--light-yellow);color:orange",
           link:"/ftorelease"
         },
         {
-          img: "iconfont icon-shouye",
+          img: "iconfont icon-gongdanjilu",
           name: "我发布的",
+          style: "background-color:var(--light-green);color:var(--mygreen)",
           link:"/freleased"
         },
         {
-          img: "iconfont icon-shouye",
+          img: "iconfont icon-hands-fill",
           name: "我参与的",
+          style: "background-color:var(--light-blue);color:var(--mydarkblue)",
           link:"/finvolved"
         },
       ],
@@ -116,7 +120,7 @@ export default {
 
 <style lang="less" scoped>
 .fight {
-  top: 100%;
+  top: 50px;
   position: absolute;
   width: 100%;
   overflow: hidden;
@@ -124,24 +128,36 @@ export default {
 }
 
 .container-order {
-  width: 90%;
-  height: 2.5rem;
-  background: rgb(255, 255, 255);
+  height: 3.5rem;
+  background: #ffffff;
   display: block;
-  margin: 0.15rem auto;
+  margin: 0.3rem 16px;
   font-size: 0.35rem;
+  border-radius: 8px;
 
   .container-order-2 {
     width: 100%;
     margin: 0;
     height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-evenly;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
 
     div {
-      width: 25%;
+      width: 29%;
+      padding: 0.7rem 0;
+      border-radius: 8px;
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
       flex-direction: column;
 
       i {
@@ -163,8 +179,8 @@ export default {
 
 .container {
   width: 95%;
-  height: 2rem;
-  border-radius: 5%;
+  height: 2.2rem;
+  border-radius: 8px;
   top: 1.45rem;
   background-color: white;
   margin: 10px auto;
@@ -192,8 +208,15 @@ export default {
       width: 60%;
       height: 100%;
       float: left;
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
-      justify-content: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: space-evenly;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
       flex-direction: column;
       span {
         font-weight: bold;
@@ -206,7 +229,7 @@ export default {
       border-radius: 50%;
     }
     .title{
-      font-size: 0.5rem;
+      font-size: 0.45rem;
     }
 
     p {
