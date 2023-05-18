@@ -180,12 +180,15 @@ export default {
     jumpToOthers(link) {
       router.push(link);
     }
+    
   },
   mounted: function () {
     this.searchInfoData();
-  watch: {
-  '$route':'searchInfoData'
   },
+  watch: {
+    '$route':'searchInfoData'
+  }
+
 };
 </script>
 
