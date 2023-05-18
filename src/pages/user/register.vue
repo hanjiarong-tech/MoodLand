@@ -81,7 +81,7 @@ export default {
           }
         }
         console.log(typeof(this.user.id))
-        axios.post('http://10.128.211.2:5000/moodland/user/user/' + this.user.id,{
+        axios.post('http://10.128.245.71:5000/moodland/user/user/' + this.user.id,{
           password: this.user.password,
           id: this.user.id,
           user_name:this.user.name,

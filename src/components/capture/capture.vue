@@ -140,7 +140,7 @@ export default {
     },
     // 关闭摄像头
     stopNavigator() {
-      this.thisVideo.srcObject.getTracks()[0].stop()
+      // this.thisVideo.srcObject.getTracks()[0].stop()
     }
   }
 }

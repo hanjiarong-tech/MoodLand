@@ -23,37 +23,37 @@ export default {
     return {
       detail: [
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
           describe: "描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
           describe: "描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
           describe: "描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
           describe: "描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
           describe: "描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
           describe: "描述"
         },
                 {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
           describe: "描述"
         },

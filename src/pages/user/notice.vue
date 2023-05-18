@@ -24,42 +24,42 @@ export default {
     return {
       detail: [
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "xxx发起情绪挑战",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "xxx添加好友",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "xxx赠送礼物",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "xxx发起社交游戏",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "xxx发起情绪挑战",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "xxx添加好友",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "xxx赠送礼物",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "xxx发起社交游戏",
           describe: "挑战描述"
         },

@@ -4,7 +4,8 @@
     <div class="container">
       <div class="container-bj">
         <div class="bj-left">
-          <img :src="`http://10.128.211.2:5000/moodland/${user.avatar}`" alt="用户头像">
+          <img :src="user.avatar" alt="用户avatar">
+          <!-- `http://10.128.245.71:5000/moodland/${user.avatar}` -->
         </div>
         <div class="bj-right">
           <span>{{ user.user_name }}</span>
@@ -26,7 +27,6 @@
           <van-cell title="心情日历" is-link to="setting" icon="calendar-o"  style="font-weight: bold;" />
           <calendar-heatmap end-date="2023-05-16" :values="timeValue" :vertical="false" :range-color="colors" :max="10" style="margin:0.3rem 0"/>
         </van-cell-group>
-        
       </div>
     </div>
     <v-footer></v-footer>
@@ -151,12 +151,23 @@ export default {
   methods: {
     searchInfoData() {
       let self = this;
-      axios.get('http://10.128.211.2:5000/moodland/user/user/' + 123456).then(function (response) {
+      let user_id=this.user.id;
+      axios.get('http://10.128.245.71:5000/moodland/user/user/'+123456).then(function (response) {
+        console.log(123456)
         //成功时服务器返回 response 数据
         self.user = response.data;
+        // 如果为空，将user头像改为login中存储的,不为空则处理一下传回的avatar路径
+        if(response.data.avatar===""){
+          self.user.avatar=localStorage.getItem("user").avatar;
+          console.log(1234);
+        }else{
+          self.user.avatar='http://10.128.245.71:5000/moodland/'+self.user.avatar;
+          console.log(123);
+        }
+        // 并将user的新数据保存
         localStorage.setItem("user", JSON.stringify(self.user))
-        console.log(response.data)
-        console.log(localStorage.getItem("user"))
+        console.log("response.data",response.data)
+        console.log("localStorage",localStorage.getItem("user"))
       }).catch(function (error) {
         console.log(error);
       });
@@ -167,7 +178,10 @@ export default {
   },
   mounted: function () {
     this.searchInfoData();
-  }
+  },
+  watch: {
+  '$route':'searchInfoData'
+  },
 };
 </script>
 

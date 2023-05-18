@@ -32,11 +32,14 @@ export default {
     return {
       user: {
         id: null,
-        password: ""
+        password: "",
+        avatar:"../../../static/img/avatar.jpg"
       }
     };
   },
   mounted() {
+    //保存登录状态，记得打包后取消注释
+    // this.judge();
   },
   methods: {
     login() {
@@ -55,7 +58,7 @@ export default {
         return false;
       }
       let self = this;
-      axios.post('http://10.128.211.2:5000/moodland/user/login/' + this.user.id, {
+      axios.post('http://10.128.245.71:5000/moodland/user/login/' + this.user.id, {
         id: this.user.id,
         password: this.user.password,
       }).then(function (response) {
@@ -80,9 +83,13 @@ export default {
         console.log(error);
       });
     },
-
     jumpRegister() {
       router.push('/register')
+    },
+    judge(){
+      if(localStorage.getItem('user')){
+        router.push('/main')
+      }
     }
   }
 }
