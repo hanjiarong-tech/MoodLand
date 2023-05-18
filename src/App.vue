@@ -25,7 +25,7 @@ body{
   /*background: #C6FFDD;  /* fallback for old browsers */
   /*background: -webkit-linear-gradient(to bottom, #f7797d, #FBD786, #C6FFDD);  /* Chrome 10-25, Safari 5.1-6 */
   /*background: linear-gradient(to bottom, #f7797d, #FBD786, #C6FFDD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background-attachment: fixed;
   height:100vh;
 }
          
@@ -40,12 +40,16 @@ body{
 }
 
 :root {
+   --theme-color:rgb(125 187 175);
    --yellow: #c2c420;
    --middle-gray:#737171;
    --light-gray:#959595;
    --deep-gray:#565656;
+   --light-yellow:#fff6d3;
+   --light-green:rgb(234,245,217);
+   --light-blue:rgb(229 247 242);
    --mygreen:rgb(80,125,135);
    --mydarkblue:rgb(43,79,106);
-   --background-gray:rgb(245, 245, 245);
+   --background-gray:rgb(250, 250, 250);
    }
 </style>

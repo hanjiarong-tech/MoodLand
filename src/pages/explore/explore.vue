@@ -10,8 +10,8 @@
       </van-tab>
     </van-tabs>
     <router-view></router-view> -->
-    <van-tabs v-model="active" color="#179dfe">
-        <van-tab v-for="(item,index) in arr" :title="item.title" :to="item.path">
+    <van-tabs v-model="active" color="var(--theme-color)" >
+        <van-tab v-for="(item,index) in arr" :title="item.title" :to="item.path" >
           <router-view></router-view>
         </van-tab>
     </van-tabs>
@@ -69,12 +69,17 @@ export default {
 
 <style lang="less" scoped>
 .home-content {
-  background: #000;
   display: flex;
   flex-direction: column;
   // height: 100vh;
 }
-
+/deep/.van-tabs__wrap{
+ width: 100%;
+ background: #fff;
+ position: fixed;
+ z-index: 1;
+ overflow: hidden;
+}
 .item {
   flex: 1;
   text-align: center;

@@ -136,7 +136,7 @@ export default {
   width: 100%;
 }
 .setting{
-  background-color: white;
+  background-color: var(--background-gray);
   height:100vh
 
 }

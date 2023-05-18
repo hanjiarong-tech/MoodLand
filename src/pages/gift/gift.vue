@@ -1,9 +1,9 @@
 <template>
   <div class="fight">
-    <!-- 挑战功能 -->
+    <!-- 送礼功能 -->
     <div class="container-order">
       <div class="container-order-2">
-        <div v-for="list in container">
+        <div v-for="list in container" @click="jumpTo(list.link)" :style = "list.style">
           <i :class="list.img"></i>
           <span>{{ list.name }}</span>
         </div>
@@ -37,16 +37,22 @@ export default {
       news: [],
       container: [
         {
-          img: "iconfont icon-shouye",
-          name: "发布挑战"
+          img: "iconfont icon-fabuguanli",
+          name: "发布挑战",
+          style: "background-color:var(--light-yellow);color:orange",
+          link:"/ftorelease"
         },
         {
-          img: "iconfont icon-shouye",
-          name: "我发布的"
+          img: "iconfont icon-gongdanjilu",
+          name: "我发布的",
+          style: "background-color:var(--light-green);color:var(--mygreen)",
+          link:"/freleased"
         },
         {
-          img: "iconfont icon-shouye",
-          name: "我参与的"
+          img: "iconfont icon-hands-fill",
+          name: "我参与的",
+          style: "background-color:var(--light-blue);color:var(--mydarkblue)",
+          link:"/finvolved"
         },
       ],
       detail: [
@@ -96,6 +102,10 @@ export default {
   methods: {
     tryon() {
       router.push("/main");
+    },
+    jumpTo(link){
+      console.log(link);
+      router.push(link);
     }
   },
   mounted() {
@@ -117,24 +127,37 @@ export default {
 }
 
 .container-order {
-  width: 90%;
-  height: 2.5rem;
-  background: rgb(255, 255, 255);
+  height: 3.5rem;
+  background: #ffffff;
   display: block;
-  margin: 0.15rem auto;
+  margin: 0.3rem 16px;
   font-size: 0.35rem;
+  border-radius: 8px;
 
   .container-order-2 {
     width: 100%;
     margin: 0;
     height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-evenly;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
 
     div {
-      width: 25%;
+      width: 29%;
+      padding: 0.7rem 0;
+      background-color: red;
+      border-radius: 8px;
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
       flex-direction: column;
 
       i {

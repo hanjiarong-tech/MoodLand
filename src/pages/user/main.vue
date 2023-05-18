@@ -4,7 +4,7 @@
     <div class="container">
       <div class="container-bj">
         <div class="bj-left">
-          <img :src="`http://10.128.211.2:5000/moodland/${user.avatar}`" alt="用户头像">
+          <img :src="`http://10.128.245.71:5000/moodland/${user.avatar}`" alt="用户头像">
         </div>
         <div class="bj-right">
           <span>{{ user.user_name }}</span>
@@ -13,10 +13,15 @@
 
       <div class="container-order">
         <div class="container-order-2">
+          
           <p v-for="list in container" @click="jumpToOthers(list.link)">
+            <van-badge :style="list.name ==='消息通知'?'visibility:visible':'visibility:hidden'" :content="20" max="99" color="orange">
             <i :class="list.class" :style = "list.style"></i>
+            </van-badge>
             <span>{{ list.name }}</span>
+            
           </p>
+          
         </div>
       </div>
       <div>
@@ -48,19 +53,19 @@ export default {
           class: "iconfont icon--",
           name: "我的好友",
           link:"/friend",
-          style:"font-size:0.8rem;color:var(--mygreen)"
+          style:"font-size:0.8rem;color:var(--mygreen);visibility:visible"
         },
         {
           class:"iconfont icon-haoyoutixing",
           name: "消息通知",
           link:"/notice",
-          style:"font-size:0.9rem;color:var(--mygreen)"
+          style:"font-size:0.9rem;color:var(--mygreen);visibility:visible"
         },
         {
           class: "iconfont icon-shezhi1",
           name: "个人设置",
           link:"/setting",
-          style:"font-size:0.8rem;color:var(--mygreen)"
+          style:"font-size:0.8rem;color:var(--mygreen);visibility:visible"
         },
       ],
       chartColumn: null,
@@ -151,7 +156,7 @@ export default {
   methods: {
     searchInfoData() {
       let self = this;
-      axios.get('http://10.128.211.2:5000/moodland/user/user/' + 123456).then(function (response) {
+      axios.get('http://10.128.245.71:5000/moodland/user/user/' + 123456).then(function (response) {
         //成功时服务器返回 response 数据
         self.user = response.data;
         localStorage.setItem("user", JSON.stringify(self.user))
@@ -180,7 +185,7 @@ export default {
 
   .container {
     width: 100%;
-    height: 3rem;
+    height: 3.6rem;
     position: absolute;
     top: 1.45rem;
 
@@ -189,7 +194,7 @@ export default {
       height: 100%;
 
       .bj-left {
-        width: 26%;
+        width: 36%;
         height: 100%;
         float: left;
         display: flex;
@@ -197,8 +202,8 @@ export default {
         align-items: center;
 
         img {
-          width: 65%;
-          height: 55%;
+          width: 60%;
+          height: 60%;
           border-radius: 50%;
         }
       }
@@ -224,7 +229,7 @@ export default {
 
       span {
         color: #000000;
-        font-size: 0.5rem;
+        font-size: 0.6rem;
       }
 
       p {

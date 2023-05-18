@@ -6,6 +6,90 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "2076364",
+      "name": "评论小",
+      "font_class": "pinglunxiao",
+      "unicode": "e8b9",
+      "unicode_decimal": 59577
+    },
+    {
+      "icon_id": "11372651",
+      "name": "点赞",
+      "font_class": "dianzan",
+      "unicode": "e8ad",
+      "unicode_decimal": 59565
+    },
+    {
+      "icon_id": "11372758",
+      "name": "点赞",
+      "font_class": "dianzan1",
+      "unicode": "e8c3",
+      "unicode_decimal": 59587
+    },
+    {
+      "icon_id": "351770",
+      "name": "首页-选中",
+      "font_class": "shouyexuanzhong",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "351771",
+      "name": "首页",
+      "font_class": "shouye1",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "351773",
+      "name": "探索-选中",
+      "font_class": "tansuoxuanzhong",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "351776",
+      "name": "我的-选中",
+      "font_class": "wodexuanzhong",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "351777",
+      "name": "我的",
+      "font_class": "wode",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "1125557",
+      "name": "发现",
+      "font_class": "faxian",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "9512571",
+      "name": "握手",
+      "font_class": "hands-fill",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "19432211",
+      "name": "发布管理",
+      "font_class": "fabuguanli",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "21433141",
+      "name": "工单记录",
+      "font_class": "gongdanjilu",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
       "icon_id": "1256460",
       "name": "设置",
       "font_class": "shezhi1",
@@ -48,39 +132,11 @@
       "unicode_decimal": 60266
     },
     {
-      "icon_id": "201228",
-      "name": "3.1我的",
-      "font_class": "31wode",
-      "unicode": "e600",
-      "unicode_decimal": 58880
-    },
-    {
       "icon_id": "351774",
       "name": "探索",
       "font_class": "tansuo",
       "unicode": "e622",
       "unicode_decimal": 58914
-    },
-    {
-      "icon_id": "2675009",
-      "name": "首页",
-      "font_class": "shouye",
-      "unicode": "e62e",
-      "unicode_decimal": 58926
-    },
-    {
-      "icon_id": "1221241",
-      "name": "点赞2",
-      "font_class": "dianzan2",
-      "unicode": "e60a",
-      "unicode_decimal": 58890
-    },
-    {
-      "icon_id": "1221242",
-      "name": "点赞",
-      "font_class": "dianzan",
-      "unicode": "e609",
-      "unicode_decimal": 58889
     }
   ]
 }

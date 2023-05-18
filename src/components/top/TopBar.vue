@@ -2,9 +2,9 @@
 <template>
     <div class="top-bar">
       <div class="center">
-        <TopItem title="情绪挑战" nav-path="/explore/fight"></TopItem>
-        <TopItem title="社交游戏" nav-path="/explore/game"></TopItem>
-        <TopItem title="社交礼物" nav-path="/explore/gift"></TopItem>
+        <TopItem title="情绪挑战" nav-path="/explore/fight" color="var(--theme-color)"></TopItem>
+        <TopItem title="社交游戏" nav-path="/explore/game" color="var(--theme-color)"></TopItem>
+        <TopItem title="社交礼物" nav-path="/explore/gift" color="var(--theme-color)"></TopItem>
       </div>
     </div>
 </template>
