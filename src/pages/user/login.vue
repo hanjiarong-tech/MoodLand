@@ -32,11 +32,14 @@ export default {
     return {
       user: {
         id: null,
-        password: ""
+        password: "",
+        avatar:"../../../static/img/avatar.jpg"
       }
     };
   },
   mounted() {
+    //保存登录状态，记得打包后取消注释
+    // this.judge();
   },
   methods: {
     login() {
@@ -80,9 +83,13 @@ export default {
         console.log(error);
       });
     },
-
     jumpRegister() {
       router.push('/register')
+    },
+    judge(){
+      if(localStorage.getItem('user')){
+        router.push('/main')
+      }
     }
   }
 }

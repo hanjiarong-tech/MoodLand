@@ -14,7 +14,7 @@
         <div class="card">
           <div class="title">
             <div class="bj-left">
-              <img src="../../../static/img/头像.jpg" alt="portrait">
+              <img src="../../../static/img/avatar.jpg" alt="portrait">
             </div>
             <div class="bj-right">
               <span>{{ list.user_id }}</span>

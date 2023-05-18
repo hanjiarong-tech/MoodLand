@@ -28,7 +28,7 @@
    
      
 
-      <!-- 导入修改头像子组件 -->
+      <!-- 导入修改avatar子组件 -->
       <filePopup ref="avatarRef" />
       <van-cell center title="提醒开关">
         <template #right-icon>
@@ -50,7 +50,7 @@ export default {
     return {
       headerLeftStatus: true,
       checked: true,
-      avatar:"../../../static/img/头像.jpg",
+      avatar:"../../../static/img/avatar.jpg",
       nameshow: false,
       namevalue:"123",
       gendervalue:'0',

@@ -41,11 +41,12 @@ Vue.use(Tabs);
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
 Vue.use(VueLazyLoad,{
-  loading:require("../static/img/头像.jpg")
+  loading:require("../static/img/avatar.jpg")
 })
 //引入UI组件
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
+
 Vue.use(MintUI)
 
 // axios.defaults.baseURL = '/api'

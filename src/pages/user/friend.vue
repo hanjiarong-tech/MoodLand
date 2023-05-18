@@ -27,33 +27,40 @@ export default {
     return {
       detail: [
         {
-          img: "../../../static/img/头像.jpg",
-          name: "小A",
-          intimacy:89,
+          img: "../../../static/img/avatar.jpg",
+          name: "名字",
           describe: "描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
-          name: "小B",
-          intimacy:89,
+          img: "../../../static/img/avatar.jpg",
+          name: "名字",
           describe: "描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
           intimacy:89,
           describe: "描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
           intimacy:89,
           describe: "描述"
         },
         {
-          img: "../../../static/img/头像.jpg",
+          img: "../../../static/img/avatar.jpg",
           name: "名字",
-          intimacy:89,
+          describe: "描述"
+        },
+        {
+          img: "../../../static/img/avatar.jpg",
+          name: "名字",
+          describe: "描述"
+        },
+                {
+          img: "../../../static/img/avatar.jpg",
+          name: "名字",
           describe: "描述"
         },
       ],
