@@ -1,14 +1,17 @@
 <template>
-  <div class="camera_outer">
-    <video id="videoCamera" :width="videoWidth" :height="videoHeight" autoplay></video>
-    <canvas id="canvasCamera" style="display:none;" :width="videoWidth" :height="videoHeight"></canvas>
-    <div style="display:flex;flex-direction:row;justify-content: space-around;width: 100%;">
-      <mt-button size="small" type="primary" @click="setImage()">拍照</mt-button>
-      <mt-button size="small" type="primary" @click="share()">设置分享范围</mt-button>
-      <van-popup v-model:show="shareRange" closeable round position="bottom" :style="{ height: '30%' }"></van-popup>
-      <mt-button size="small" type="primary" @click="aDiary()">发布</mt-button>
+  <div class="capture">
+    <canvas id="canvasCamera" :width="videoWidth" :height="videoHeight"></canvas>
+    <div class="camera_outer">
+      <video id="videoCamera" :width="videoWidth" :height="videoHeight" autoplay></video>
+      <div style="display:flex;flex-direction:row;justify-content: space-around;width: 100%;">
+        <mt-button size="small" type="primary" @click="reset()">重拍</mt-button>
+        <mt-button size="small" type="primary" @click="setImage()">拍照</mt-button>
+        <mt-button size="small" type="primary" @click="share()">设置分享范围</mt-button>
+        <van-popup v-model:show="shareRange" closeable round position="bottom" :style="{ height: '30%' }"></van-popup>
+        <mt-button size="small" type="primary" @click="aDiary()">发布</mt-button>
+      </div>
+      <mt-field placeholder="发布日志内容" type="textarea" rows="4" v-model="diary" />
     </div>
-    <mt-field placeholder="发布日志内容" type="textarea" rows="4" v-model="diary" />
   </div>
 </template>
 <script>
@@ -16,14 +19,14 @@
 export default {
   data() {
     return {
-      videoWidth: 300,
-      videoHeight: 300,
+      videoWidth: 350,
+      videoHeight: 350,
       imgSrc: '',
       thisCancas: null,
       thisContext: null,
       thisVideo: null,
       diary: "",
-      shareRange:false
+      shareRange: false
     }
   },
   mounted() {
@@ -84,6 +87,7 @@ export default {
 
     setImage() {
       var _this = this
+      this.thisCancas.style.visibility="visible";
       // 点击，canvas画图
       _this.thisContext.drawImage(_this.thisVideo, 0, 0, _this.videoWidth, _this.videoHeight)
       // 获取图片base64链接
@@ -129,13 +133,17 @@ export default {
       // 将File文件对象返回给方法的调用者
       return file
     },
+    // 重拍
+    reset(){
+      this.thisCancas.style.visibility="hidden"
+    },
     // 发布内容
-    aDiary(){
+    aDiary() {
 
     },
     // 分享范围
-    share(){
-      this.shareRange=true;
+    share() {
+      this.shareRange = true;
 
     },
     // 关闭摄像头
@@ -147,6 +155,24 @@ export default {
 
 </script>
 <style lang="less" scoped>
+.capture{
+  position: relative;
+  margin:0 auto;
+  width:350px;
+  top: 10%;
+}
+#canvasCamera {
+  position: absolute;
+  visibility: hidden;
+  border-radius: 4%;
+  margin:0 auto;
+  display:block;
+  z-index: 1;
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+}
+
 .camera_outer {
   position: relative;
   overflow: hidden;
@@ -156,24 +182,19 @@ export default {
   flex-direction: column;
   align-items: center;
   height: 70%;
-  top:10%;
+
   justify-content: space-between;
 
   video {
     border-radius: 4%;
-    width: 90vw;
-    height: 90vw;
     -webkit-backface-visibility: hidden;
-    -webkit-transform: translate3d(0, 0, 0);
-  }
-
-  canvas,
-  .tx_img {
+    // -webkit-transform: translate3d(0, 0, 0);
+    transform: scaleX(-1);
     -moz-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     -o-transform: scaleX(-1);
-    transform: scaleX(-1);
   }
+
 
   /deep/ .mint-field.is-textarea {
     width: 90%;

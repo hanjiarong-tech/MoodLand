@@ -4,13 +4,13 @@
       <div class="comment-top">
         <!-- <div class="number">15条评论</div> -->
         <div class="close" @click="close">
-          <span class="iconfont icon-guanbi" style="font-weight: bold;font-size: 13px"></span>
+          <span class="iconfont icon-guanbi" style="font-weight: bold;font-size: 18px"></span>
         </div>
       </div>
       <div class="comment-body">
         <div class="comment-box" v-for="item in comments">
           <div class="comment-item" @click="sendMessage()">
-            <img class="user-pic" :src="item.commentator_avatar" alt="头像" />
+            <img class="user-pic" :src="item.commentator_avatar==null?'../../../static/img/avatardefault.png':item.commentator_avatar" alt="头像" />
             <div class="item-info">
               <div class="replay">
                 <p class="name">{{ item.commentator_name }}</p>
@@ -21,12 +21,12 @@
           </div>
           <div v-for="reply in item.reply">
             <div class="sub-comment-item" @click="">
-              <img class="user-pic" :src="reply.reviewed_avatar" alt="头像"/>
+              <img class="user-pic" :src="reply.reviewed_avatar==null?'../../../static/img/avatardefault.png':reply.reviewed_avatar" alt="头像"/>
               <div class="item-info">
                 <div class="replay">
-                  <span class="name">{{ reply.commentator_name}}回复</span>
+                  <span class="name">{{ reply.commentator_name}} 回复</span>
                   <span class="name">@{{reply.reviewed_name}}：</span>
-                  <p class="reply-name">{{ reply.comment_text }}</p>
+                  <p class="reply-content">{{ reply.comment_text }}</p>
                   <p class="time">{{ reply.comment_time }}</p>
                 </div>
               </div>
@@ -53,7 +53,7 @@
             <div class="item-info">
               <div class="replay">
                 <p class="name">开心开心😊</p>
-                <p class="reply-name">学习快乐</p>
+                <p class="reply-content">学习快乐</p>
                 <p class="time">03-19</p>
               </div>
               <div class="zan">
@@ -64,6 +64,8 @@
               </div>
             </div>
           </div> -->
+          <van-divider
+            :style="{ padding: '0 16px'}"/>
         </div>
         <!-- <div class="comment-box">
           <div class="comment-item">
@@ -87,7 +89,7 @@
             <div class="item-info">
               <div class="replay">
                 <p class="name">开心开心😊</p>
-                <p class="reply-name">学习快乐</p>
+                <p class="reply-content">学习快乐</p>
                 <p class="time">03-19</p>
               </div>
               <div class="zan">
@@ -117,10 +119,11 @@ export default {
     };
   },
   created() {
-    console.log(this.comments)
+    console.log('123',this.comments)
   },
   props: {
     comments:{
+      tyoe:Array,
       required:true
     },
 
@@ -147,8 +150,9 @@ export default {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   z-index: 999;
-  padding: 10px;
-  background-color: #F8F8FF;
+  padding: 5vw;
+  background-color: white;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 
   .comment-box {
@@ -168,9 +172,9 @@ export default {
     }
 
     .close {
-      position:absolute;
-      right:5px;
-      padding-right: 5px;
+      position: absolute;
+      right: 16px;
+      top: 16px;
       color: #666;
     }
   }
@@ -211,19 +215,20 @@ export default {
       }
 
       .replay-des,
-      .reply-name {
-        font-size: 14px;
-        line-height: 20px;
+      .reply-content {
+        font-size: 0.4rem;
+        line-height: 0.9rem;
       }
 
       .name {
         color: #686868;
-        font-size: 13px;
+        font-size: 0.4rem;
+        font-weight: bold;
       }
 
       .time {
         color: #686868;
-        font-size: 13px;
+        font-size: 0.3rem;
       }
 
       .zan {
