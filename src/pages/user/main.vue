@@ -143,7 +143,7 @@ export default {
         { date: "2021-05-12", count: 6 },
         { date: "2021-05-15", count: 6 },
       ],
-      user: localStorage.getItem("user"),
+      user: JSON.parse(localStorage.getItem("user")),
       headerLeftStatus: false
     };
   },
@@ -156,23 +156,22 @@ export default {
   methods: {
     searchInfoData() {
       let self = this;
-      let user_id=this.user.id;
-      axios.get('http://10.128.245.71:5000/moodland/user/user/'+123456).then(function (response) {
-        console.log(123456)
+      console.log(self.user.user_id)
+      // `http://10.128.245.71:5000/moodland/${user.avatar}`
+      axios.get(`http://10.128.245.71:5000/moodland/user/user/${self.user.user_id}`).then(function (response) {
         //成功时服务器返回 response 数据
         self.user = response.data;
+        console.log(self.user);
         // 如果为空，将user头像改为login中存储的,不为空则处理一下传回的avatar路径
         if(response.data.avatar===""){
           self.user.avatar=localStorage.getItem("user").avatar;
-          console.log(1234);
         }else{
-          self.user.avatar='http://10.128.245.71:5000/moodland/'+self.user.avatar;
-          console.log(123);
+          self.user.avatar=`http://10.128.245.71:5000/moodland/${self.user.avatar}`;
         }
         // 并将user的新数据保存
         localStorage.setItem("user", JSON.stringify(self.user))
         console.log("response.data",response.data)
-        console.log("localStorage",localStorage.getItem("user"))
+        // console.log("localStorage",localStorage.getItem("user"))
       }).catch(function (error) {
         console.log(error);
       });

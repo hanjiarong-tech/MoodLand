@@ -19,7 +19,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: login
     },
@@ -29,7 +29,7 @@ export default new Router({
       component: register
     },
     {
-      path: '/photo',
+      path: '/',
       name: 'photo',
       component: photo
     },

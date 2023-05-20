@@ -7,7 +7,7 @@
     <div class="register-2">
       <label>
         <!-- <span>账号</span> -->
-        <input type="text" v-model="user.id" placeholder="请输入手机号">
+        <input type="text" v-model="user.user_id" placeholder="请输入手机号">
       </label>
       <label>
         <!-- <span>密码</span> -->
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       user: {
-        id: null,
+        user_id: null,
         password: "",
         avatar:"../../../static/img/avatar.jpg"
       }
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     login() {
-      if (this.user.id == "") {
+      if (this.user.user_id == "") {
         Toast({
           message: "请输入手机号",
           duration: 950
@@ -58,8 +58,8 @@ export default {
         return false;
       }
       let self = this;
-      axios.post('http://10.128.245.71:5000/moodland/user/login/' + this.user.id, {
-        id: this.user.id,
+      axios.post('http://10.128.245.71:5000/moodland/user/login/' + this.user.user_id, {
+        id: this.user.user_id,
         password: this.user.password,
       }).then(function (response) {
         //成功时服务器返回 response 数据

@@ -1,7 +1,7 @@
 <template>
   <div id="bottom">
     <ul class="bottom-ul"> 
-      <router-link :to="{ path: '/photo' }" tag="li">
+      <router-link :to="{ path: '/' }" tag="li">
           <i class="iconfont icon-shouyexuanzhong" style="color:var(--theme-color)" v-if="$route.path === '/photo' || $route.path === '/'"></i>
           <i class="iconfont icon-shouye1" style = "color:var(--mydarkblue)" v-else></i>
           <span :style="$route.path ==='/photo' || $route.path ==='/'  ? 'color: var(--theme-color) ': 'color: var(--mydarkblue)'">首页</span>

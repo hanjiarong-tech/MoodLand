@@ -46,21 +46,21 @@ export default {
   components: {
     "v-footer": footer,
   },
-  watch: {
-    active(newVal){
-      switch (newVal) {
-        case 0: 
-          this.$router.push('/explore/fight')
-          break;
-        case 1: 
-          this.$router.push('/explore/game')
-          break;
-        case 2:
-          this.$router.push('/explore/gift')
-          break;
-      }
-    }
-  },
+  // watch: {
+  //   active(newVal){
+  //     switch (newVal) {
+  //       case 0: 
+  //         this.$router.push('/explore/fight')
+  //         break;
+  //       case 1: 
+  //         this.$router.push('/explore/game')
+  //         break;
+  //       case 2:
+  //         this.$router.push('/explore/gift')
+  //         break;
+  //     }
+  //   }
+  // },
   // mounted() {
   //   this.$router.push({ path: 'fight' });
   // },

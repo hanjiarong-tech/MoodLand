@@ -10,13 +10,13 @@ import VueCalendarHeatmap from 'vue-calendar-heatmap'
 import echarts from 'echarts'
 // 滑动特效插件
 import VueSwiper from 'vue-awesome-swiper';
-// import 'swiper/swiper-bundle.css';
+import 'swiper/swiper-bundle.css';
 import { Navbar, TabItem } from 'mint-ui';
 import { Grid, GridItem,Card,Tab, Tabs,Divider,Tag } from 'vant';
 import { Switch } from 'vant';
 import { Dialog } from 'vant';
 import { Cell, CellGroup } from 'vant';
-import { Popup } from 'vant';
+import { Popup,Toast } from 'vant';
 import { showConfirmDialog } from 'vant';
 import { Field,Picker} from 'vant';
 import { Badge } from 'vant';
@@ -24,7 +24,7 @@ import { ImagePreview} from 'vant';
 //注册
 //icon
 Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs,Divider,Tag)
-Vue.use(Popup)
+Vue.use(Popup,Toast)
 Vue.use(VueCalendarHeatmap)
 Vue.use(Grid);
 Vue.use(GridItem);
@@ -40,6 +40,7 @@ Vue.use(Tab);
 Vue.use(Tabs);
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
+Vue.prototype.$toast = Toast
 Vue.use(VueLazyLoad,{
   loading:require("../static/img/avatar.jpg")
 })
@@ -51,14 +52,14 @@ Vue.use(MintUI)
 
 // axios.defaults.baseURL = '/api'
 
-router.beforeEach((to,from,next) => { 
-  if(to.meta.requireAuth) {
-    if(!localStorage.getItem('user')) {
-      next({path:'/login'})
-    }
-  }
-  next()
-})
+// router.beforeEach((to,from,next) => { 
+//   if(to.meta.requireAuth) {
+//     if(!localStorage.getItem('user')) {
+//       next({path:'/login'})
+//     }
+//   }
+//   next()
+// })
 
 
 /* eslint-disable no-new */

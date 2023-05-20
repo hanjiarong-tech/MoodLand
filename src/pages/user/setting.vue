@@ -1,7 +1,7 @@
 <template>
   <div class="setting">
     <!-- <v-header title="设置" :headerLeftStatus="headerLeftStatus" :save="save" /> -->
-    <van-nav-bar title="个人信息" left-arrow @click-left="$router.back()"  />
+    <van-nav-bar title="个人信息" left-arrow @click-left="$router.back()" />
     <div class="content">
       <van-cell @click="openAvatar" title="头像" is-link>
         <template #default>
@@ -9,24 +9,19 @@
         </template>
       </van-cell>
       <van-cell @click="nameshow = true" title="昵称" :value="namevalue" is-link />
-      <van-cell title="性别" :value="gendervalue === 0 ? '男' : '女'" @click="showPicker = true" is-link />
-      <van-popup v-model:show="showPicker" round position="bottom" >
-        <van-picker
-          show-toolbar
-          :columns="columns"
-          @cancel="showPicker = false"
-          @confirm="saveGender"
-        />
+      <van-cell title="性别" :value="columns[gendervalue]" @click="showPicker = true" is-link />
+      <van-popup v-model:show="showPicker" round position="bottom">
+        <van-picker show-toolbar :columns="columns" @cancel="showPicker = false" @confirm="saveGender" />
       </van-popup>
       <!-- 修改用户昵称弹出层 -->
       <van-popup v-model="nameshow" position="bottom" :style="{ height: '8%' }">
-        <van-field v-model="namevalue" center clearable label="用户名" placeholder="请输入用户名" >
-        <template #button>
+        <van-field v-model="namevalue" center clearable label="用户名" placeholder="请输入用户名">
+          <template #button>
             <van-button size="small" @click="saveName()" type="primary">保存</van-button> </template>
-      </van-field>
-    </van-popup>
-   
-     
+        </van-field>
+      </van-popup>
+
+
 
       <!-- 导入修改avatar子组件 -->
       <filePopup ref="avatarRef" />
@@ -50,13 +45,13 @@ export default {
     return {
       headerLeftStatus: true,
       checked: true,
-      avatar:"../../../static/img/avatar.jpg",
+      avatar: "../../../static/img/avatar.jpg",
       nameshow: false,
-      namevalue:"123",
-      gendervalue:'0',
-      showPicker:false,
-      columns: ['男', '女'],
-      
+      namevalue: "123",
+      gendervalue: 2,
+      showPicker: false,
+      columns: ['男', '女', '无性别'],
+
     };
   },
   mounted() {
@@ -86,15 +81,21 @@ export default {
       //   console.log(error);
       // });
     },
-    saveName(){
-      this.nameshow=false;
+    saveName() {
+      this.nameshow = false;
       // this.namedata=this.namevalue;
     },
     saveGender(value) {
-      if(value==='男'){
-        this.gendervalue = 0;
-      }else{
-        this.gendervalue = 1;
+      switch (value) {
+        case "无性别":
+          this.gendervalue = 2;
+          break;
+        case "男":
+          this.gendervalue = 0;
+          break;
+        case "女":
+          this.gendervalue = 1;
+          break;
       }
       this.showPicker = false;
     },
@@ -114,19 +115,19 @@ export default {
       //   this.$toast.success('修改失败')
       // });
     },
-    openAvatar(){
-      this.$refs.avatarRef.show=true;
+    openAvatar() {
+      this.$refs.avatarRef.show = true;
     },
   },
-    components: {
-      "v-header": header,
-      "v-footer": footer,
-      "filePopup":filePopup
-    },
-    mounted: function () {
-      this.searchInfoData();
-    }
+  components: {
+    "v-header": header,
+    "v-footer": footer,
+    "filePopup": filePopup
+  },
+  mounted: function () {
+    this.searchInfoData();
   }
+}
 </script>
 
 <style scoped>
@@ -135,10 +136,10 @@ export default {
   position: absolute;
   width: 100%;
 }
-.setting{
-  background-color: var(--background-gray);
-  height:100vh
 
+.setting {
+  background-color: var(--background-gray);
+  height: 100vh
 }
 </style>
 
