@@ -13,6 +13,20 @@
       <mt-field placeholder="发布日志内容" type="textarea" rows="4" v-model="diary" />
     </div>
   </div>
+  <div class="capture">
+    <canvas id="canvasCamera" :width="videoWidth" :height="videoHeight"></canvas>
+    <div class="camera_outer">
+      <video id="videoCamera" :width="videoWidth" :height="videoHeight" autoplay></video>
+      <div style="display:flex;flex-direction:row;justify-content: space-around;width: 100%;">
+        <mt-button size="small" type="primary" @click="reset()">重拍</mt-button>
+        <mt-button size="small" type="primary" @click="setImage()">拍照</mt-button>
+        <mt-button size="small" type="primary" @click="share()">设置分享范围</mt-button>
+        <van-popup v-model:show="shareRange" closeable round position="bottom" :style="{ height: '30%' }"></van-popup>
+        <mt-button size="small" type="primary" @click="aDiary()">发布</mt-button>
+      </div>
+      <mt-field placeholder="发布日志内容" type="textarea" rows="4" v-model="diary" />
+    </div>
+  </div>
 </template>
 <script>
 import { Toast } from 'vant'
@@ -23,11 +37,14 @@ export default {
     return {
       videoWidth: 350,
       videoHeight: 350,
+      videoWidth: 350,
+      videoHeight: 350,
       imgSrc: '',
       thisCancas: null,
       thisContext: null,
       thisVideo: null,
       diary: "",
+      shareRange: false
       shareRange: false
     }
   },
@@ -146,9 +163,12 @@ export default {
     },
     // 发布内容
     aDiary() {
+    aDiary() {
 
     },
     // 分享范围
+    share() {
+      this.shareRange = true;
     share() {
       this.shareRange = true;
 
@@ -189,6 +209,7 @@ export default {
   align-items: center;
   height: 70%;
 
+
   justify-content: space-between;
 
   video {
@@ -196,10 +217,13 @@ export default {
     -webkit-backface-visibility: hidden;
     // -webkit-transform: translate3d(0, 0, 0);
     transform: scaleX(-1);
+    // -webkit-transform: translate3d(0, 0, 0);
+    transform: scaleX(-1);
     -moz-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     -o-transform: scaleX(-1);
   }
+
 
 
   /deep/ .mint-field.is-textarea {

@@ -1,17 +1,18 @@
 <template>
   <div class="setting">
-    <van-nav-bar title="好友列表" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="消息通知" left-arrow @click-left="$router.back()" />
     <div class="container" v-for="list2 in detail">
       <div class="container-bj">
         <div class="bj-left">
-          <img :src="list2.img">
+          <img :src="'http://10.128.245.71:5000/moodland/'+list2.picture">
         </div>
         <div class="bj-right">
           <p class="title">{{ list2.name }}</p>
-          <p style="color:var(--deep-gray)">{{ list2.describe }}</p>
+          <p style="color:var(--deep-gray)">{{ list2.content }}</p>
         </div>
         <div class="bj-action">
-          <van-button icon="success" type="primary" style="background-color: var(--light-green);border: 0px;color: #07c160;font-size: 0.9em;"></van-button>
+          <van-button v-if="list2.notice_type == 1 && list2.action==0" icon="success" type="primary" style="background-color:rgb(73 185 92);border: 0px;color: white;">同意</van-button>
+          <van-button disabled v-if="list2.notice_type == 1 && list2.action==1" type="primary" style="background-color:transparent;border: 0px;color:var(--deep-gray);">已同意</van-button>
           </div>
       </div>
       <van-divider :style="{margin:0,padding: '0 16px'}"/>
@@ -26,45 +27,37 @@ export default {
     return {
       detail: [
         {
-          img: "../../../static/img/avatar.jpg",
-          name: "xxx发起情绪挑战",
-          describe: "挑战描述"
+          notice_url: 123456,
+          user_id: 123,
+          name: "hqz",
+          action: 0,
+          notice_id: 2,
+          content: "想添加您为好友",
+          picture: "avatar/123456.jpg",
+          notice_type: 1,
+          has_read: 0
         },
         {
-          img: "../../../static/img/avatar.jpg",
-          name: "xxx添加好友",
-          describe: "挑战描述"
+          notice_url: 123456,
+          user_id: 123,
+          name: "hqz",
+          action: 1,
+          notice_id: 2,
+          content: "想添加您为好友",
+          picture: "avatar/123456.jpg",
+          notice_type: 1,
+          has_read: 0
         },
         {
-          img: "../../../static/img/avatar.jpg",
-          name: "xxx赠送礼物",
-          describe: "挑战描述"
-        },
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "xxx发起社交游戏",
-          describe: "挑战描述"
-        },
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "xxx发起情绪挑战",
-          describe: "挑战描述"
-        },
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "xxx添加好友",
-          describe: "挑战描述"
-        },
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "xxx赠送礼物",
-          describe: "挑战描述"
-        },
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "xxx发起社交游戏",
-          describe: "挑战描述"
-        },
+          notice_url: 123456,
+          user_id: 123,
+          action: null,
+          notice_id: 3,
+          content: "您的日志有新互动了",
+          picture: "avatar/123456.jpg",
+          notice_type: 2,
+          has_read: 0
+        }
       ],
     };
   },
@@ -106,7 +99,7 @@ export default {
     }
 
     .bj-right {
-      width: 55%;
+      width: 49%;
       height: 100%;
       float: left;
       display: -webkit-box;
@@ -127,7 +120,7 @@ export default {
       float: right;
       display: flex;
       height: 100%;
-      width: 19%;
+      width: 25%;
       align-content: center;
       align-items: center;
       justify-content: center;

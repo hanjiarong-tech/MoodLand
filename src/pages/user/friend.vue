@@ -12,7 +12,7 @@
           <!-- <p style="color:var(--deep-gray)">{{ list2.describe }}</p> -->
         </div>
         <div class="bj-action">
-          <van-button icon="point-gift" type="primary" style="font-size: 1em;background-color: transparent;color: #ff8917;border: 0;"/>
+          <van-button icon="point-gift" type="primary" style="font-size: 1.2em;background-color: transparent;color: #ff8917;border: 0;"/>
         </div>
       </div>
       <van-divider :style="{margin:0,padding: '0 16px'}"/>
