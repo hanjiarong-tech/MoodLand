@@ -9,8 +9,9 @@
         </div>
       </div>
     </div>
-    <p style="font-size: 20px;">发现游戏</p>
-    <!-- 发现游戏 -->
+    <van-cell title="发现游戏" icon="search" style="font-weight: bold;background-color: transparent;" />
+    <!-- <p style="font-size: 20px;">发现挑战</p> -->
+    <!-- 发现挑战 -->
     <div class="container" v-for="list2 in detail">
       <div class="container-bj">
         <div class="bj-left">
@@ -18,7 +19,7 @@
         </div>
         <div class="bj-right">
           <p class="title">{{ list2.name }}</p>
-          <p>{{ list2.describe }}</p>
+          <p style="color:var(--deep-gray)">{{ list2.describe }}</p>
         </div>
       </div>
     </div>
@@ -58,42 +59,32 @@ export default {
       detail: [
         {
           img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
+          game_id:0,
+          name: "猜猜我的心情",
           describe: "挑战描述"
         },
         {
           img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
+          game_id:1,
+          name: "猜猜我的心情",
           describe: "挑战描述"
         },
         {
           img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
+          game_id:2,
+          name: "猜猜我的心情",
           describe: "挑战描述"
         },
         {
           img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
+          game_id:3,
+          name: "猜猜我的心情",
           describe: "挑战描述"
         },
         {
           img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
-          describe: "挑战描述"
-        },
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
-          describe: "挑战描述"
-        },
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
-          describe: "挑战描述"
-        },
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
+          game_id:4,
+          name: "猜猜我的心情",
           describe: "挑战描述"
         },
       ],
@@ -119,7 +110,7 @@ export default {
 
 <style lang="less" scoped>
 .fight {
-  top: 100%;
+  top: 50px;
   position: absolute;
   width: 100%;
   overflow: hidden;
@@ -178,8 +169,8 @@ export default {
 
 .container {
   width: 95%;
-  height: 2rem;
-  border-radius: 5%;
+  height: 2.2rem;
+  border-radius: 8px;
   top: 1.45rem;
   background-color: white;
   margin: 10px auto;
@@ -207,8 +198,15 @@ export default {
       width: 60%;
       height: 100%;
       float: left;
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
-      justify-content: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: space-evenly;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
       flex-direction: column;
       span {
         font-weight: bold;
@@ -221,7 +219,7 @@ export default {
       border-radius: 50%;
     }
     .title{
-      font-size: 0.5rem;
+      font-size: 0.45rem;
     }
 
     p {

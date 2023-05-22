@@ -6,6 +6,7 @@ import main from "@/pages/user/main"
 import notice from "@/pages/user/notice"
 import setting from "@/pages/user/setting"
 import friend from "@/pages/user/friend"
+import mydiary from '@/pages/user/mydiary'
 import photo from "@/pages/photo/photo"
 import explore from '@/pages/explore/explore'
 import fight from '@/pages/fight/fight'
@@ -14,6 +15,7 @@ import released from '@/pages/fight/released'
 import ftorelease from '@/pages/fight/torelease'
 import game from '@/pages/game/game'
 import gift from '@/pages/gift/gift'
+
 Vue.use(Router)
 
 export default new Router({
@@ -95,6 +97,11 @@ export default new Router({
       path: '/friend', 
       name: 'friend',
       component: friend,
+    },
+    {
+      path: '/mydiary', 
+      name: 'mydiary',
+      component: mydiary,
     },
   ]
 })

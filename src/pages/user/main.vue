@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <v-header title="个人中心" :headerLeftStatus="headerLeftStatus" />
+    <!-- <v-header title="个人中心" :headerLeftStatus="headerLeftStatus" /> -->
     <div class="container">
       <div class="container-bj">
         <div class="bj-left">
@@ -29,8 +29,8 @@
         <!-- <calendar-heatmap start-date="2023-03-01" :vertical="true" end-date="2023-04-01" :values="timeValue" :range-color='rangeColor' tooltip-unit="こんとりびゅーと" @day-click="someMethod"/> -->
         <!-- <div ref="chartColumn" style="width:100%; height:400px;"></div> -->
         <van-cell-group inset>
-          <van-cell title="心情日历" is-link to="setting" icon="calendar-o"  style="font-weight: bold;" />
-          <calendar-heatmap end-date="2023-05-16" :values="timeValue" :vertical="false" :range-color="colors" :max="10" style="margin:0.3rem 0"/>
+          <van-cell title="我的心情" is-link to="mydiary" icon="calendar-o"  style="font-weight: bold;" />
+          <calendar-heatmap end-date="2023-05-22" :values="timeValue" :vertical="false" :range-color="colors" :max="28" style="margin:0.3rem 0"/>
         </van-cell-group>
       </div>
     </div>
@@ -70,10 +70,37 @@ export default {
       ],
       chartColumn: null,
       colors: ['#ebedf0',
+        'rgba(255,150,178,0.4)',
+        'rgba(255,150,178,0.6)',
+        'rgba(255,150,178,0.8)',
+        'rgba(255,150,178,1)',//surprise 4
+        'rgba(75,167,133,0.4)',
+        'rgba(75,167,133,0.6)',
+        'rgba(75,167,133,0.8)',
+        'rgba(75,167,133,1)',//fear 8
+        'rgba(122,162,255,0.4)',
+        'rgba(122,162,255,0.6)',
+        'rgba(122,162,255,0.8)',
+        'rgba(122,162,255,1.0)',//disgust 12
         'rgba(255,202,43,0.4)',
         'rgba(255,202,43,0.6)',
         'rgba(255,202,43,0.8)',
-        'rgba(255,202,43,1.0)',],
+        'rgba(255,202,43,1.0)',//happiness 16
+        'rgba(28,196,233,0.4)',
+        'rgba(28,196,233,0.6)',
+        'rgba(28,196,233,0.8)',
+        'rgba(28,196,233,1.0)',//sadness 20
+        'rgba(243,109,66,0.4)',
+        'rgba(243,109,66,0.6)',
+        'rgba(243,109,66,0.8)',
+        'rgba(243,109,66,1.0)',//anger 24
+        'rgba(124,225,0,0.4)',
+        'rgba(124,225,0,0.6)',
+        'rgba(124,225,0,0.8)',
+        'rgba(124,225,0,1.0)',//netural 28
+        
+        
+      ],
       timeValue: [
         { date: "2020-08-02", count: 6 },
         { date: "2020-08-03", count: 6 },
@@ -119,29 +146,35 @@ export default {
         { date: "2021-03-23", count: 6 },
         { date: "2021-03-24", count: 6 },
         { date: "2021-03-25", count: 6 },
-        { date: "2021-03-26", count: 6 },
-        { date: "2021-03-27", count: 6 },
-        { date: "2021-03-28", count: 6 },
-        { date: "2021-03-31", count: 6 },
-        { date: "2021-04-03", count: 6 },
-        { date: "2021-04-07", count: 6 },
-        { date: "2021-04-04", count: 6 },
-        { date: "2021-04-10", count: 6 },
-        { date: "2021-04-11", count: 6 },
-        { date: "2021-04-14", count: 6 },
-        { date: "2021-04-17", count: 6 },
-        { date: "2021-04-18", count: 6 },
-        { date: "2021-04-21", count: 6 },
-        { date: "2021-04-24", count: 6 },
-        { date: "2021-04-25", count: 6 },
-        { date: "2021-04-28", count: 6 },
-        { date: "2021-05-01", count: 6 },
-        { date: "2021-05-02", count: 6 },
-        { date: "2021-05-05", count: 6 },
-        { date: "2021-05-08", count: 6 },
-        { date: "2021-05-09", count: 6 },
-        { date: "2021-05-12", count: 6 },
-        { date: "2021-05-15", count: 6 },
+        { date: "2023-03-26", count: 21 },
+        { date: "2023-03-27", count: 22 },
+        { date: "2023-03-28", count: 23 },
+        { date: "2023-03-31", count: 24 },
+        { date: "2023-04-03", count: 25 },
+        { date: "2023-04-04", count: 26 },
+        { date: "2023-04-07", count: 27 },
+        { date: "2023-04-10", count: 28 },
+        { date: "2023-04-11", count: 0 },
+        { date: "2023-04-14", count: 1 },
+        { date: "2023-04-17", count: 2 },
+        { date: "2023-04-18", count: 3 },
+        { date: "2023-04-21", count: 4 },
+        { date: "2023-04-24", count: 5 },
+        { date: "2023-04-25", count: 6 },
+        { date: "2023-04-28", count: 7 },
+        { date: "2023-05-01", count: 8 },
+        { date: "2023-05-02", count: 9 },
+        { date: "2023-05-05", count: 10 },
+        { date: "2023-05-08", count: 11 },
+        { date: "2023-05-09", count: 12 },
+        { date: "2023-05-12", count: 13 },
+        { date: "2023-05-15", count: 14 },
+        { date: "2023-05-16", count: 15 },
+        { date: "2023-05-17", count: 16 },
+        { date: "2023-05-18", count: 17 },
+        { date: "2023-05-19", count: 18 },
+        { date: "2023-05-20", count: 19 },
+        { date: "2023-05-21", count: 20 },
       ],
       user: JSON.parse(localStorage.getItem("user")),
       headerLeftStatus: false
@@ -158,7 +191,7 @@ export default {
       let self = this;
       console.log(self.user.user_id)
       // `http://10.128.245.71:5000/moodland/${user.avatar}`
-      axios.get(`http://10.128.245.71:5000/moodland/user/user/${self.user.user_id}`).then(function (response) {
+      axios.get(process.env.VUE_APP_SERVER_URL+`/moodland/user/user/${self.user.user_id}`).then(function (response) {
         //成功时服务器返回 response 数据
         self.user = response.data;
         console.log(self.user);
@@ -166,13 +199,14 @@ export default {
         if(response.data.avatar===""){
           self.user.avatar=localStorage.getItem("user").avatar;
         }else{
-          self.user.avatar=`http://10.128.245.71:5000/moodland/${self.user.avatar}`;
+          self.user.avatar=process.env.VUE_APP_SERVER_URL+`/moodland/${self.user.avatar}`;
         }
         // 并将user的新数据保存
         localStorage.setItem("user", JSON.stringify(self.user))
         console.log("response.data",response.data)
         // console.log("localStorage",localStorage.getItem("user"))
       }).catch(function (error) {
+        self.user.avatar='../../../static/img/avatardefault.png';
         console.log(error);
       });
     },
@@ -202,7 +236,7 @@ export default {
     width: 100%;
     height: 3.6rem;
     position: absolute;
-    top: 1.45rem;
+    top: 1.1rem;
 
     .container-bj {
       width: 100%;

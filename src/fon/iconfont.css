@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4040302 */
-  src: url('iconfont.woff2?t=1684414421464') format('woff2'),
-       url('iconfont.woff?t=1684414421464') format('woff'),
-       url('iconfont.ttf?t=1684414421464') format('truetype');
+  src: url('iconfont.woff2?t=1684778246872') format('woff2'),
+       url('iconfont.woff?t=1684778246872') format('woff'),
+       url('iconfont.ttf?t=1684778246872') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,46 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-sad-f:before {
+  content: "\e644";
+}
+
+.icon-post_pic:before {
+  content: "\e620";
+}
+
+.icon-scream:before {
+  content: "\e6a5";
+}
+
+.icon-ghost-fill:before {
+  content: "\e6fc";
+}
+
+.icon-angry2:before {
+  content: "\e6f1";
+}
+
+.icon-confused2:before {
+  content: "\e733";
+}
+
+.icon-kongbudianyingjingshengjianjiao:before {
+  content: "\e602";
+}
+
+.icon-surprise:before {
+  content: "\f0e7";
+}
+
+.icon-happy-face:before {
+  content: "\e684";
+}
+
+.icon-neutral-face:before {
+  content: "\e685";
 }
 
 .icon-nansheng:before {

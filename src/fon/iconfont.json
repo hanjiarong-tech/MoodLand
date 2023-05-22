@@ -6,6 +6,76 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11349200",
+      "name": "sad-f",
+      "font_class": "sad-f",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "11919491",
+      "name": "拍照",
+      "font_class": "post_pic",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "17203249",
+      "name": "scream",
+      "font_class": "scream",
+      "unicode": "e6a5",
+      "unicode_decimal": 59045
+    },
+    {
+      "icon_id": "35094407",
+      "name": "鬼",
+      "font_class": "ghost-fill",
+      "unicode": "e6fc",
+      "unicode_decimal": 59132
+    },
+    {
+      "icon_id": "128787",
+      "name": "angry2",
+      "font_class": "angry2",
+      "unicode": "e6f1",
+      "unicode_decimal": 59121
+    },
+    {
+      "icon_id": "128855",
+      "name": "confused2",
+      "font_class": "confused2",
+      "unicode": "e733",
+      "unicode_decimal": 59187
+    },
+    {
+      "icon_id": "3745824",
+      "name": "恐怖电影——惊声尖叫",
+      "font_class": "kongbudianyingjingshengjianjiao",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "5634420",
+      "name": "surprise",
+      "font_class": "surprise",
+      "unicode": "f0e7",
+      "unicode_decimal": 61671
+    },
+    {
+      "icon_id": "10331125",
+      "name": "happy-face",
+      "font_class": "happy-face",
+      "unicode": "e684",
+      "unicode_decimal": 59012
+    },
+    {
+      "icon_id": "10331133",
+      "name": "neutral-face",
+      "font_class": "neutral-face",
+      "unicode": "e685",
+      "unicode_decimal": 59013
+    },
+    {
       "icon_id": "22632593",
       "name": "男生",
       "font_class": "nansheng",

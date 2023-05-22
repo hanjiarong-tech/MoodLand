@@ -111,6 +111,7 @@
 </template>
 <script>
 import * as CommentData from '@/api/mockdata';
+import router from '../../router';
 export default {
   name: "comment",
   data() {

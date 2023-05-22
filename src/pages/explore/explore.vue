@@ -36,10 +36,6 @@ export default {
           title:'社交游戏',
           path:'/explore/game'
         },
-        {
-          title:'社交礼物',
-          path:'/explore/gift'
-        },
       ]
     };
   },
