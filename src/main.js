@@ -12,7 +12,7 @@ import echarts from 'echarts'
 import VueSwiper from 'vue-awesome-swiper';
 import 'swiper/swiper-bundle.css';
 import { Navbar, TabItem } from 'mint-ui';
-import { Grid, GridItem,Card,Tab, Tabs,Divider,Tag } from 'vant';
+import { Grid, GridItem,Card,Tab, Tabs,Divider,Tag,Uploader } from 'vant';
 import { Switch } from 'vant';
 import { Dialog } from 'vant';
 import { Cell, CellGroup } from 'vant';
@@ -23,7 +23,7 @@ import { Badge } from 'vant';
 import { ImagePreview} from 'vant';
 //注册
 //icon
-Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs,Divider,Tag)
+Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs,Divider,Tag,Uploader)
 Vue.use(Popup,Toast)
 Vue.use(VueCalendarHeatmap)
 Vue.use(Grid);

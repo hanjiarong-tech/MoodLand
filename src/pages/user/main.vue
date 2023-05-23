@@ -30,7 +30,7 @@
         <!-- <div ref="chartColumn" style="width:100%; height:400px;"></div> -->
         <van-cell-group inset>
           <van-cell title="我的心情" is-link to="mydiary" icon="calendar-o"  style="font-weight: bold;" />
-          <calendar-heatmap end-date="2023-05-22" :values="timeValue" :vertical="false" :range-color="colors" :max="28" style="margin:0.3rem 0"/>
+          <calendar-heatmap tooltip-unit="" end-date="2023-05-22" :values="timeValue" :vertical="false" :range-color="colors" :max="28" style="margin:0.3rem 0"/>
         </van-cell-group>
       </div>
     </div>

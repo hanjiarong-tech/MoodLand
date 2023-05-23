@@ -8,6 +8,7 @@ import setting from "@/pages/user/setting"
 import friend from "@/pages/user/friend"
 import mydiary from '@/pages/user/mydiary'
 import photo from "@/pages/photo/photo"
+import postphoto from "@/pages/photo/postphoto"
 import explore from '@/pages/explore/explore'
 import fight from '@/pages/fight/fight'
 import finvolved from '@/pages/fight/involved'
@@ -34,6 +35,11 @@ export default new Router({
       path: '/photo',
       name: 'photo',
       component: photo
+    },
+    {
+      path: '/postphoto',
+      name: 'postphoto',
+      component: postphoto
     },
     {
       path: '/explore',

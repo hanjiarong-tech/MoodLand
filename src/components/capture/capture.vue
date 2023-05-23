@@ -9,27 +9,27 @@
         </van-button>
       </div>
       <div class = "button_container" :style ="complete_photo?'justify-content: space-evenly;width: 70%;':'justify-content: space-evenly;width: 70%;display:none'">
-        <van-button round type="primary"  color=var(--mygreen) @click="reset()" style="height: 2rem;width: 2rem;">
+        <van-button round type="primary"  color=var(--mydarkblue) @click="reset()" style="height: 2rem;width: 2rem;">
         <i class="iconfont icon-guanbi"></i>
         </van-button>
-        <van-button round type="primary"  color=var(--mygreen)  @click="share()" style="height: 2rem;width: 2rem;">
+        <van-button round type="primary"  color=var(--mydarkblue)  @click="aDiary()" style="height: 2rem;width: 2rem;">
         <i class="iconfont icon-fabuguanli"></i>
         </van-button>
       </div>
-      <div style="display:flex;flex-direction:row;justify-content: space-around;width: 100%;">
+      <!-- <div style="display:flex;flex-direction:row;justify-content: space-around;width: 100%;">
         <mt-button size="small" type="primary" @click="reset()">重拍</mt-button>
         <mt-button size="small" type="primary" @click="setImage()">拍照</mt-button>
         <mt-button size="small" type="primary" @click="share()">设置分享范围</mt-button>
         <van-popup v-model:show="shareRange" closeable round position="bottom" :style="{ height: '30%' }"></van-popup>
         <mt-button size="small" type="primary" @click="aDiary()">发布</mt-button>
-      </div>
-      <mt-field placeholder="发布日志内容" type="textarea" rows="4" v-model="diary" />
+      </div> -->
+      <!-- <mt-field placeholder="发布日志内容" type="textarea" rows="4" v-model="diary" /> -->
     </div>
   </div>
 </template>
 <script>
 import { Toast } from 'vant'
-
+import router from '../../router';
 
 export default {
   data() {
@@ -37,11 +37,12 @@ export default {
       videoWidth: 350,
       videoHeight: 350,
       imgSrc: '',
-      thisCancas: null,
+      thisCanvas: null,
       thisVideo: null,
       diary: "",
       shareRange: false,
       complete_photo:false,
+      fileUrl:null,
     }
   },
   mounted() {
@@ -59,8 +60,8 @@ export default {
     getCompetence() {
       // this.$toast("开始111111111111111111111");
       var _this = this
-      this.thisCancas = document.getElementById('canvasCamera')
-      this.thisContext = this.thisCancas.getContext('2d')
+      this.thisCanvas = document.getElementById('canvasCamera')
+      this.thisContext = this.thisCanvas.getContext('2d')
       this.thisVideo = document.getElementById('videoCamera')
       // 旧版本浏览器可能根本不支持mediaDevices，我们首先设置一个空对象
       if (navigator.mediaDevices === undefined) {
@@ -107,11 +108,11 @@ export default {
 
     setImage() {
       var _this = this
-      this.thisCancas.style.visibility = "visible";
+      this.thisCanvas.style.visibility = "visible";
       // 点击，canvas画图
       _this.thisContext.drawImage(_this.thisVideo, 0, 0, _this.videoWidth, _this.videoHeight)
       // 获取图片base64链接
-      var image = this.thisCancas.toDataURL('image/png')
+      var image = this.thisCanvas.toDataURL('image/png')
       _this.imgSrc = image
       const file = image
       const time = (new Date()).valueOf()
@@ -119,6 +120,7 @@ export default {
       const conversions = this.base64ToFile(file, name)
       const data = new FormData()
       data.append('file', conversions)
+      this.fileUrl = image
       this.complete_photo = true;
       // uploadImg(data).then(res => {
       //   if (res.data.code == 0) {
@@ -156,12 +158,13 @@ export default {
     },
     // 重拍
     reset() {
-      this.thisCancas.style.visibility = "hidden"
+      this.thisCanvas.style.visibility = "hidden"
       this.complete_photo = false
     },
     // 发布内容
     aDiary() {
-
+      router.push({name:"postphoto",query: {file: this.fileUrl}});
+      
     },
     // 分享范围
     share() {
