@@ -3,6 +3,19 @@
     <canvas id="canvasCamera" :width="videoWidth" :height="videoHeight"></canvas>
     <div class="camera_outer">
       <video id="videoCamera" :width="videoWidth" :height="videoHeight" autoplay></video>
+      <div class="button_container" :style ="complete_photo?'display:none':''" >
+        <van-button round type="primary"  color=var(--mygreen) @click="setImage()" style="height: 2rem;width: 2rem;">
+        <i class="iconfont icon-post_pic"></i>
+        </van-button>
+      </div>
+      <div class = "button_container" :style ="complete_photo?'justify-content: space-evenly;width: 70%;':'justify-content: space-evenly;width: 70%;display:none'">
+        <van-button round type="primary"  color=var(--mygreen) @click="reset()" style="height: 2rem;width: 2rem;">
+        <i class="iconfont icon-guanbi"></i>
+        </van-button>
+        <van-button round type="primary"  color=var(--mygreen)  @click="share()" style="height: 2rem;width: 2rem;">
+        <i class="iconfont icon-fabuguanli"></i>
+        </van-button>
+      </div>
       <div style="display:flex;flex-direction:row;justify-content: space-around;width: 100%;">
         <mt-button size="small" type="primary" @click="reset()">重拍</mt-button>
         <mt-button size="small" type="primary" @click="setImage()">拍照</mt-button>
@@ -27,7 +40,8 @@ export default {
       thisCancas: null,
       thisVideo: null,
       diary: "",
-      shareRange: false
+      shareRange: false,
+      complete_photo:false,
     }
   },
   mounted() {
@@ -105,6 +119,7 @@ export default {
       const conversions = this.base64ToFile(file, name)
       const data = new FormData()
       data.append('file', conversions)
+      this.complete_photo = true;
       // uploadImg(data).then(res => {
       //   if (res.data.code == 0) {
       //     this.$emit('refreshDataList', res.data.data.url)
@@ -142,6 +157,7 @@ export default {
     // 重拍
     reset() {
       this.thisCancas.style.visibility = "hidden"
+      this.complete_photo = false
     },
     // 发布内容
     aDiary() {
@@ -177,6 +193,13 @@ export default {
   -moz-transform: scaleX(-1);
   -webkit-transform: scaleX(-1);
   -o-transform: scaleX(-1);
+}
+
+.button_container{
+  display: flex;
+  justify-content: center;
+  width:100%;
+  margin:0.8rem 0;
 }
 .camera_outer {
   position: relative;
