@@ -41,7 +41,7 @@ export default {
           img: "iconfont icon-fabuguanli",
           name: "发布挑战",
           style: "background-color:var(--light-yellow);color:orange",
-          link:"/ftorelease"
+          link:"/post"
         },
         {
           img: "iconfont icon-gongdanjilu",
@@ -106,7 +106,7 @@ export default {
     },
     jumpTo(link){
       console.log(link);
-      router.push(link);
+      router.push({path:link,query: {postType: 0}});
     }
   },
   mounted() {

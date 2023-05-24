@@ -11,6 +11,7 @@ import photo from "@/pages/photo/photo"
 import postphoto from "@/pages/photo/postphoto"
 import explore from '@/pages/explore/explore'
 import fight from '@/pages/fight/fight'
+import post from '@/pages/fight/post'
 import finvolved from '@/pages/fight/involved'
 import released from '@/pages/fight/released'
 import ftorelease from '@/pages/fight/torelease'
@@ -61,11 +62,11 @@ export default new Router({
           name: 'game',
           component: game,
         },
-        {
-          path: 'gift', 
-          name: 'gift',
-          component: gift,
-        },
+        // {
+        //   path: 'gift', 
+        //   name: 'gift',
+        //   component: gift,
+        // },
         
       ],
     },
@@ -73,6 +74,11 @@ export default new Router({
       path: '/freleased', 
       name: 'freleased',
       component: released,
+    },
+    {
+      path: '/post', 
+      name: 'post',
+      component: post,
     },
     {
       path: '/finvolved', 
