@@ -194,10 +194,10 @@ export default {
       axios.get(process.env.VUE_APP_SERVER_URL+`/moodland/user/user/${self.user.user_id}`).then(function (response) {
         //成功时服务器返回 response 数据
         self.user = response.data;
-        console.log(self.user);
+        console.log("self.user.avatar:",self.user.avatar);
         // 如果为空，将user头像改为login中存储的,不为空则处理一下传回的avatar路径
-        if(response.data.avatar===""){
-          self.user.avatar=localStorage.getItem("user").avatar;
+        if(response.data.avatar===null){
+          self.user.avatar=JSON.parse(localStorage.getItem("user")).avatar
         }else{
           self.user.avatar=process.env.VUE_APP_SERVER_URL+`/moodland/${self.user.avatar}`;
         }

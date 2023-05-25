@@ -33,7 +33,7 @@ export default {
       user: {
         user_id: null,
         password: "",
-        avatar:"../../../static/img/avatar.jpg"
+        avatar:"../../../static/img/avatardefault.png"
       }
     };
   },
@@ -70,6 +70,7 @@ export default {
               duration: 950
             });
             localStorage.setItem("user", JSON.stringify(self.user));
+            console.log("localStorage.getItem(user).avatar",JSON.parse(localStorage.getItem("user")).avatar)
             router.push('/main')
             break;
           case false:
