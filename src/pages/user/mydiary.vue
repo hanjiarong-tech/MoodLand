@@ -16,7 +16,7 @@
         <div class="card">
           <div class="title">
             <div class="bj-left">
-              <img src="../../../static/img/avatar.jpg" alt="portrait">
+              <img :src="list.avatar" alt="portrait">
             </div>
             <div class="bj-right">
               <span style="font-size: 0.4rem;font-weight: bold;">{{ list.user_id }}</span>
@@ -68,6 +68,7 @@ import header from '@/components/header/index'
 import footer from '@/components/footer/index'
 import comment from '@/components/comment/comment';
 import filePopup from '@/components/filePopup/filePopup'
+import comment from '@/components/comment/comment';
 import { Dialog } from 'vant';
 import axios from "axios";
 export default {
@@ -185,7 +186,7 @@ export default {
       commentData: [],
       serverUrl:'',
       showComment: false,
-      moodtype: ["Surprise", "Fear", "Disgust", "Happiness", "Sadness", "Anger", "Neutral"],
+      moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       moodColor:['rgb(255,150,178)','rgb(75,167,133)','rgb(122,162,255)','rgb(255,202,43)','rgb(28,196,233)','rgb(243,109,66)','rgb(124,225,0)'],
       moodIcon:['iconfont icon-surprise','iconfont icon-ghost-fill','iconfont icon-confused2','iconfont icon-happy-face','iconfont icon-sad-f','iconfont icon-angry2','iconfont icon-neutral-face'],
       user: JSON.parse(localStorage.getItem('user')),
@@ -220,6 +221,7 @@ export default {
   components: {
     "v-header": header,
     "v-footer": footer,
+    comment,
     CalendarHeatmap,
     // CalendarHeatmap
   },

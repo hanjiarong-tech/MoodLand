@@ -12,6 +12,9 @@
     <swiper :options="swiperOptions">
       <swiper-slide>
         <capture @refreshDataList="refreshDataList" />
+        <div style="justify-content: center;display:flex;bottom:2rem">
+          <i>查看好友的心情↓</i>
+        </div>
       </swiper-slide>
       <swiper-slide v-for="(list, index) in frienddiarys" :key="index">
         <div class="card">
@@ -74,9 +77,9 @@ export default {
       commentData: [],
       serverUrl: '',
       showComment: false,
-      moodtype: ["Surprise", "Fear", "Disgust", "Happiness", "Sadness", "Anger", "Neutral"],
-      moodColor: ['rgb(255,150,178)', 'rgb(75,167,133)', 'rgb(122,162,255)', 'rgb(255,202,43)', 'rgb(28,196,233)', 'rgb(243,109,66)', 'rgb(124,225,0)'],
-      moodIcon: ['iconfont icon-surprise', 'iconfont icon-ghost-fill', 'iconfont icon-confused2', 'iconfont icon-happy-face', 'iconfont icon-sad-f', 'iconfont icon-angry2', 'iconfont icon-neutral-face'],
+      moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
+      moodColor:['rgb(255,150,178)','rgb(75,167,133)','rgb(122,162,255)','rgb(255,202,43)','rgb(28,196,233)','rgb(243,109,66)','rgb(124,225,0)'],
+      moodIcon:['iconfont icon-surprise','iconfont icon-ghost-fill','iconfont icon-confused2','iconfont icon-happy-face','iconfont icon-sad-f','iconfont icon-angry2','iconfont icon-neutral-face'],
       user: JSON.parse(localStorage.getItem('user')),
       frienddiarys: [],
       swiperOptions: {
