@@ -66,6 +66,7 @@
 import { CalendarHeatmap } from "vue-calendar-heatmap";
 import header from '@/components/header/index'
 import footer from '@/components/footer/index'
+import comment from '@/components/comment/comment';
 import filePopup from '@/components/filePopup/filePopup'
 import { Dialog } from 'vant';
 import axios from "axios";

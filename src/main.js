@@ -3,6 +3,8 @@ import App from './App'
 import router from './router'
 import store from './vuex/index'
 import VueLazyLoad from 'vue-lazyload'
+import VueStar from 'vue-star'
+
 import axios from 'axios';
 import Vant from 'vant';
 import 'vant/lib/index.css';
@@ -21,8 +23,11 @@ import { showConfirmDialog } from 'vant';
 import { Field,Picker} from 'vant';
 import { Badge } from 'vant';
 import { ImagePreview} from 'vant';
-//注册
-//icon
+import VueStarPlus from 'vue-star-plus' // same with vue3 version
+import 'vue-star-plus/lib/style.css'  // same with vue3 version
+
+Vue.component('VueStarPlus', VueStarPlus)
+// Vue.component('VueStar', VueStar)
 Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs,Divider,Tag,Uploader)
 Vue.use(Popup,Toast)
 Vue.use(VueCalendarHeatmap)

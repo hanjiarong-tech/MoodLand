@@ -58,7 +58,7 @@ export default {
         return false;
       }
       let self = this;
-      axios.post('http://10.128.245.71:5000/moodland/user/login/' + this.user.user_id, {
+      axios.post(process.env.VUE_APP_SERVER_URL+'/moodland/user/login/' + this.user.user_id, {
         id: this.user.user_id,
         password: this.user.password,
       }).then(function (response) {

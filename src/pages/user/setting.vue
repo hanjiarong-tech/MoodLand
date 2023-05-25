@@ -51,6 +51,7 @@ export default {
       gendervalue: 2,
       showPicker: false,
       columns: ['男', '女', '无性别'],
+      user: JSON.parse(localStorage.getItem("user")),
 
     };
   },
@@ -82,7 +83,17 @@ export default {
       // });
     },
     saveName() {
+      let self=this
+      axios.put(process.env.VUE_APP_SERVER_URL + `/user/user/${self.user.user_id}/name/actions/modify`, {
+        name: self.user.user_name
+      }).then(function (response) {
+        //成功时服务器返回 response 数据
+        console.log(response)
+      }).catch(function (error) {
+        console.log(error);
+      });
       this.nameshow = false;
+
       // this.namedata=this.namevalue;
     },
     saveGender(value) {
