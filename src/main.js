@@ -3,7 +3,7 @@ import App from './App'
 import router from './router'
 import store from './vuex/index'
 import VueLazyLoad from 'vue-lazyload'
-import VueStar from 'vue-star'
+// import VueStar from 'vue-star'
 
 import axios from 'axios';
 import Vant from 'vant';

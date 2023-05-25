@@ -1,6 +1,6 @@
 <template>
-  <div class="comment-wrap">
-    <div class="comment-list">
+  <div class="comment-wrap" :style="showComment?`height:50vh`:`height:0;`">
+    <div class="comment-list" style="margin: 5vw;" v-if="showComment">
       <div class="comment-top">
         <!-- <div class="number">15条评论</div> -->
         <div class="close" @click="close">
@@ -10,7 +10,9 @@
       <div class="comment-body">
         <div class="comment-box" v-for="item in comments">
           <div class="comment-item" @click="sendMessage()">
-            <img class="user-pic" :src="item.commentator_avatar==null?'../../../static/img/avatardefault.png':item.commentator_avatar" alt="头像" />
+            <img class="user-pic"
+              :src="item.commentator_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + item.commentator_avatar"
+              alt="头像" />
             <div class="item-info">
               <div class="replay">
                 <p class="name">{{ item.commentator_name }}</p>
@@ -21,88 +23,23 @@
           </div>
           <div v-for="reply in item.reply">
             <div class="sub-comment-item" @click="">
-              <img class="user-pic" :src="reply.reviewed_avatar==null?'../../../static/img/avatardefault.png':reply.reviewed_avatar" alt="头像"/>
+              <img class="user-pic"
+                :src="reply.reviewed_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + reply.reviewed_avatar"
+                alt="头像" />
               <div class="item-info">
                 <div class="replay">
-                  <span class="name">{{ reply.commentator_name}} 回复</span>
-                  <span class="name">@{{reply.reviewed_name}}：</span>
+                  <span class="name">{{ reply.commentator_name }} 回复</span>
+                  <span class="name">@{{ reply.reviewed_name }}：</span>
                   <p class="reply-content">{{ reply.comment_text }}</p>
                   <p class="time">{{ reply.comment_time }}</p>
                 </div>
               </div>
             </div>
           </div>
-          <!-- <div class="comment-item">
-            <img class="user-pic" src="../../../static/img/头像.jpg" alt />
-            <div class="item-info">
-              <div class="replay">
-                <p class="name">快乐仔逛学习</p>
-                <p class="replay-des">快乐仔每天在学习</p>
-                <p class="time">03-19<span> 回复</span></p>
-              </div>
-              <div class="zan" @click="showLike">
-                <span style="text-align: center">
-                  <i class="iconfont icon-xin" :class="{ 'active': isShow }"></i>
-                  <p>10</p>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="sub-comment-item">
-            <img class="user-pic" src="../../../static/img/头像.jpg" alt />
-            <div class="item-info">
-              <div class="replay">
-                <p class="name">开心开心😊</p>
-                <p class="reply-content">学习快乐</p>
-                <p class="time">03-19</p>
-              </div>
-              <div class="zan">
-                <span style="text-align: center">
-                  <i class="iconfont icon-xin" :class="{ 'active': isShow }"></i>
-                  <p>66</p>
-                </span>
-              </div>
-            </div>
-          </div> -->
-          <van-divider
-            :style="{ padding: '0 16px'}"/>
+          <van-divider :style="{ padding: '0 16px' }" />
         </div>
-        <!-- <div class="comment-box">
-          <div class="comment-item">
-            <img class="user-pic" src="../../../static/img/头像.jpg" alt />
-            <div class="item-info">
-              <div class="replay">
-                <p class="name">快乐仔逛学习</p>
-                <p class="replay-des">快乐仔每天在学习</p>
-                <p class="time">03-19</p>
-              </div>
-              <div class="zan" @click="showLike">
-                <span style="text-align: center">
-                  <i class="iconfont icon-xin" :class="{ 'active': isShow }"></i>
-                  <p>10</p>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="sub-comment-item">
-            <img class="user-pic" src="../../../static/img/头像.jpg" alt />
-            <div class="item-info">
-              <div class="replay">
-                <p class="name">开心开心😊</p>
-                <p class="reply-content">学习快乐</p>
-                <p class="time">03-19</p>
-              </div>
-              <div class="zan">
-                <span style="text-align: center">
-                  <i class="iconfont icon-dianzan2" :class="{ 'active': isShow }"></i>
-                  <p>66</p>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
-      <div class="reply-input">
+      <div class="reply-input" v-if="showComment">
         <input type="text" placeholder="有爱评论，说点好听的~" />
         <mt-button type="primary" size="small">发送</mt-button>
       </div>
@@ -116,17 +53,22 @@ export default {
   name: "comment",
   data() {
     return {
+      serverUrl: process.env.VUE_APP_SERVER_URL
 
     };
   },
   created() {
-    console.log('123',this.comments)
+    console.log('123', this.comments)
   },
   props: {
-    comments:{
-      tyoe:Array,
-      required:true
+    comments: {
+      tyoe: Array,
+      required: true
     },
+    showComment: {
+      required: true
+
+    }
 
   },
   methods: {
@@ -140,24 +82,30 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-
-
 .comment-wrap {
-  position: fixed;
-  left: 0;
+  // position: fixed;
   bottom: 0;
-  height: 500px;
+  position: absolute;
+  height: 50vh;
   width: 100%;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  z-index: 999;
-  padding: 5vw;
+  z-index: 99999;
   background-color: white;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-
+  transition: height 0.2s ease;
+.comment-body{
+  height:100%;
+  overflow:auto;
+}
+  // -webkit-transition: -webkit-transform .3s;
+  // transition: -webkit-transform .3s;
+  // transition: transform .3s;
+  // transition: transform .3s, -webkit-transform .3s;
   .comment-box {
     padding-bottom: 10px;
+    
   }
 
   .comment-top {
@@ -182,8 +130,6 @@ export default {
 
   .comment-body {
     max-height: 400px;
-    overflow: auto;
-    margin-top: 15px;
 
     .comment-item {
       display: flex;
