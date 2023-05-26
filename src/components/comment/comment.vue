@@ -105,7 +105,6 @@ export default {
   // transition: transform .3s, -webkit-transform .3s;
   .comment-box {
     padding-bottom: 10px;
-    
   }
 
   .comment-top {

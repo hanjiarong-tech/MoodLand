@@ -43,7 +43,7 @@
       </div>
     <!-- 展开评论 -->
     <!-- <van-popup v-model="showComment" round position="right" :style="{ height: '500px' }"> -->
-      <comment class="swiper-no-swiping" :showComment="showComment" :comments="commentData" @change="costPlannedAmountChange">
+      <comment class="ss" :showComment="showComment" :comments="commentData" @change="costPlannedAmountChange">
       </comment>
     <!-- </van-popup> -->
   </div>

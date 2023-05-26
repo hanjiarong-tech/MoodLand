@@ -44,8 +44,7 @@ export default {
       frienddiarys: [],
       swiperOptions: {
         noSwiping:true,
-        noSwipingClass:"swiper-no-swiping",
-        // noSwipingSelector: 'div',
+        noSwipingClass:"ss",
         touchMoveStopPropagation:true,
         direction: 'vertical', // 滑动方向
         grabCursor: false, // 小手掌抓取滑动
