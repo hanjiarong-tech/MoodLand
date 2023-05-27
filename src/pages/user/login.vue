@@ -58,9 +58,12 @@ export default {
         return false;
       }
       let self = this;
+      var md5pwd1 = this.$md5(this.user.password)
+      var md5pwd2 = this.$md5(md5pwd1+this.user.user_id)
+
       axios.post(process.env.VUE_APP_SERVER_URL+'/moodland/user/login/' + this.user.user_id, {
         id: this.user.user_id,
-        password: this.user.password,
+        password: md5pwd2,
       }).then(function (response) {
         //成功时服务器返回 response 数据
         switch (response.data.success) {

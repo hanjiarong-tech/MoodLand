@@ -53,13 +53,14 @@ export default {
       user: {
         name: "",
         password: "",
-        id:123
+        id:null,
       },
       nextpassword: ""
     };
   },
   methods: {
     regusterUser() {
+      var self = this
       if (this.user.name == "" || this.user.password == "" || this.user.id == null) {
         Toast({
           message: "输入内容不能为空",
@@ -80,9 +81,11 @@ export default {
             'Content-type': "application/json"
           }
         }
+        var md5pwd1 = this.$md5(this.user.password)
+        var md5pwd2 = this.$md5(md5pwd1+this.user.id)
         console.log(typeof(this.user.id))
-        axios.post('http://10.128.245.71:5000/moodland/user/user/' + this.user.id,{
-          password: this.user.password,
+        axios.post(process.env.VUE_APP_SERVER_URL+'/moodland/user/user/' + this.user.id,{
+          password: md5pwd2,
           id: this.user.id,
           user_name:this.user.name,
         },config).then(function (response) {
@@ -93,7 +96,8 @@ export default {
                     message: response.data.msg,
                     duration: 950
                   });
-                  this.$router.push("/login");
+                  localStorage.setItem("user", JSON.stringify(self.user));
+                  self.$router.push('/main')
                   break;
                 case false:
                   Toast({
@@ -102,6 +106,8 @@ export default {
                     });
                   break;
               }
+              
+
             }).catch(function (error) {
               console.log(error);
             });

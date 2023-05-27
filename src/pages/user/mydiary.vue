@@ -107,50 +107,6 @@ export default {
         
       ],
       timeValue: [
-        { date: "2020-08-02", count: 6 },
-        { date: "2020-08-03", count: 6 },
-        { date: "2020-08-04", count: 6 },
-        { date: "2020-08-05", count: 6 },
-        { date: "2020-08-06", count: 6 },
-        { date: "2020-08-07", count: 6 },
-        { date: "2020-08-08", count: 6 },
-        { date: "2020-08-15", count: 6 },
-        { date: "2020-08-22", count: 6 },
-        { date: "2020-08-29", count: 6 },
-        { date: "2020-09-05", count: 6 },
-        { date: "2020-09-28", count: 6 },
-        { date: "2020-09-22", count: 6 },
-        { date: "2020-09-23", count: 6 },
-        { date: "2020-09-24", count: 6 },
-        { date: "2020-10-04", count: 6 },
-        { date: "2020-10-02", count: 6 },
-        { date: "2020-10-10", count: 6 },
-        { date: "2020-10-11", count: 6 },
-        { date: "2020-10-17", count: 6 },
-        { date: "2020-10-19", count: 6 },
-        { date: "2020-10-23", count: 6 },
-        { date: "2020-10-27", count: 6 },
-        { date: "2020-10-28", count: 6 },
-        { date: "2020-10-29", count: 6 },
-        { date: "2020-11-22", count: 6 },
-        { date: "2020-11-30", count: 6 },
-        { date: "2020-12-08", count: 6 },
-        { date: "2020-12-16", count: 6 },
-        { date: "2020-12-24", count: 6 },
-        { date: "2021-01-01", count: 6 },
-        { date: "2021-01-09", count: 6 },
-        { date: "2021-01-16", count: 6 },
-        { date: "2021-01-22", count: 6 },
-        { date: "2021-01-28", count: 6 },
-        { date: "2021-02-03", count: 6 },
-        { date: "2021-02-09", count: 6 },
-        { date: "2021-02-15", count: 6 },
-        { date: "2021-02-21", count: 6 },
-        { date: "2021-03-21", count: 6 },
-        { date: "2021-03-22", count: 6 },
-        { date: "2021-03-23", count: 6 },
-        { date: "2021-03-24", count: 6 },
-        { date: "2021-03-25", count: 6 },
         { date: "2023-03-26", count: 21 },
         { date: "2023-03-27", count: 22 },
         { date: "2023-03-28", count: 23 },
@@ -237,7 +193,7 @@ export default {
         if(response.data.avatar===""){
           self.user.avatar=localStorage.getItem("user").avatar;
         }else{
-          self.user.avatar=`http://10.128.245.71:5000/moodland/${self.user.avatar}`;
+          self.user.avatar=process.env.VUE_APP_SERVER_URL +`/moodland/${self.user.avatar}`;
         }
         // 并将user的新数据保存
         localStorage.setItem("user", JSON.stringify(self.user))
