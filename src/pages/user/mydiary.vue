@@ -229,7 +229,7 @@ export default {
       let self = this;
       console.log(self.user.user_id)
       // `http://10.128.245.71:5000/moodland/${user.avatar}`
-      axios.get(`http://10.128.245.71:5000/moodland/user/user/${self.user.user_id}`).then(function (response) {
+      axios.get(process.env.VUE_APP_SERVER_URL +`/moodland/user/user/${self.user.user_id}`).then(function (response) {
         //成功时服务器返回 response 数据
         self.user = response.data;
         console.log(self.user);
