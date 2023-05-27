@@ -1,10 +1,10 @@
 <template>
   <div class='home'>
     <swiper :options="swiperOptions">
-      <swiper-slide @mousemove.stop style="height: calc(100vh - 60px);">
+      <swiper-slide @mousemove.stop style="height: calc( 100vh - 60px );">
         <capture @refreshDataList="refreshDataList" />
-        <div style="justify-content: center;display:flex;bottom:2rem">
-          <i>查看好友的心情↓</i>
+        <div class = "hint">
+          <i>查看好友的心情 ↓</i>
         </div>
       </swiper-slide>
       <swiper-slide v-for="(list, index) in frienddiarys" :key="index">
@@ -100,5 +100,14 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
+  .hint{
+    position: absolute;
+    display: flex;
+    bottom: 6vh;
+    width: 100%;
+    font-size: 0.4rem;
+    color: var(--mygreen);
+    justify-content: center;
+  }
 }
 </style>

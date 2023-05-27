@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4040302 */
-  src: url('iconfont.woff2?t=1684778246872') format('woff2'),
-       url('iconfont.woff?t=1684778246872') format('woff'),
-       url('iconfont.ttf?t=1684778246872') format('truetype');
+  src: url('iconfont.woff2?t=1685210659459') format('woff2'),
+       url('iconfont.woff?t=1685210659459') format('woff'),
+       url('iconfont.ttf?t=1685210659459') format('truetype');
 }
 
 .iconfont {
@@ -13,16 +13,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-ranking-list-fill:before {
+  content: "\e864";
+}
+
 .icon-sad-f:before {
   content: "\e644";
 }
 
 .icon-post_pic:before {
   content: "\e620";
-}
-
-.icon-scream:before {
-  content: "\e6a5";
 }
 
 .icon-ghost-fill:before {
@@ -35,10 +35,6 @@
 
 .icon-confused2:before {
   content: "\e733";
-}
-
-.icon-kongbudianyingjingshengjianjiao:before {
-  content: "\e602";
 }
 
 .icon-surprise:before {
