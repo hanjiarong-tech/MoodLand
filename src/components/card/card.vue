@@ -42,15 +42,12 @@
         </div>
       </div>
     <!-- 展开评论 -->
-    <!-- <van-popup v-model="showComment" round position="right" :style="{ height: '500px' }"> -->
       <comment class="ss" :showComment="showComment" :comments="commentData" @change="costPlannedAmountChange">
       </comment>
-    <!-- </van-popup> -->
   </div>
 </template>
 <script>
 import axios from "axios";
-import * as CommentData from '@/api/mockdata';
 import comment from '@/components/comment/comment';
 import like from '@/components/like/like'
 export default {
@@ -60,13 +57,12 @@ export default {
       user: JSON.parse(localStorage.getItem("user")),
       commentData: [],
       friendlikes: [],
-      serverUrl: '',
+      serverUrl: process.env.VUE_APP_SERVER_URL,
       showComment: false,
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       moodColor: ['rgb(255,150,178)', 'rgb(75,167,133)', 'rgb(122,162,255)', 'rgb(255,202,43)', 'rgb(28,196,233)', 'rgb(243,109,66)', 'rgb(124,225,0)'],
       moodIcon: ['iconfont icon-surprise', 'iconfont icon-ghost-fill', 'iconfont icon-confused2', 'iconfont icon-happy-face', 'iconfont icon-sad-f', 'iconfont icon-angry2', 'iconfont icon-neutral-face'],
       user: JSON.parse(localStorage.getItem('user')),
-      frienddiarys: [],
     };
   },
   props:{
@@ -84,23 +80,7 @@ export default {
       this.friendlikes = param1;
 
     },
-    // 获取好友日志
-    async friendDiary() {
-      const config = {
-        headers: {
-          'Content-type': "application/json"
-        }
-      }
-      let self = this;
-      self.serverUrl = process.env.VUE_APP_SERVER_URL;
-      axios.get(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + self.user.user_id + '/friend', config).then(function (response) {
-        //成功时服务器返回 response 数据
-        self.frienddiarys = response.data;
-        console.log("resfrienddiarys ", self.frienddiarys);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
+  
     // 获取评论列表
     async thisCommentData(diaryid) {
       this.showComment = true;
@@ -118,19 +98,13 @@ export default {
         console.log(error);
       });
     },
-    // 获取mock数据
-    getData() {
-      this.commentData = CommentData.comment.data;
-    },
     // 关闭评论
     async costPlannedAmountChange(param1) {
       this.showComment = param1;
     },
-
-
   },
   mounted() {
-    this.friendDiary();
+
   },
   components: {
     comment,
@@ -140,11 +114,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.home {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
 
 .card {
   width: 90%;

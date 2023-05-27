@@ -1,5 +1,5 @@
 <template>
-  <div class="comment-wrap" :style="showComment?`height:50vh`:`height:0;`">
+  <div class="comment-wrap" :style="showComment ? `height:50vh` : `height:0;`">
     <div class="comment-list" style="margin: 5vw;" v-if="showComment">
       <div class="comment-top">
         <!-- <div class="number">15条评论</div> -->
@@ -9,7 +9,7 @@
       </div>
       <div class="comment-body">
         <div class="comment-box" v-for="item in comments">
-          <div class="comment-item" @click="sendMessage()">
+          <div class="comment-item" @click="sendMessage(item.diary_id, item.comment_id,0)">
             <img class="user-pic"
               :src="item.commentator_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + item.commentator_avatar"
               alt="头像" />
@@ -22,7 +22,7 @@
             </div>
           </div>
           <div v-for="reply in item.reply">
-            <div class="sub-comment-item" @click="">
+            <div class="sub-comment-item" @click="sendMessage(reply.diary_id, reply.comment_id,1)">
               <img class="user-pic"
                 :src="reply.reviewed_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + reply.reviewed_avatar"
                 alt="头像" />
@@ -40,8 +40,8 @@
         </div>
       </div>
       <div class="reply-input" v-if="showComment">
-        <input type="text" placeholder="有爱评论，说点好听的~" />
-        <mt-button type="primary" size="small">发送</mt-button>
+        <input v-model="content" type="text" placeholder="有爱评论，说点好听的~" />
+        <mt-button type="primary" size="small" @click="send()">发送</mt-button>
       </div>
     </div>
   </div>
@@ -49,12 +49,20 @@
 <script>
 import * as CommentData from '@/api/mockdata';
 import router from '../../router';
+import { send } from 'process';
 export default {
   name: "comment",
   data() {
     return {
-      serverUrl: process.env.VUE_APP_SERVER_URL
-
+      serverUrl: process.env.VUE_APP_SERVER_URL,
+      diary_id: "",
+      comment_id: '',
+      comment_type:0,
+      content: '',
+      reply_id:'',
+      reviewed_id:'',
+      data:'',
+      user: JSON.parse(localStorage.getItem("user")),
     };
   },
   created() {
@@ -76,6 +84,65 @@ export default {
     close() {
       this.$emit('change', false);
     },
+    sendMessage(diaryid, commentid,commenttype) {
+      this.diary_id = diaryid;
+      this.comment_id = commentid;
+      this.comment_type=commenttype;
+    },
+    currentTime() {
+      var date = new Date();
+      var year = date.getFullYear(); //月份从0~11，所以加一
+      let month = date.getMonth();
+      console.log("month", month);
+      var dateArr = [
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+      ];
+      //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+      for (var i = 0; i < dateArr.length; i++) {
+        if (dateArr[i] >= 1 && dateArr[i] <= 9) {
+          dateArr[i] = "0" + dateArr[i];
+        }
+      }
+      var strDate =
+        year +
+        "/" +
+        dateArr[0] +
+        "/" +
+        dateArr[1] +
+        " " +
+        dateArr[2] +
+        ":" +
+        dateArr[3] +
+        ":" +
+        dateArr[4];
+      //此处可以拿外部的变量接收，也可直接返回  strDate:2022-05-01 13:25:30
+      this.date = strDate;
+      console.log("strDate", strDate);
+    },
+
+    send() {
+      let self = this;
+      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}/${self.diary_id}/comment/${self.comment_id}`, {
+        "comment_id": self.comment_id,
+        "comment_text": self.content,
+        "comment_time": self.date,
+        "comment_type": self.comment_type,
+        "commentator_id": self.user.user_id,
+        "diary_id": self.diary_id,
+        // "reply_id": ?
+        // "reviewed_id": ?
+      }).then(function (response) {
+        //成功时服务器返回 response 数据
+
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
   },
   mounted() {
   },
@@ -95,10 +162,12 @@ export default {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   transition: height 0.2s ease;
-.comment-body{
-  height:100%;
-  overflow:auto;
-}
+
+  .comment-body {
+    height: 100%;
+    overflow: auto;
+  }
+
   // -webkit-transition: -webkit-transform .3s;
   // transition: -webkit-transform .3s;
   // transition: transform .3s;
