@@ -12,6 +12,7 @@ import postphoto from "@/pages/photo/postphoto"
 import explore from '@/pages/explore/explore'
 import fight from '@/pages/fight/fight'
 import post from '@/pages/fight/post'
+import detail from '@/pages/fight/detail'
 import finvolved from '@/pages/fight/involved'
 import released from '@/pages/fight/released'
 import ftorelease from '@/pages/fight/torelease'
@@ -79,6 +80,11 @@ export default new Router({
       path: '/post', 
       name: 'post',
       component: post,
+    },
+    {
+      path: '/detail', 
+      name: 'detail',
+      component: detail,
     },
     {
       path: '/finvolved', 
