@@ -14,11 +14,13 @@
               <van-tag round type="primary">{{detail.join_num}} / {{detail.max_num}}</van-tag>
             </template>
           </van-card>
-          <div v-for="(challenger,index) in challengerList">
-            <van-cell :key="challenger.participant_id" >
-              <span>{{index+1}}</span>
-              <span>{{challenger.participant_name}}</span>
-              <span>{{challenger.score}}</span>
+          <div class = "rank" v-for="(challenger,index) in challengerList">
+            <van-cell :key="challenger.participant_id">
+              <span class="index">
+                <i class="iconfont icon-ranking-list-fill">
+                {{index+1}}</i></span>
+              <span class = "name">{{challenger.participant_name}}</span>
+              <span class = "score">{{challenger.score}}</span>
               </van-cell>
           </div>
     </div>
@@ -208,6 +210,23 @@ height: 100vh;
   height: 3.6rem;
   position: absolute;
 }
+}
+.rank{
+  .index{
+    width: 20%;
+    color: orange;
+  }
+  .name{
+    width:20%;
+  }
+  .score{
+    width: 60%;
+    text-align:right;
+  }
+}
+
+/deep/ .van-cell__value{
+  display:flex;
 }
 
 

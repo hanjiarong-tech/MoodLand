@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "34453262",
+      "name": "ranking-list-fill",
+      "font_class": "ranking-list-fill",
+      "unicode": "e864",
+      "unicode_decimal": 59492
+    },
+    {
       "icon_id": "11349200",
       "name": "sad-f",
       "font_class": "sad-f",
@@ -18,13 +25,6 @@
       "font_class": "post_pic",
       "unicode": "e620",
       "unicode_decimal": 58912
-    },
-    {
-      "icon_id": "17203249",
-      "name": "scream",
-      "font_class": "scream",
-      "unicode": "e6a5",
-      "unicode_decimal": 59045
     },
     {
       "icon_id": "35094407",
@@ -46,13 +46,6 @@
       "font_class": "confused2",
       "unicode": "e733",
       "unicode_decimal": 59187
-    },
-    {
-      "icon_id": "3745824",
-      "name": "恐怖电影——惊声尖叫",
-      "font_class": "kongbudianyingjingshengjianjiao",
-      "unicode": "e602",
-      "unicode_decimal": 58882
     },
     {
       "icon_id": "5634420",

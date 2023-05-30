@@ -1,8 +1,8 @@
 <template>
   <div class="like">
     <!-- 设置颜色可以控制显示的颜色 -->
-    <VueStarPlus v-model="active2" :color="active2 ? '#ff0000' : '#bfcbd9'">
-      <template v-slot:icon>{{ active2 ? '❤' : '❤' }}<span style="font-size: 14px;">{{ count }}</span></template>
+    <VueStarPlus v-model="active2" :color="active2 ? 'red' : 'var(--deepgray)'">
+      <template v-slot:icon>{{ active2 ? '❤' : '❤' }}<span style="font-size: 0.5rem;">{{ count }}</span></template>
     </VueStarPlus>
     <div v-for="(list, index) in friendlikes" :key="index">
       <img :src="list.avatar" alt="用户avatar">
@@ -85,14 +85,25 @@ export default {
 
 </script>
 <style lang="less" scoped>
-.capture {
-  position: relative;
-  margin: 0 auto;
-  width: 350px;
-  top: 10%;
+
+.like{
+  width: 1.2rem;
+  height: 1.2rem;
+  display: flex;
+  align-items: center;
 }
 
 .VueStar {
-  font-size: 24px
+  font-size: 0.7rem;
+}
+
+/deep/ .VueStar__ground{
+  width:1.5rem;
+  height:1rem;
+}
+
+/deep/ .VueStar__decoration{
+  left: -6vw;
+  top: -6vw;
 }
 </style>
