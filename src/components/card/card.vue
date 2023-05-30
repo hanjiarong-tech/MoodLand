@@ -42,7 +42,7 @@
         </div>
       </div>
     <!-- 展开评论 -->
-      <comment class="ss" :showComment="showComment" :comments="commentData" @change="costPlannedAmountChange">
+      <comment class="ss" :showComment="showComment" :comments="commentData" :diaryid="diaryid" @update="addComment" @change="costPlannedAmountChange">
       </comment>
   </div>
 </template>
@@ -55,6 +55,7 @@ export default {
   data() {
     return {
       user: JSON.parse(localStorage.getItem("user")),
+      diaryid:'',
       commentData: [],
       friendlikes: [],
       serverUrl: process.env.VUE_APP_SERVER_URL,
@@ -84,6 +85,8 @@ export default {
     // 获取评论列表
     async thisCommentData(diaryid) {
       this.showComment = true;
+      this.diaryid=diaryid;
+      console.log("this.diaryid",this.diaryid)
       const config = {
         headers: {
           'Content-type': "application/json"
@@ -102,6 +105,9 @@ export default {
     async costPlannedAmountChange(param1) {
       this.showComment = param1;
     },
+    async addComment(){
+      this.thisCommentData(this.diaryid)
+    }
   },
   mounted() {
 

@@ -10,6 +10,13 @@
       </van-cell>
       <van-cell @click="nameshow = true" title="昵称" :value="namevalue" is-link />
       <van-cell title="性别" :value="columns[gendervalue]" @click="showPicker = true" is-link />
+      <van-cell center title="提醒开关">
+        <template #right-icon>
+          <van-switch :value="checked" @input="onInput" />
+        </template>
+      </van-cell>
+      <van-cell @click="passshow = true" title="修改密码" :value="passvalue" is-link />
+      <!-- 修改性别弹出层 -->
       <van-popup v-model:show="showPicker" round position="bottom">
         <van-picker show-toolbar :columns="columns" @cancel="showPicker = false" @confirm="saveGender" />
       </van-popup>
@@ -20,16 +27,13 @@
             <van-button size="small" @click="saveName()" type="primary">保存</van-button> </template>
         </van-field>
       </van-popup>
-
-
-
       <!-- 导入修改avatar子组件 -->
-      <filePopup ref="avatarRef" />
-      <van-cell center title="提醒开关">
-        <template #right-icon>
-          <van-switch :value="checked" @input="onInput" />
-        </template>
-      </van-cell>
+      <filePopup ref="avatarRef" @change="changeAvatar" />
+
+    </div>
+    <div class="down">
+      <van-button color="#ff1111" @click="logout" type="primary" block>退出登录</van-button>
+      <van-button color="#dd32dd" @click="logoff" type="primary" block>注销账户</van-button>
     </div>
   </div>
 </template>
@@ -44,18 +48,20 @@ export default {
   data() {
     return {
       headerLeftStatus: true,
-      checked: true,
-      avatar: "../../../static/img/avatar.jpg",
+      checked: false,
+      avatar: JSON.parse(localStorage.getItem("user")).avatar,
       nameshow: false,
       namevalue: "123",
       gendervalue: 2,
       showPicker: false,
+      passvalue: "",
       columns: ['男', '女', '无性别'],
       user: JSON.parse(localStorage.getItem("user")),
-
     };
   },
   mounted() {
+    
+    this.searchInfoData()
   },
   methods: {
     onInput(checked) {
@@ -64,28 +70,52 @@ export default {
         message: '是否切换开关？',
       }).then(() => {
         this.checked = checked;
+        localStorage.setItem("notice",this.checked)
+      });
+    },
+    logout() {
+      Dialog.confirm({
+        title: '提醒',
+        message: '是否退出登录？',
+      }).then(() => {
+        this.$router.push("/")
+      });
+    },
+    logoff() {
+      Dialog.confirm({
+        title: '提醒',
+        message: '是否注销账号？',
+      }).then(() => {
+        axios.delete(process.env.VUE_APP_SERVER_URL + `/user/user/${this.user.user_id}`).then(function (response) {
+          this.$router.push("/")
+        }).catch(function (error) {
+          Toast({
+            message: "注销失败",
+            duration: 950
+          });
+        })
+
       });
     },
     searchInfoData() {
-      // let self = this;
-      // console.log(123);
-      // axios.post('http://10.128.245.71:5000/moodland/notice/' + 123456, {
-      //   content: "123",
-      //   has_read: 0,
-      //   notice_id: 1,
-      //   notice_url: 0,
-      //   notice_type: 1,
-      // }).then(function (response) {
-      //   //成功时服务器返回 response 数据
-      //   console.log(response.data)
-      // }).catch(function (error) {
-      //   console.log(error);
-      // });
+      let self = this;
+      console.log(process.env.VUE_APP_SERVER_URL);
+      axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}`, {
+      }).then(function (response) {
+        response.data.avatar == null ? '../../../static/img/avatardefault.png' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
+        self.namevalue = response.data.user_name;
+        response.data.remind == 0 ? self.checked = false : self.checked = true;
+        self.gendervalue = response.data.sex
+        //成功时服务器返回 response 数据
+        console.log(response.data)
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
     saveName() {
-      let self=this
+      let self = this
       axios.put(process.env.VUE_APP_SERVER_URL + `/user/user/${self.user.user_id}/name/actions/modify`, {
-        name: self.user.user_name
+        name: self.namevalue
       }).then(function (response) {
         //成功时服务器返回 response 数据
         console.log(response)
@@ -110,21 +140,8 @@ export default {
       }
       this.showPicker = false;
     },
-    save() {
-      // let self = this;
-      // console.log(123);
-      // axios.post('http://10.128.245.71:5000/moodland/notice/' + 123456, {
-      //   content: "123",
-      //   has_read: 0,
-      //   notice_id: 1,
-      //   notice_url: 0,
-      //   notice_type: 1,
-      // }).then(function (response) {
-      //   //成功时服务器返回 response 数据
-      //   this.$toast.success('修改成功')
-      // }).catch(function (error) {
-      //   this.$toast.success('修改失败')
-      // });
+    changeAvatar(url) {
+      this.avatar = url
     },
     openAvatar() {
       this.$refs.avatarRef.show = true;
@@ -144,13 +161,24 @@ export default {
 <style scoped>
 .content {
   top: auto;
-  position: absolute;
+  position: relative;
   width: 100%;
 }
 
 .setting {
   background-color: var(--background-gray);
   height: 100vh
+}
+
+.down {
+  position: relative;
+  top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 14vh;
 }
 </style>
 
