@@ -14,7 +14,7 @@ import echarts from 'echarts'
 import VueSwiper from 'vue-awesome-swiper';
 import 'swiper/swiper-bundle.css';
 import { Navbar, TabItem } from 'mint-ui';
-import { Grid, GridItem,Card,Tab, Tabs,Divider,Tag,Uploader } from 'vant';
+import { Grid, GridItem,Card,Tab, Tabs,Divider,Tag,Uploader,Search } from 'vant';
 import { Switch } from 'vant';
 import { Dialog } from 'vant';
 import { Cell, CellGroup } from 'vant';
@@ -30,7 +30,7 @@ Vue.prototype.$md5 = md5;
 
 Vue.component('VueStarPlus', VueStarPlus)
 // Vue.component('VueStar', VueStar)
-Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs,Divider,Tag,Uploader)
+Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs,Divider,Tag,Uploader,Search)
 Vue.use(Popup,Toast)
 Vue.use(VueCalendarHeatmap)
 Vue.use(Grid);

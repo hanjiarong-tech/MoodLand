@@ -16,7 +16,7 @@
         <div class="container-order-2">
           
           <p v-for="list in container" @click="jumpToOthers(list.link)">
-            <van-badge :style="list.name ==='消息通知'?'visibility:visible':'visibility:hidden'" :content="20" max="99" color="orange">
+            <van-badge :style="list.name ==='消息通知' && noticeNum>0 ?'visibility:visible':'visibility:hidden'" :content="noticeNum" max="99" color="orange">
             <i :class="list.class" :style = "list.style"></i>
             </van-badge>
             <span>{{ list.name }}</span>
@@ -45,9 +45,11 @@ import router from '../../router';
 import { CalendarHeatmap } from "vue-calendar-heatmap";
 // import { CalendarHeatmap } from "vue-calendar-heatmap";
 import * as echarts from "echarts";
+import { type } from 'os';
 export default {
   data() {
     return {
+      noticeNum:0,
       container: [
         {
           class: "iconfont icon--",
@@ -192,6 +194,20 @@ export default {
         console.log(error);
       });
     },
+    searchNotice(){
+      let self = this
+      axios.get(process.env.VUE_APP_SERVER_URL+`/moodland/notice/${self.user.user_id}/my/unread`).then(function (response) {
+        //成功时服务器返回 response 数据
+        var res = response.data
+        console.log(res)
+        if(typeof(res)=="number"){
+          self.noticeNum = res
+        }
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
     jumpToOthers(link) {
       router.push(link);
     }
@@ -199,6 +215,7 @@ export default {
   },
   mounted: function () {
     this.searchInfoData();
+    this.searchNotice();
     this.searchMoodData();
   },
   watch: {

@@ -1,17 +1,17 @@
 <template>
   <div class="setting">
     <van-nav-bar title="消息通知" left-arrow @click-left="$router.back()" />
-    <div class="container" v-for="list2 in detail">
-      <div class="container-bj">
+    <div class="container" v-for="(list2,index) in detail">
+      <div class="container-bj" :style = "list2.has_read==0?'background-color: var(--background-gray);':''">
         <div class="bj-left">
-          <img :src="'http://10.128.245.71:5000/moodland/'+list2.picture">
+          <img :src="list2.picture==null?'../../../static/img/avatar.jpg':serverUrl+'/moodland/'+list2.picture">
         </div>
         <div class="bj-right">
           <p class="title">{{ list2.name }}</p>
           <p style="color:var(--deep-gray)">{{ list2.content }}</p>
         </div>
         <div class="bj-action">
-          <van-button v-if="list2.notice_type == 1 && list2.action==0" icon="success" type="primary" style="background-color:rgb(73 185 92);border: 0px;color: white;">同意</van-button>
+          <van-button v-if="list2.notice_type == 1 && list2.action==0" icon="success" type="primary" style="background-color:rgb(73 185 92);border: 0px;color: white;" @click = "acceptNotice(index)">同意</van-button>
           <van-button disabled v-if="list2.notice_type == 1 && list2.action==1" type="primary" style="background-color:transparent;border: 0px;color:var(--deep-gray);">已同意</van-button>
           </div>
       </div>
@@ -22,48 +22,91 @@
 
 <script>
 import footer from '@/components/footer/index'
+import axios from "axios";
 export default {
   data() {
     return {
+      serverUrl:process.env.VUE_APP_SERVER_URL,
+      user: JSON.parse(localStorage.getItem("user")),
       detail: [
-        {
-          notice_url: 123456,
-          user_id: 123,
-          name: "hqz",
-          action: 0,
-          notice_id: 2,
-          content: "想添加您为好友",
-          picture: "avatar/123456.jpg",
-          notice_type: 1,
-          has_read: 0
-        },
-        {
-          notice_url: 123456,
-          user_id: 123,
-          name: "hqz",
-          action: 1,
-          notice_id: 2,
-          content: "想添加您为好友",
-          picture: "avatar/123456.jpg",
-          notice_type: 1,
-          has_read: 0
-        },
-        {
-          notice_url: 123456,
-          user_id: 123,
-          action: null,
-          notice_id: 3,
-          content: "您的日志有新互动了",
-          picture: "avatar/123456.jpg",
-          notice_type: 2,
-          has_read: 0
-        }
+        // {
+        //   notice_url: 123456,
+        //   user_id: 123,
+        //   name: "hqz",
+        //   action: 0,
+        //   notice_id: 2,
+        //   content: "想添加您为好友",
+        //   picture: "avatar/123456.jpg",
+        //   notice_type: 1,
+        //   has_read: 0
+        // },
+        // {
+        //   notice_url: 123456,
+        //   user_id: 123,
+        //   name: "hqz",
+        //   action: 1,
+        //   notice_id: 2,
+        //   content: "想添加您为好友",
+        //   picture: "avatar/123456.jpg",
+        //   notice_type: 1,
+        //   has_read: 0
+        // },
+        // {
+        //   notice_url: 123456,
+        //   user_id: 123,
+        //   action: null,
+        //   notice_id: 3,
+        //   content: "您的日志有新互动了",
+        //   picture: "avatar/123456.jpg",
+        //   notice_type: 2,
+        //   has_read: 0
+        // }
       ],
     };
   },
   mounted() {
+    this.serverUrl = process.env.VUE_APP_SERVER_URL;
+    this.getNotice();
   },
   methods: {
+    getNotice() {
+      let self = this;
+      console.log(self.user.user_id)
+      const config = {
+        headers: {
+          'Content-type': "application/json"
+        }
+      }
+      axios.get(process.env.VUE_APP_SERVER_URL+`/moodland/notice/${self.user.user_id}/my`,config).then(function (response) {
+        //成功时服务器返回 response 数据
+        self.detail = response.data;
+        console.log(response.data)
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    acceptNotice(index){
+      console.log(this.detail[index])
+
+      var notice_id = this.detail[index].notice_id
+      var notice = this.detail[index]
+      notice.action = 1;
+
+      let self = this;
+      const config = {
+        headers: {
+          'Content-type': "application/json"
+        }
+      }
+      axios.post(process.env.VUE_APP_SERVER_URL+`/moodland/notice/${self.user.user_id}/${notice_id}/action/answer`,notice,config).then(function (response) {
+        //成功时服务器返回 response 数据
+        console.log(response.data)
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
     
   },
   components: {
