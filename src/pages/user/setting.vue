@@ -3,7 +3,7 @@
     <!-- <v-header title="设置" :headerLeftStatus="headerLeftStatus" :save="save" /> -->
     <van-nav-bar title="个人信息" left-arrow @click-left="$router.back()" />
     <div class="content">
-      <van-cell @click="openAvatar" title="头像" is-link>
+      <van-cell @click="openFile" title="头像" is-link>
         <template #default>
           <img :src="avatar" style="width:30px; height:30px;border-radius: 50%;" alt="用户头像">
         </template>
@@ -28,7 +28,14 @@
         </van-field>
       </van-popup>
       <!-- 导入修改avatar子组件 -->
-      <filePopup ref="avatarRef" @change="changeAvatar" />
+      <div class="file">
+        <!-- <van-popup v-model="show" round position="bottom" :style="{ height: '15%' }"> -->
+        <div class="updateAva">
+          <!-- <div @click="openFile">从相册中选择</div> -->
+          <input @change="changImg" ref="inputFileRef" type="file" style="display: none;">
+          <!-- <div class="borderDiv">拍照</div> -->
+        </div>
+      </div>
 
     </div>
     <div class="down">
@@ -39,6 +46,7 @@
 </template>
 
 <script>
+import { ImagePreview } from 'vant';
 import header from '@/components/header/index'
 import footer from '@/components/footer/index'
 import filePopup from '@/components/filePopup/filePopup'
@@ -51,7 +59,7 @@ export default {
       checked: false,
       avatar: JSON.parse(localStorage.getItem("user")).avatar,
       nameshow: false,
-      namevalue: "123",
+      namevalue: "",
       gendervalue: 2,
       showPicker: false,
       passvalue: "",
@@ -60,7 +68,7 @@ export default {
     };
   },
   mounted() {
-    
+
     this.searchInfoData()
   },
   methods: {
@@ -70,7 +78,7 @@ export default {
         message: '是否切换开关？',
       }).then(() => {
         this.checked = checked;
-        localStorage.setItem("notice",this.checked)
+        localStorage.setItem("notice", this.checked)
       });
     },
     logout() {
@@ -97,12 +105,56 @@ export default {
 
       });
     },
+    // 修改头像
+    openFile() {
+      this.$refs.inputFileRef.click()
+    },
+    changImg() {
+      let that = this
+      const file = this.$refs.inputFileRef.files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.addEventListener('load', function () {
+        ImagePreview({
+          images: [
+            reader.result
+          ],
+          closeable: true,
+          onClose: that.closeProcess,
+        })
+      })
+    },
+    closeProcess() {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '确定要修改头像吗'
+      }).then(async () => {
+        // 得到图片
+        const path = this.$refs.inputFileRef.files[0]
+        // 发送图片对象
+        const fd = new FormData()
+        fd.append('file', path)
+        let self = this;
+        console.log(123);
+        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/avatar/action/upload`, fd).then(function (response) {
+          //成功时服务器返回 response 数据
+          console.log(window.URL.createObjectURL(path))
+          self.avatar= window.URL.createObjectURL(path)
+          self.user.avatar=window.URL.createObjectURL(path)
+          console.log(self.user.avatar)
+          localStorage.setItem("user",self.user)
+        }).catch(function (error) {
+        });
+      })
+    },
     searchInfoData() {
       let self = this;
       console.log(process.env.VUE_APP_SERVER_URL);
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}`, {
       }).then(function (response) {
-        response.data.avatar == null ? '../../../static/img/avatardefault.png' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
+        response.data.avatar = response.data.avatar == null ? '../../../static/img/avatardefault.png' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
+        console.log("response.data.avatar", response.data.avatar)
+        self.avatar = response.data.avatar
         self.namevalue = response.data.user_name;
         response.data.remind == 0 ? self.checked = false : self.checked = true;
         self.gendervalue = response.data.sex
@@ -123,8 +175,6 @@ export default {
         console.log(error);
       });
       this.nameshow = false;
-
-      // this.namedata=this.namevalue;
     },
     saveGender(value) {
       switch (value) {
@@ -140,8 +190,8 @@ export default {
       }
       this.showPicker = false;
     },
-    changeAvatar(url) {
-      this.avatar = url
+    async changeAvatar() {
+      console.log("上传头像")
     },
     openAvatar() {
       this.$refs.avatarRef.show = true;

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import router from '../../router'
 import topBar from '@/components/top/TopBar.vue'; // 顶部导航组件
 import footer from '@/components/footer/index'
 export default {
@@ -51,15 +52,16 @@ export default {
   //       case 1: 
   //         this.$router.push('/explore/game')
   //         break;
-  //       case 2:
-  //         this.$router.push('/explore/gift')
-  //         break;
   //     }
   //   }
   // },
-  // mounted() {
-  //   this.$router.push({ path: 'fight' });
-  // },
+  mounted() {
+    console.log(this.$route.path)
+    if(this.$route.path ==='/explore/game'){
+      console.log(this.$route.path)
+      this.active=1;
+    }
+  },
 };
 </script>
 

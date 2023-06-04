@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <van-nav-bar title="发布挑战" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="我参与的" left-arrow @click-left="$router.back()" />
     <div class="container" v-for="list2 in detail">
       <div class="container-bj">
         <div class="bj-left">
@@ -19,7 +19,7 @@
 <script>
 import footer from '@/components/footer/index'
 export default {
-  name: 'ftorelease',
+  name: 'greleased',
   data() {
     return {
       detail: [

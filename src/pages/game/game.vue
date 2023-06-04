@@ -10,8 +10,6 @@
       </div>
     </div>
     <van-cell title="发现游戏" icon="search" style="font-weight: bold;background-color: transparent;" />
-    <!-- <p style="font-size: 20px;">发现挑战</p> -->
-    <!-- 发现挑战 -->
     <div class="container" v-for="list2 in detail">
       <div class="container-bj">
         <div class="bj-left">
@@ -41,19 +39,19 @@ export default {
           img: "iconfont icon-fabuguanli",
           name: "发布游戏",
           style: "background-color:var(--light-yellow);color:orange",
-          link:"/ftorelease"
+          link:"/gtorelease"
         },
         {
           img: "iconfont icon-gongdanjilu",
           name: "我发布的",
           style: "background-color:var(--light-green);color:var(--mygreen)",
-          link:"/freleased"
+          link:"/greleased"
         },
         {
           img: "iconfont icon-hands-fill",
           name: "我参与的",
           style: "background-color:var(--light-blue);color:var(--mydarkblue)",
-          link:"/finvolved"
+          link:"/ginvolved"
         },
       ],
       detail: [
@@ -96,7 +94,7 @@ export default {
     },
     jumpTo(link){
       console.log(link);
-      router.push(link);
+      router.push({path:link,query: {postType: 1}});
     }
   },
   mounted() {

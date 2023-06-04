@@ -3,10 +3,10 @@
       <div class="card">
         <div class="title">
           <div class="bj-left">
-            <img src="../../../static/img/avatar.jpg" alt="portrait">
+            <img :src="list.avatar == null ? '../../../static/img/avatar.jpg' : serverUrl + '/moodland/' + list.avatar" alt="portrait">
           </div>
           <div class="bj-right">
-            <span style="font-size: 0.4rem;font-weight: bold;">{{ list.user_id }}</span>
+            <span style="font-size: 0.4rem;font-weight: bold;">{{ list.user_name }}</span>
             <span style="font-size: 0.35rem;">{{ list.post_time }}</span>
           </div>
         </div>

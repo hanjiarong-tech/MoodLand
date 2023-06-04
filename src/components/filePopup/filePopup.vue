@@ -1,12 +1,11 @@
 <template>
   <div class="file">
-    <van-popup v-model="show" round position="bottom" :style="{ height: '15%' }">
+    <!-- <van-popup v-model="show" round position="bottom" :style="{ height: '15%' }"> -->
       <div class="updateAva">
-        <div @click="openFile">从相册中选择</div>
+        <!-- <div @click="openFile">从相册中选择</div> -->
         <input @change="changImg" ref="inputFileRef" type="file" style="display: none;">
-        <div class="borderDiv">拍照</div>
+        <!-- <div class="borderDiv">拍照</div> -->
       </div>
-    </van-popup>
   </div>
 </template>
 <script>
@@ -56,21 +55,18 @@ export default {
         const path = this.$refs.inputFileRef.files[0]
         // 发送图片对象
         const fd = new FormData()
-        fd.append('photo', path)
+        fd.append('file', path)
         let self = this;
         console.log(123);
-        axios.post(process.env.VUE_APP_SERVER_URL+`/moodland/user/user/${self.user.user_id}/avatar/action/upload`,fd).then(function (response) {
+        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/avatar/action/upload`, fd).then(function (response) {
           //成功时服务器返回 response 数据
-          Toast({
-              message: "修改成功",
-              duration: 950
-            });
-          this.$emit('changeAvatar')
+          this.$emit('update')
+          // Toast({
+          //   message: response.data.msg,
+          //   duration: 950
+          // });
+          console.log(process.env.VUE_APP_SERVER_URL + '/moodland/avatar/' + self.user.user_id + '.jpg')
         }).catch(function (error) {
-          Toast({
-              message: "修改失败",
-              duration: 950
-            });
         });
 
       })
@@ -78,6 +74,7 @@ export default {
 
   },
   mounted() {
+    this.openFile();
   },
 };
 </script>

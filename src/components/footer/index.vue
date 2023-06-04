@@ -15,7 +15,7 @@
         <span :style="$route.path ==='/classify' ? 'color: var(--theme-color) ': 'color: var(--mydarkblue)'">分类</span>
       </router-link> -->
 
-      <router-link :to="{ path: '/explore/fight' }" tag="li">
+      <router-link :to="{ path: '/explore' }" tag="li">
         <i class="iconfont icon-tansuoxuanzhong" style="color:var(--theme-color)" v-if="$route.matched[0].path=='/explore'"></i>
         <i class="iconfont icon-tansuo" style = "color:var(--mydarkblue)" v-else></i>
         <span :style="$route.matched[0].path=='/explore' ? 'color: var(--theme-color) ': 'color: var(--mydarkblue)'">探索</span>

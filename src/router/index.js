@@ -14,8 +14,11 @@ import fight from '@/pages/fight/fight'
 import post from '@/pages/fight/post'
 import detail from '@/pages/fight/detail'
 import finvolved from '@/pages/fight/involved'
-import released from '@/pages/fight/released'
+import freleased from '@/pages/fight/released'
 import ftorelease from '@/pages/fight/torelease'
+import ginvolved from '@/pages/game/involved'
+import greleased from '@/pages/game/released'
+import gtorelease from '@/pages/game/torelease'
 import game from '@/pages/game/game'
 import gift from '@/pages/gift/gift'
 
@@ -71,11 +74,7 @@ export default new Router({
         
       ],
     },
-    {
-      path: '/freleased', 
-      name: 'freleased',
-      component: released,
-    },
+
     {
       path: '/post', 
       name: 'post',
@@ -87,6 +86,11 @@ export default new Router({
       component: detail,
     },
     {
+      path: '/freleased', 
+      name: 'freleased',
+      component: freleased,
+    },
+    {
       path: '/finvolved', 
       name: 'finvolved',
       component: finvolved,
@@ -96,6 +100,22 @@ export default new Router({
       name: 'ftorelease',
       component: ftorelease,
     },
+    {
+      path: '/greleased', 
+      name: 'greleased',
+      component: greleased,
+    },
+    {
+      path: '/ginvolved', 
+      name: 'ginvolved',
+      component: ginvolved,
+    },
+    {
+      path: '/gtorelease', 
+      name: 'gtorelease',
+      component: gtorelease,
+    },
+    
     {
       path: '/main',
       name: 'main',

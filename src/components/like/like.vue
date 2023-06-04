@@ -18,14 +18,13 @@ export default {
   data() {
     return {
       friendlikes: [],
-      active2: false,
+      active2: this.ilike?true:false,
       count: 0,
       user: JSON.parse(localStorage.getItem("user")),
     }
   },
   mounted() {
     this.friendlike(this.likeid)
-    this.mylike()
   },
   destroyed() {
   },
@@ -44,9 +43,6 @@ export default {
         console.log(error);
       });
     },
-    mylike() {
-      this.ilike?this.active2=true:this.active2=false;
-    }
   },
   watch: {
     active2: function (newVal) {
@@ -70,7 +66,6 @@ export default {
         });
       }
       newVal ? this.count++ : this.count--;
-
     }
   },
   props: {

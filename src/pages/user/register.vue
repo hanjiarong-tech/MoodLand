@@ -14,7 +14,7 @@
       </label>
       <label for>
         <!-- <span>电话</span> -->
-        <input type="number" v-model="user.id" placeholder="手机号码" />
+        <input type="number" v-model="user.user_id" placeholder="手机号码" />
       </label>
       <label for>
         <!-- <span>密码</span> -->
@@ -53,7 +53,8 @@ export default {
       user: {
         name: "",
         password: "",
-        id:null,
+        user_id:null,
+        avatar:"../../../static/img/avatardefault.png"
       },
       nextpassword: ""
     };
@@ -61,7 +62,7 @@ export default {
   methods: {
     regusterUser() {
       var self = this
-      if (this.user.name == "" || this.user.password == "" || this.user.id == null) {
+      if (this.user.name == "" || this.user.password == "" || this.user.user_id == null) {
         Toast({
           message: "输入内容不能为空",
           duration: 950
@@ -82,11 +83,11 @@ export default {
           }
         }
         var md5pwd1 = this.$md5(this.user.password)
-        var md5pwd2 = this.$md5(md5pwd1+this.user.id)
+        var md5pwd2 = this.$md5(md5pwd1+this.user.user_id)
         console.log(typeof(this.user.id))
-        axios.post(process.env.VUE_APP_SERVER_URL+'/moodland/user/user/' + this.user.id,{
+        axios.post(process.env.VUE_APP_SERVER_URL+'/moodland/user/user/' + this.user.user_id,{
           password: md5pwd2,
-          id: this.user.id,
+          id: this.user.user_id,
           user_name:this.user.name,
         },config).then(function (response) {
               //成功时服务器返回 response 数据

@@ -88,7 +88,6 @@ export default {
       param.append('file', self.file)
       console.log("localStorage.getItem",localStorage.getItem("notice"))
       console.log('request')
-      
       axios.post('http://10.128.211.227:5000/predict', param).then(function (response) {
         //成功时服务器返回 response 数据
         console.log("1234", response.data)

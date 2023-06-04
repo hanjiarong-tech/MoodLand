@@ -9,18 +9,20 @@
       </div>
       <div class="comment-body">
         <div class="comment-box" v-for="item in comments">
-          <div class="comment-item" @click="sendMessage(item.comment_id, 0, item.commentator_id)">
-            <img class="user-pic"
-              :src="item.commentator_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + item.commentator_avatar"
-              alt="头像" />
-            <div class="item-info">
-              <div class="replay">
-                <p class="name">{{ item.commentator_name }}</p>
-                <p class="replay-des">{{ item.comment_text }}</p>
-                <p class="time">{{ item.comment_time }}</p>
+          <a>
+            <div class="comment-item" @click="sendMessage(item.comment_id, 0, item.commentator_id)">
+              <img class="user-pic"
+                :src="item.commentator_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + item.commentator_avatar"
+                alt="头像" />
+              <div class="item-info">
+                <div class="replay">
+                  <p class="name">{{ item.commentator_name }}</p>
+                  <p class="replay-des">{{ item.comment_text }}</p>
+                  <p class="time">{{ item.comment_time }}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
           <div v-for="reply in item.reply">
             <div class="sub-comment-item" @click="sendMessage(reply.comment_id, 1, item.commentator_id)">
               <img class="user-pic"
@@ -91,6 +93,7 @@ export default {
       this.reply_id = commentid;
       this.comment_type = commenttype;
       this.reviewed_id = commentatorid;
+      console.log("click")
     },
     currentTime() {
       var date = new Date();
@@ -126,18 +129,19 @@ export default {
       this.date = strDate;
       console.log("strDate", strDate);
     },
-
     send() {
       let self = this;
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}/${self.diaryid}/comment/${self.comment_id}`, {
-        comment_id: self.comment_id,
-        comment_text: self.content,
-        comment_time: self.date,
-        comment_type: self.comment_type,
-        commentator_id: self.user.user_id,
-        diary_id: self.diaryid,
-        reply_id: self.reply_id,
-        reviewed_id: self.reviewed_id
+        "comment": {
+          comment_id: self.comment_id,
+          comment_text: self.content,
+          comment_time: self.date,
+          comment_type: self.comment_type,
+          commentator_id: self.user.user_id,
+          diary_id: self.diaryid,
+          reply_id: self.reply_id,
+          reviewed_id: self.reviewed_id
+        }
       }).then(function (response) {
         //成功时服务器返回 response 数据
         this.reply_id = '';
@@ -162,7 +166,7 @@ export default {
   width: 100%;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  z-index: 99999;
+  z-index: 999;
   background-color: white;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -206,6 +210,16 @@ export default {
 
     .comment-item {
       display: flex;
+      cursor: pointer;
+      width: 100%
+    }
+
+    .comment-item:active {
+      background: #eef0f4;
+    }
+
+    .sub-comment-item:active {
+      background: #eef0f4;
     }
 
     .sub-comment-item {
@@ -308,5 +322,4 @@ export default {
 
   }
 
-}
-</style>
+}</style>
