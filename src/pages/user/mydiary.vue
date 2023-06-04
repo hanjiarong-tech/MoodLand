@@ -66,35 +66,35 @@ export default {
         
       ],
       timeValue: [
-        { date: "2023-03-26", count: 21 },
-        { date: "2023-03-27", count: 22 },
-        { date: "2023-03-28", count: 23 },
-        { date: "2023-03-31", count: 24 },
-        { date: "2023-04-03", count: 25 },
-        { date: "2023-04-04", count: 26 },
-        { date: "2023-04-07", count: 27 },
-        { date: "2023-04-10", count: 28 },
-        { date: "2023-04-11", count: 0 },
-        { date: "2023-04-14", count: 1 },
-        { date: "2023-04-17", count: 2 },
-        { date: "2023-04-18", count: 3 },
-        { date: "2023-04-21", count: 4 },
-        { date: "2023-04-24", count: 5 },
-        { date: "2023-04-25", count: 6 },
-        { date: "2023-04-28", count: 7 },
-        { date: "2023-05-01", count: 8 },
-        { date: "2023-05-02", count: 9 },
-        { date: "2023-05-05", count: 10 },
-        { date: "2023-05-08", count: 11 },
-        { date: "2023-05-09", count: 12 },
-        { date: "2023-05-12", count: 13 },
-        { date: "2023-05-15", count: 14 },
-        { date: "2023-05-16", count: 15 },
-        { date: "2023-05-17", count: 16 },
-        { date: "2023-05-18", count: 17 },
-        { date: "2023-05-19", count: 18 },
-        { date: "2023-05-20", count: 19 },
-        { date: "2023-05-21", count: 20 },
+        // { date: "2023-03-26", count: 21 },
+        // { date: "2023-03-27", count: 22 },
+        // { date: "2023-03-28", count: 23 },
+        // { date: "2023-03-31", count: 24 },
+        // { date: "2023-04-03", count: 25 },
+        // { date: "2023-04-04", count: 26 },
+        // { date: "2023-04-07", count: 27 },
+        // { date: "2023-04-10", count: 28 },
+        // { date: "2023-04-11", count: 0 },
+        // { date: "2023-04-14", count: 1 },
+        // { date: "2023-04-17", count: 2 },
+        // { date: "2023-04-18", count: 3 },
+        // { date: "2023-04-21", count: 4 },
+        // { date: "2023-04-24", count: 5 },
+        // { date: "2023-04-25", count: 6 },
+        // { date: "2023-04-28", count: 7 },
+        // { date: "2023-05-01", count: 8 },
+        // { date: "2023-05-02", count: 9 },
+        // { date: "2023-05-05", count: 10 },
+        // { date: "2023-05-08", count: 11 },
+        // { date: "2023-05-09", count: 12 },
+        // { date: "2023-05-12", count: 13 },
+        // { date: "2023-05-15", count: 14 },
+        // { date: "2023-05-16", count: 15 },
+        // { date: "2023-05-17", count: 16 },
+        // { date: "2023-05-18", count: 17 },
+        // { date: "2023-05-19", count: 18 },
+        // { date: "2023-05-20", count: 19 },
+        // { date: "2023-05-21", count: 20 },
       ],
       headerLeftStatus: false,
       commentData: [],
@@ -196,7 +196,7 @@ export default {
       let user_id = JSON.parse(localStorage.getItem('user')).user_id;
       console.log(user_id);
       self.serverUrl = process.env.VUE_APP_SERVER_URL;
-      axios.get(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + 123456 + '/my', config).then(function (response) {
+      axios.get(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + self.user.user_id + '/my', config).then(function (response) {
         //成功时服务器返回 response 数据
         self.mydiarys = response.data;
         console.log("resmydiarys ", self.mydiarys);
@@ -242,14 +242,43 @@ export default {
       this.showComment = param1;
     },
 
+    searchMoodData() {
+      let self = this;
+      axios.get(process.env.VUE_APP_SERVER_URL+`/moodland/diary/${self.user.user_id}/mood`).then(function (response) {
+        //成功时服务器返回 response 数据
+        var res = response.data
+        console.log(res)
+        self.timeValue =[]
+        for(var i =0;i<res.length;i++) {
+          var item = res[i]
+          var timev = {}
+          timev.date=item.post_time.split(" ")[0]
+          var add = Math.floor(item.emotion_strength/20)-2
+          if(add<0){
+            add = 0
+          }
+          timev.count = item.emotion * 4 + add + 1
+          timev.diary_id = item.diary_id
+          self.timeValue.push(timev)
+        }
+        console.log(self.timeValue)
+        // console.log("localStorage",localStorage.getItem("user"))
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    
+
     jumpToOthers(link) {
       router.push(link);
     }
     
   },
   mounted: function () {
-    this.myDiary();
+    
     this.searchInfoData();
+    this.myDiary();
+    this.searchMoodData();
   },
   watch: {
     '$route':'searchInfoData'
