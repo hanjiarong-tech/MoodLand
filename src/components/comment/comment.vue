@@ -9,7 +9,7 @@
       </div>
       <div class="comment-body">
         <div class="comment-box" v-for="item in comments">
-          <div class="comment-item" @click="sendMessage(item.diary_id, item.comment_id,0)">
+          <div class="comment-item" @click="sendMessage(item.comment_id, 0, item.commentator_id)">
             <img class="user-pic"
               :src="item.commentator_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + item.commentator_avatar"
               alt="头像" />
@@ -22,7 +22,7 @@
             </div>
           </div>
           <div v-for="reply in item.reply">
-            <div class="sub-comment-item" @click="sendMessage(reply.diary_id, reply.comment_id,1)">
+            <div class="sub-comment-item" @click="sendMessage(reply.comment_id, 1, item.commentator_id)">
               <img class="user-pic"
                 :src="reply.reviewed_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + reply.reviewed_avatar"
                 alt="头像" />
@@ -49,19 +49,19 @@
 <script>
 import * as CommentData from '@/api/mockdata';
 import router from '../../router';
-import { send } from 'process';
+import axios from "axios";
+// import { send } from 'process';
 export default {
   name: "comment",
   data() {
     return {
       serverUrl: process.env.VUE_APP_SERVER_URL,
-      diary_id: "",
       comment_id: '',
-      comment_type:0,
+      comment_type: 0,
       content: '',
-      reply_id:'',
-      reviewed_id:'',
-      data:'',
+      reply_id: '',
+      reviewed_id: '',
+      data: '',
       user: JSON.parse(localStorage.getItem("user")),
     };
   },
@@ -76,6 +76,9 @@ export default {
     showComment: {
       required: true
 
+    },
+    diaryid: {
+      required: true
     }
 
   },
@@ -84,10 +87,10 @@ export default {
     close() {
       this.$emit('change', false);
     },
-    sendMessage(diaryid, commentid,commenttype) {
-      this.diary_id = diaryid;
-      this.comment_id = commentid;
-      this.comment_type=commenttype;
+    sendMessage(commentid, commenttype, commentatorid) {
+      this.reply_id = commentid;
+      this.comment_type = commenttype;
+      this.reviewed_id = commentatorid;
     },
     currentTime() {
       var date = new Date();
@@ -126,19 +129,21 @@ export default {
 
     send() {
       let self = this;
-      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}/${self.diary_id}/comment/${self.comment_id}`, {
-        "comment_id": self.comment_id,
-        "comment_text": self.content,
-        "comment_time": self.date,
-        "comment_type": self.comment_type,
-        "commentator_id": self.user.user_id,
-        "diary_id": self.diary_id,
-        // "reply_id": ?
-        // "reviewed_id": ?
+      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}/${self.diaryid}/comment/${self.comment_id}`, {
+        comment_id: self.comment_id,
+        comment_text: self.content,
+        comment_time: self.date,
+        comment_type: self.comment_type,
+        commentator_id: self.user.user_id,
+        diary_id: self.diaryid,
+        reply_id: self.reply_id,
+        reviewed_id: self.reviewed_id
       }).then(function (response) {
         //成功时服务器返回 response 数据
-
-
+        this.reply_id = '';
+        this.comment_type = 0;
+        this.reviewed_id = '';
+        this.$emit('update');
       }).catch(function (error) {
         console.log(error);
       });

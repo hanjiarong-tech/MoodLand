@@ -51,7 +51,6 @@ export default {
   watch: {
     active2: function (newVal) {
       if (newVal) {
-        this.count++;
         let self = this;
         console.log(this.likeid)
         axios.post(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + this.user.user_id + '/' + this.likeid + '/like').then(function (response) {
@@ -61,7 +60,6 @@ export default {
           console.log(error);
         });
       } else {
-        this.count--;
         let self = this;
         console.log(this.likeid)
         axios.delete(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + this.user.user_id + '/' + this.likeid + '/like').then(function (response) {
