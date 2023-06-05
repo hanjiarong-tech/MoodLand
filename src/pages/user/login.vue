@@ -6,11 +6,9 @@
     </div>
     <div class="register-2">
       <label>
-        <!-- <span>账号</span> -->
         <input type="text" v-model="user.user_id" placeholder="请输入手机号">
       </label>
       <label>
-        <!-- <span>密码</span> -->
         <input type="password" v-model="user.password" placeholder="请输入密码">
       </label>
     </div>

@@ -15,7 +15,27 @@
           <van-switch :value="checked" @input="onInput" />
         </template>
       </van-cell>
-      <van-cell @click="passshow = true" title="修改密码" :value="passvalue" is-link />
+      <van-cell @click="showPwd = true" title="修改密码" :value="passvalue" is-link />
+      <!-- 修改密码弹出层 -->
+      <van-popup round v-model="showPwd" :style="{ width: '90%' }">
+        <div>
+          <div class="register-2">
+            <label for>
+              <input type="password" v-model="password" placeholder="输入原密码" />
+            </label>
+            <label for>
+              <input type="password" v-model="nextpassword" placeholder="输入新密码" />
+            </label>
+            <label for>
+              <input type="password" v-model="nextpassword1" placeholder="确认新密码" />
+            </label>
+          </div>
+          <div class="register-3">
+            <input type="button" class="btn" @click="confirmPwd" value="确认修改" />
+          </div>
+        </div>
+      </van-popup>
+
       <!-- 修改性别弹出层 -->
       <van-popup v-model:show="showPicker" round position="bottom">
         <van-picker show-toolbar :columns="columns" @cancel="showPicker = false" @confirm="saveGender" />
@@ -47,6 +67,7 @@
 
 <script>
 import { ImagePreview } from 'vant';
+import { Toast } from "mint-ui";
 import header from '@/components/header/index'
 import footer from '@/components/footer/index'
 import filePopup from '@/components/filePopup/filePopup'
@@ -63,12 +84,15 @@ export default {
       gendervalue: 2,
       showPicker: false,
       passvalue: "",
+      showPwd: false,
       columns: ['男', '女', '无性别'],
       user: JSON.parse(localStorage.getItem("user")),
+      password: "",
+      nextpassword1: "",
+      nextpassword: "",
     };
   },
   mounted() {
-
     this.searchInfoData()
   },
   methods: {
@@ -105,6 +129,33 @@ export default {
 
       });
     },
+    // 修改密码
+    confirmPwd() {
+      if (!this.password || !this.nextpassword || !this.nextpassword1) {
+        Toast({
+          message: "输入内容不能为空",
+          duration: 950,
+          position: 'bottom',
+          className: "toastIndex"
+        });
+        return false;
+      } else if (this.nextpassword !== this.nextpassword1) {
+        Toast({
+          message: "新密码两次输入不一致",
+          duration: 950,
+          position: 'bottom',
+          className: "toastIndex"
+        });
+      } else {
+        // 修改密码接口
+        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/password/actions/modify/`, {
+        
+        }).then(function (response) {
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
+    },
     // 修改头像
     openFile() {
       this.$refs.inputFileRef.click()
@@ -139,10 +190,10 @@ export default {
         axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/avatar/action/upload`, fd).then(function (response) {
           //成功时服务器返回 response 数据
           console.log(window.URL.createObjectURL(path))
-          self.avatar= window.URL.createObjectURL(path)
-          self.user.avatar=window.URL.createObjectURL(path)
+          self.avatar = window.URL.createObjectURL(path)
+          self.user.avatar = window.URL.createObjectURL(path)
           console.log(self.user.avatar)
-          localStorage.setItem("user",self.user)
+          localStorage.setItem("user", self.user)
         }).catch(function (error) {
         });
       })
@@ -208,7 +259,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .content {
   top: auto;
   position: relative;
@@ -229,6 +280,59 @@ export default {
   justify-content: space-around;
   width: 100%;
   height: 14vh;
+}
+
+.register-2 {
+  margin: 0.6rem 0.8rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.register-2 label {
+  width: 7.5rem;
+  font-size: 0.4rem;
+  line-height: 1.1rem;
+  margin-bottom: 0.6rem;
+  border-radius: 0.2rem;
+}
+
+
+
+.register-2 label span {
+  width: 20%;
+  font-size: 0.5rem;
+  line-height: 1.5rem;
+  display: block;
+  float: left;
+}
+
+.register-2 label input {
+  width: 100%;
+  font-size: 0.4rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.2rem;
+  background: rgb(248, 248, 248);
+}
+
+.register-3 {
+  display: flex;
+  margin-top: 0.3rem;
+}
+
+.btn {
+  width: 3.5rem;
+  height: 1.1rem;
+  margin: 0 auto;
+  /* margin-top: 0.72rem; */
+  margin-bottom: 0.3rem;
+  text-align: center;
+  line-height: 1.1rem;
+  font-size: 0.45rem;
+  color: #fff;
+  border-radius: 0.2rem;
+  background-color: var(--mydarkblue);
+  /* background-image: linear-gradient(90deg, #418eff, #4566ff); */
 }
 </style>
 

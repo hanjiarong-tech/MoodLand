@@ -22,6 +22,9 @@ export default {
  @import './fon/iconfont.css';
  @import 'https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css';
  @import 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.css';
+ .toastIndex{
+  z-index: 100000;
+}
 body{
   background:linear-gradient(to bottom, #70e1f570  0%, rgb(248,249,237)  40%,#fcf5ea70  70%);
   background-attachment: fixed;

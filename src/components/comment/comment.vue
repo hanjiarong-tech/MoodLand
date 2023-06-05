@@ -9,20 +9,18 @@
       </div>
       <div class="comment-body">
         <div class="comment-box" v-for="item in comments">
-          <a>
-            <div class="comment-item" @click="sendMessage(item.comment_id, 0, item.commentator_id)">
-              <img class="user-pic"
-                :src="item.commentator_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + item.commentator_avatar"
-                alt="头像" />
-              <div class="item-info">
-                <div class="replay">
-                  <p class="name">{{ item.commentator_name }}</p>
-                  <p class="replay-des">{{ item.comment_text }}</p>
-                  <p class="time">{{ item.comment_time }}</p>
-                </div>
+          <div class="comment-item" @click="sendMessage(item.comment_id, 0, item.commentator_id)">
+            <img class="user-pic"
+              :src="item.commentator_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + item.commentator_avatar"
+              alt="头像" />
+            <div class="item-info">
+              <div class="replay">
+                <p class="name">{{ item.commentator_name }}</p>
+                <p class="replay-des">{{ item.comment_text }}</p>
+                <p class="time">{{ item.comment_time }}</p>
               </div>
             </div>
-          </a>
+          </div>
           <div v-for="reply in item.reply">
             <div class="sub-comment-item" @click="sendMessage(reply.comment_id, 1, item.commentator_id)">
               <img class="user-pic"
@@ -58,12 +56,12 @@ export default {
   data() {
     return {
       serverUrl: process.env.VUE_APP_SERVER_URL,
-      comment_id: '',
+      comment_id: null,
       comment_type: 0,
       content: '',
-      reply_id: '',
-      reviewed_id: '',
-      data: '',
+      reply_id: null,
+      reviewed_id: null,
+      date: '',
       user: JSON.parse(localStorage.getItem("user")),
     };
   },
@@ -131,15 +129,19 @@ export default {
     },
     send() {
       let self = this;
-      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}/${self.diaryid}/comment/${self.comment_id}`, {
+      self.currentTime();
+      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}/${self.diaryid}/comment/${self.reply_id}`, {
         "comment": {
+          // 当前评论id，为null
           comment_id: self.comment_id,
           comment_text: self.content,
           comment_time: self.date,
           comment_type: self.comment_type,
           commentator_id: self.user.user_id,
           diary_id: self.diaryid,
+          // 回复的评论的id 可以为null
           reply_id: self.reply_id,
+          // 回复的评论者的id 可以为null
           reviewed_id: self.reviewed_id
         }
       }).then(function (response) {
@@ -322,4 +324,5 @@ export default {
 
   }
 
-}</style>
+}
+</style>
