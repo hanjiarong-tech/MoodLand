@@ -35,13 +35,12 @@
           </div>
         </div>
       </van-popup>
-
       <!-- 修改性别弹出层 -->
       <van-popup v-model:show="showPicker" round position="bottom">
         <van-picker show-toolbar :columns="columns" @cancel="showPicker = false" @confirm="saveGender" />
       </van-popup>
       <!-- 修改用户昵称弹出层 -->
-      <van-popup v-model="nameshow" position="bottom" :style="{ height: '8%' }">
+      <van-popup v-model="nameshow" position="bottom" :style="{ height: '30%' }">
         <van-field v-model="namevalue" center clearable label="用户名" placeholder="请输入用户名">
           <template #button>
             <van-button size="small" @click="saveName()" type="primary">保存</van-button> </template>
@@ -131,6 +130,7 @@ export default {
     },
     // 修改密码
     confirmPwd() {
+      let self=this;
       if (!this.password || !this.nextpassword || !this.nextpassword1) {
         Toast({
           message: "输入内容不能为空",
@@ -148,9 +148,22 @@ export default {
         });
       } else {
         // 修改密码接口
-        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/password/actions/modify/`, {
-        
+        var md5pwd1 = this.$md5(self.password)
+        var md5pwd2 = this.$md5(md5pwd1+self.user.user_id)
+        var md5pwd3 = this.$md5(self.nextpassword)
+        var md5pwd4 = this.$md5(md5pwd3+self.user.user_id)
+        axios.put(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/password/action/modify`, {
+        old_pwd:md5pwd2,
+        new_pwd:md5pwd4
         }).then(function (response) {
+          // self.showPwd=false
+          Toast({
+          message: response.data.msg,
+          duration: 950,
+          position: 'bottom',
+          className: "toastIndex"
+        });
+          console.log(response.data)
         }).catch(function (error) {
           console.log(error);
         });
@@ -183,17 +196,28 @@ export default {
         // 得到图片
         const path = this.$refs.inputFileRef.files[0]
         // 发送图片对象
-        const fd = new FormData()
-        fd.append('file', path)
         let self = this;
+        const fd = new FormData()
+        const lastavatar=self.user.avatar
+        const lastavatar2=lastavatar.split('/')[lastavatar.split('/').length-1]
+        console.log("avatar/"+lastavatar2)
+        if(lastavatar=="../../../static/img/avatardefault.png"){
+          fd.append('last_url',"",)
+        }else{
+          fd.append('last_url',"avatar/"+lastavatar2)
+        }
+        fd.append('file', path)
         console.log(123);
-        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/avatar/action/upload`, fd).then(function (response) {
+        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/avatar/action/upload`, fd)
+        .then(function (response) {
           //成功时服务器返回 response 数据
+          console.log("info",response.data.info)
           console.log(window.URL.createObjectURL(path))
           self.avatar = window.URL.createObjectURL(path)
-          self.user.avatar = window.URL.createObjectURL(path)
+          searchInfoData()
+          // self.user.avatar = window.URL.createObjectURL(path)
           console.log(self.user.avatar)
-          localStorage.setItem("user", self.user)
+          // localStorage.setItem("user", self.user)
         }).catch(function (error) {
         });
       })
@@ -217,7 +241,7 @@ export default {
     },
     saveName() {
       let self = this
-      axios.put(process.env.VUE_APP_SERVER_URL + `/user/user/${self.user.user_id}/name/actions/modify`, {
+      axios.put(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/name/actions/modify`, {
         name: self.namevalue
       }).then(function (response) {
         //成功时服务器返回 response 数据

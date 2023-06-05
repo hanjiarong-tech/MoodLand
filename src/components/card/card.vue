@@ -32,6 +32,7 @@
           </div>
           
           <div class="comment">
+            <!-- 点赞 -->
             <like :likeid="list.diary_id" :ilike="list.has_like" @change="likeAmount"></like>
             <div class="like_count" @click="thisCommentData(list.diary_id)" >
               <!-- 评论 -->
@@ -42,9 +43,6 @@
                   fill="#3D3D3D" p-id="5640"></path>
               </svg>
             </div>
-            
-            <!-- 点赞 -->
-          
           </div>
         </div>
       </div>
@@ -104,6 +102,7 @@ export default {
         //成功时服务器返回 response 数据
         self.commentData = response.data;
         console.log("res ", self.commentData);
+        
       }).catch(function (error) {
         console.log(error);
       });
@@ -220,6 +219,7 @@ export default {
     flex-direction: row-reverse;
 
     .like_count {
+      margin-top: 7px;
       display: flex;
       width: 1.1rem;
       justify-content: space-between;

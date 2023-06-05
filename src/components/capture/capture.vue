@@ -46,7 +46,7 @@ export default {
     }
   },
   mounted() {
-    this.$toast("开始调用");
+    // this.$toast("开始调用");
     this.getCompetence()
   },
   destroyed() {

@@ -9,7 +9,7 @@
       </div>
       <div class="comment-body">
         <div class="comment-box" v-for="item in comments">
-          <div class="comment-item" @click="sendMessage(item.comment_id, 0, item.commentator_id)">
+          <div class="comment-item" @click="sendMessage(item.comment_id, 0, item.commentator_id,item.commentator_name)">
             <img class="user-pic"
               :src="item.commentator_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + item.commentator_avatar"
               alt="头像" />
@@ -17,12 +17,13 @@
               <div class="replay">
                 <p class="name">{{ item.commentator_name }}</p>
                 <p class="replay-des">{{ item.comment_text }}</p>
-                <p class="time">{{ item.comment_time }}</p>
+                <span class="time">{{ item.comment_time }}</span>
+                <span v-if="item.commentator_id ===user.user_id" @click="deleteComment(item.comment_id)" class="time">删除</span>
               </div>
             </div>
           </div>
           <div v-for="reply in item.reply">
-            <div class="sub-comment-item" @click="sendMessage(reply.comment_id, 1, item.commentator_id)">
+            <div class="sub-comment-item" @click="sendMessage(reply.comment_id, 1, reply.commentator_id,reply.commentator_name)">
               <img class="user-pic"
                 :src="reply.reviewed_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + reply.reviewed_avatar"
                 alt="头像" />
@@ -31,7 +32,8 @@
                   <span class="name">{{ reply.commentator_name }} 回复</span>
                   <span class="name">@{{ reply.reviewed_name }}：</span>
                   <p class="reply-content">{{ reply.comment_text }}</p>
-                  <p class="time">{{ reply.comment_time }}</p>
+                  <span class="time">{{ reply.comment_time }}</span>
+                  <span v-if="reply.commentator_id ===user.user_id" @click="deleteComment(reply.comment_id)" class="time">删除</span>
                 </div>
               </div>
             </div>
@@ -40,7 +42,7 @@
         </div>
       </div>
       <div class="reply-input" v-if="showComment">
-        <input v-model="content" type="text" placeholder="有爱评论，说点好听的~" />
+        <input v-model="content" type="text" :placeholder="placeholder" />
         <mt-button type="primary" size="small" @click="send()">发送</mt-button>
       </div>
     </div>
@@ -56,12 +58,13 @@ export default {
   data() {
     return {
       serverUrl: process.env.VUE_APP_SERVER_URL,
-      comment_id: null,
+      comment_id: "",
       comment_type: 0,
       content: '',
-      reply_id: null,
-      reviewed_id: null,
+      reply_id: "",
+      reviewed_id: "",
       date: '',
+      placeholder:"输入评论",
       user: JSON.parse(localStorage.getItem("user")),
     };
   },
@@ -87,17 +90,18 @@ export default {
     close() {
       this.$emit('change', false);
     },
-    sendMessage(commentid, commenttype, commentatorid) {
+    sendMessage(commentid, commenttype, commentatorid,commentatorname) {
       this.reply_id = commentid;
       this.comment_type = commenttype;
       this.reviewed_id = commentatorid;
-      console.log("click")
+      this.placeholder="回复"+commentatorname+":"
+      console.log(commentatorname)
+      console.log("click");
     },
     currentTime() {
       var date = new Date();
       var year = date.getFullYear(); //月份从0~11，所以加一
       let month = date.getMonth();
-      console.log("month", month);
       var dateArr = [
         date.getMonth() + 1,
         date.getDate(),
@@ -125,11 +129,27 @@ export default {
         dateArr[4];
       //此处可以拿外部的变量接收，也可直接返回  strDate:2022-05-01 13:25:30
       this.date = strDate;
-      console.log("strDate", strDate);
+    },
+    deleteComment(id){
+      let self=this;
+      axios.delete(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}/${self.diaryid}/comment/${id}`)
+      .then(function (response) {
+        self.$emit('update');
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
     send() {
       let self = this;
       self.currentTime();
+      console.log("self.comment_id",self.comment_id)
+      console.log("self.comment_text",self.content)
+      console.log("self.comment_time",self.date)
+      console.log("comment_type",self.comment_type)
+      console.log("commentator_id",self.user.user_id)
+      console.log("self.diary_id",self.diaryid)
+      console.log("self.reply_id",self.reply_id)
+      console.log("self.reviewed_id",self.reviewed_id)
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}/${self.diaryid}/comment/${self.reply_id}`, {
         "comment": {
           // 当前评论id，为null
@@ -146,10 +166,10 @@ export default {
         }
       }).then(function (response) {
         //成功时服务器返回 response 数据
-        this.reply_id = '';
-        this.comment_type = 0;
-        this.reviewed_id = '';
-        this.$emit('update');
+        self.reply_id = '';
+        self.comment_type = 0;
+        self.reviewed_id = '';
+        self.$emit('update');
       }).catch(function (error) {
         console.log(error);
       });

@@ -4,7 +4,7 @@ import router from './router'
 import store from './vuex/index'
 import VueLazyLoad from 'vue-lazyload'
 // import VueStar from 'vue-star'
-
+import { RadioGroup, Radio } from 'vant';
 import axios from 'axios';
 import Vant from 'vant';
 import 'vant/lib/index.css';
@@ -30,6 +30,8 @@ Vue.prototype.$md5 = md5;
 
 Vue.component('VueStarPlus', VueStarPlus)
 // Vue.component('VueStar', VueStar)
+Vue.use(Radio);
+Vue.use(RadioGroup);
 Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs,Divider,Tag,Uploader,Search)
 Vue.use(Popup,Toast)
 Vue.use(VueCalendarHeatmap)
@@ -51,6 +53,7 @@ Vue.prototype.$toast = Toast
 Vue.use(VueLazyLoad,{
   loading:require("../static/img/avatar.jpg")
 })
+
 //引入UI组件
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
