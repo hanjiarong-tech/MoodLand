@@ -13,7 +13,7 @@
         </div>
         <div class="bj-right">
           <p class="title">{{ list2.friend_name }}</p>
-          <van-tag color="var(--light-yellow)" text-color="orange" round type="primary" size="large">{{
+          <van-tag color="var(--light-yellow)" text-color="orange" round type="primary" size="large">亲密度：{{
             list2.intimacy }}</van-tag>
           <!-- <p style="color:var(--deep-gray)">{{ list2.describe }}</p> -->
         </div>
