@@ -89,8 +89,7 @@ export default {
       let param = new FormData()
       const config = {
       headers: {
-        'Content-type':  'multipart/form-data',
-        'processData':false,
+        'Content-Type':  'application/json'
       }
     }
       param.append('file', self.file)
