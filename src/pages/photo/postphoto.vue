@@ -88,14 +88,22 @@ export default {
       let param = new FormData()
       const config = {
       headers: {
-        'Content-type':  'multipart/form-data',
-        'processData':false,
+        'Content-Type':  'application/json'
       }
     }
       param.append('file', self.file)
       console.log("localStorage.getItem",localStorage.getItem("notice"))
       console.log('request')
-      axios.post('http://10.128.211.227:5000/predict', param,config).then(function (response) {
+      axios({
+        method: 'POST',
+        url:'http://10.128.211.227:5000/predict',
+        data:param,
+      //   async: false,
+      //   processData: false,
+      //   headers: {
+      //   'Content-Type':  false
+      // }
+      }).then(function (response) {
         //成功时服务器返回 response 数据
         console.log("1234", response.data)
         self.loading = false;
