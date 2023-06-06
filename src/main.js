@@ -23,6 +23,7 @@ import { showConfirmDialog } from 'vant';
 import { Field,Picker} from 'vant';
 import { Badge } from 'vant';
 import { ImagePreview} from 'vant';
+import { Skeleton } from 'vant';
 import VueStarPlus from 'vue-star-plus' // same with vue3 version
 import 'vue-star-plus/lib/style.css'  // same with vue3 version
 import md5 from 'js-md5';
@@ -30,6 +31,7 @@ Vue.prototype.$md5 = md5;
 
 Vue.component('VueStarPlus', VueStarPlus)
 // Vue.component('VueStar', VueStar)
+Vue.use(Skeleton);
 Vue.use(Radio);
 Vue.use(RadioGroup);
 Vue.use(Field,ImagePreview,Picker,Badge,Tab,Tabs,Divider,Tag,Uploader,Search)
