@@ -22,7 +22,7 @@
           <van-switch @click="checknotice()" v-model="switchChecked" size="20" />
         </template>
       </van-field>
-      <van-button :loading="loading"  @click="release()" type="primary" block style="position: fixed;bottom: 0px;"
+      <van-button :loading="loading" @click="release()" type="primary" block style="position: fixed;bottom: 0px;"
         color=var(--mydarkblue)>发布</van-button>
     </div>
   </div>
@@ -39,10 +39,10 @@ export default {
   name: "postphoto",
   data() {
     return {
-      loading:true,
+      loading: true,
       chartColumn: null,
-      checked:true,
-      switchChecked: localStorage.getItem("notice")=='true',
+      checked: true,
+      switchChecked: localStorage.getItem("notice") == 'true',
       clearable: true,
       message: '',
       emotion: 3,
@@ -52,7 +52,7 @@ export default {
       user: JSON.parse(localStorage.getItem("user")),
       headerLeftStatus: false,
       file: this.$route.query.file,
-      data:this.$route.query.data,
+      data: this.$route.query.data,
       date: "",
     };
   },
@@ -69,33 +69,36 @@ export default {
       const fd = new FormData()
       fd.append("pictrue", self.file)
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, {
-        "diary":{content:self.message,
-        emotion:self.emotion,
-        emotion_strength:self.emotion_strength,
-        picture:"",
-        post_time:self.date,
-        user_id:123}
+        "diary": {
+          content: self.message,
+          emotion: self.emotion,
+          emotion_strength: self.emotion_strength,
+          picture: "",
+          post_time: self.date,
+          user_id: 123
+        }
       }).then(function (response) {
         console.log("-------", response)
       }).catch(function (error) {
         console.log(error);
       });
     },
-    checknotice(){
+    checknotice() {
       console.log(this.switchChecked)
     },
     searchMoodData() {
       let self = this;
       let param = new FormData()
-      const config = {
-      headers: {
-        'Content-Type':  'application/json'
-      }
-    }
+      //   const config = {
+      //   headers: {
+      //     'Content-Type':  'application/json'
+      //   }
+      // }
+      console.log(self.data)
       param.append('file', self.file)
-      console.log("localStorage.getItem",localStorage.getItem("notice"))
+      console.log("localStorage.getItem", localStorage.getItem("notice"))
       console.log('request')
-      axios.post('http://10.128.211.227:5000/predict', self.data,config).then(function (response) {
+      axios.post('http://10.128.211.227:5000/predict', self.data).then(function (response) {
         //成功时服务器返回 response 数据
         console.log("1234", response.data)
         self.loading = false;
@@ -151,7 +154,7 @@ export default {
     },
 
   },
-  mounted(){
+  mounted() {
     this.searchMoodData();
   },
 

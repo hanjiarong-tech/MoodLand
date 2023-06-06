@@ -120,7 +120,7 @@ export default {
       const name = time + '.png'
       const conversions = this.base64ToFile(file, name)
       const data = new FormData()
-      data.append('file', conversions)
+      data.append("file", conversions)
       this.data=data;
       this.fileUrl = image
       this.complete_photo = true;
