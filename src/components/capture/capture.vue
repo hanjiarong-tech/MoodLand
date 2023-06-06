@@ -43,6 +43,7 @@ export default {
       shareRange: false,
       complete_photo:false,
       fileUrl:null,
+      data:"",
     }
   },
   mounted() {
@@ -120,6 +121,7 @@ export default {
       const conversions = this.base64ToFile(file, name)
       const data = new FormData()
       data.append('file', conversions)
+      this.data=data;
       this.fileUrl = image
       this.complete_photo = true;
       // uploadImg(data).then(res => {
@@ -163,8 +165,7 @@ export default {
     },
     // 发布内容
     aDiary() {
-      router.push({name:"postphoto",query: {file: this.fileUrl}});
-      
+      router.push({name:"postphoto",query: {file: this.fileUrl,data:this.data}});
     },
     // 分享范围
     share() {
