@@ -143,17 +143,8 @@ export default {
     },
 
   },
-  mounted: function () {
-    //使用h5的读取文件api
-    // var reader = new FileReader();
-    //     reader.readAsDataURL(this.file);
-    //     //读取完成后触发
-    //     reader.onload = function () {
-    //     //改变img的路径
-    //         document.querySelector("van-image").src = this.result;
-    //     };
+  mounted(){
     this.searchMoodData();
-
   },
 
   watch: {

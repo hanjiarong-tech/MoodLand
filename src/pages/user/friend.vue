@@ -20,7 +20,7 @@
         <div class="bj-action">
           <van-button icon="point-gift" type="primary"
             style="font-size: 1.2em;background-color: transparent;color: #ff8917;border: 0;"
-            @click="sendGift(list2.friend_id,list2.intimacy)" />
+            @click="sendGift(list2.friend_id, list2.intimacy)" />
         </div>
       </div>
 
@@ -52,12 +52,16 @@
         <div class="register-2">
           <van-grid :column-num="3">
             <van-grid-item v-for="gift in giftlist">
-              <div class="div2" :style="intimacy<gift.min_intimacy ? 'background: #000000;pointer-events:none;': ''" @click="setInfo(gift)">
+              <van-badge :content="gift.min_intimacy" max="99" color="orange">
+              <div class="div2" :style="intimacy < gift.min_intimacy ? 'opacity:0.5;pointer-events:none;' : ''"
+                @click="setInfo(gift)">
                 <van-image :src="serverUrl + '/moodland/' + gift.gift_picture" />
                 <p>{{ gift.gift_name }}</p>
               </div>
+              </van-badge>
             </van-grid-item>
           </van-grid>
+            <input v-model="advice" type="text"/>
         </div>
         <div class="register-3">
           <input type="button" class="btn" @click="give()" value="确认赠送" />
@@ -79,10 +83,10 @@ export default {
       user: JSON.parse(localStorage.getItem("user")),
       searchId: null,
       giftlist: [],
-      intimacy:0,
+      intimacy: 0,
       friedid: null,
       giftInfo: {},
-      date:"",
+      date: "",
       // giftInfo: {
       //   gift_id: null,
       //   gift_name: "",
@@ -135,8 +139,8 @@ export default {
         console.log(error);
       });
     },
-    setInfo(Info){
-      self.giftInfo=Info;
+    setInfo(Info) {
+      self.giftInfo = Info;
     },
     // 获取当前时间
     currentTime() {
@@ -172,10 +176,10 @@ export default {
       this.date = strDate;
     },
     // 获取礼物列表
-    sendGift(friend_id,intimacy) {
+    sendGift(friend_id, intimacy) {
       let self = this;
       self.showGift = true;
-      self.intimacy=intimacy;
+      self.intimacy = intimacy;
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/gift/type`).then(function (response) {
         self.giftlist = response.data;
         console.log(self.giftlist)
@@ -189,16 +193,16 @@ export default {
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/gift/${self.user.user_id}/send`, {
         "socialGift": {
           advice: self.advice,
-          giftInfo:self.giftInfo,
-          gift_id:self.giftInfo.gift_id,
-          gift_num:1,
-          giver_id:self.user.user_id,
-          recipient_id:self.friedid,
-          send_id:'',
-          send_time:self.date
+          giftInfo: self.giftInfo,
+          gift_id: self.giftInfo.gift_id,
+          gift_num: 1,
+          giver_id: self.user.user_id,
+          recipient_id: self.friedid,
+          send_id: '',
+          send_time: self.date
         }
       }).then(function (response) {
-        self.showGift=false;
+        self.showGift = false;
       }).catch(function (error) {
         console.log(error);
       });
@@ -271,6 +275,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin:0.2rem;
 }
 
 .register-2 label {
@@ -289,6 +294,7 @@ export default {
 
 .register-2 .div2 :hover {
   background: #eef0f4;
+  border: #000000;
 }
 
 .register-2 p {
@@ -305,7 +311,7 @@ export default {
 
 .register-2 label input {
   width: 100%;
-  font-size: 0.4rem;
+  font-size: 0.2rem;
   padding: 0.1rem 0.3rem;
   border-radius: 0.2rem;
   background: rgb(248, 248, 248);
@@ -330,6 +336,29 @@ export default {
   background-color: var(--mydarkblue);
 
   /* background-image: linear-gradient(90deg, #418eff, #4566ff); */
+}
+
+.reply-input {
+  font-size: 13px;
+  width: 100%;
+  height: 50px;
+  border-top: 1px solid #d9d9d9;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  display: flex;
+  background-color: #fff;
+
+  input {
+    line-height: 40px;
+    width: 85%;
+    padding: 0 10px;
+  }
+
+  input:focus {
+    border: none;
+  }
 }
 
 .container {
