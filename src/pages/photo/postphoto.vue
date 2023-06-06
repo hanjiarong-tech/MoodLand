@@ -23,6 +23,7 @@
         </template>
       </van-field>
       <van-button :loading="loading" @click="release()" type="primary" block style="position: fixed;bottom: 0px;"
+      <van-button :loading="loading" @click="release()" type="primary" block style="position: fixed;bottom: 0px;"
         color=var(--mydarkblue)>发布</van-button>
     </div>
   </div>
@@ -42,6 +43,8 @@ export default {
       loading: true,
       input:null,
       chartColumn: null,
+      checked: true,
+      switchChecked: localStorage.getItem("notice") == 'true',
       checked: true,
       switchChecked: localStorage.getItem("notice") == 'true',
       clearable: true,
@@ -77,12 +80,21 @@ export default {
           post_time: self.date,
           user_id: 123
         }
+        "diary": {
+          content: self.message,
+          emotion: self.emotion,
+          emotion_strength: self.emotion_strength,
+          picture: "",
+          post_time: self.date,
+          user_id: 123
+        }
       }).then(function (response) {
         console.log("-------", response)
       }).catch(function (error) {
         console.log(error);
       });
     },
+    checknotice() {
     checknotice() {
       console.log(this.switchChecked)
     },
@@ -182,6 +194,7 @@ export default {
     },
 
   },
+  mounted() {
   mounted() {
     this.searchMoodData();
   },
