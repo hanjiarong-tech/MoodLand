@@ -22,7 +22,7 @@
           <van-switch @click="checknotice()" v-model="switchChecked" size="20" />
         </template>
       </van-field>
-      <van-button @click="release()" type="primary" block style="position: fixed;bottom: 0px;"
+      <van-button :loading="loading"  @click="release()" type="primary" block style="position: fixed;bottom: 0px;"
         color=var(--mydarkblue)>发布</van-button>
     </div>
   </div>
@@ -39,6 +39,7 @@ export default {
   name: "postphoto",
   data() {
     return {
+      loading:true,
       chartColumn: null,
       checked:true,
       switchChecked: localStorage.getItem("notice")=='true',
@@ -85,12 +86,19 @@ export default {
     searchMoodData() {
       let self = this;
       let param = new FormData()
+      const config = {
+      headers: {
+        'Content-type':  'multipart/form-data',
+        'processData':false,
+      }
+    }
       param.append('file', self.file)
       console.log("localStorage.getItem",localStorage.getItem("notice"))
       console.log('request')
-      axios.post('http://10.128.211.227:5000/predict', param).then(function (response) {
+      axios.post('http://10.128.211.227:5000/predict', param,config).then(function (response) {
         //成功时服务器返回 response 数据
         console.log("1234", response.data)
+        self.loading = false;
       }).catch(function (error) {
         console.log(error);
       });

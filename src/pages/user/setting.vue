@@ -58,8 +58,8 @@
 
     </div>
     <div class="down">
-      <van-button color="#ff1111" @click="logout" type="primary" block>退出登录</van-button>
-      <van-button color="#dd32dd" @click="logoff" type="primary" block>注销账户</van-button>
+      <van-button color="var(--mygreen)" @click="logout" type="primary" block style="margin-bottom: 0.5rem;">退出登录</van-button>
+      <van-button color="var(--mygreen)" @click="logoff" type="primary" block>注销账户</van-button>
     </div>
   </div>
 </template>
@@ -296,6 +296,7 @@ export default {
 }
 
 .down {
+  padding: 0.3rem;
   position: relative;
   top: 50px;
   display: flex;
@@ -303,18 +304,17 @@ export default {
   align-items: center;
   justify-content: space-around;
   width: 100%;
-  height: 14vh;
 }
 
 .register-2 {
-  margin: 0.6rem 0.8rem;
+  margin: 0.6rem 0.4rem 0;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
 .register-2 label {
-  width: 7.5rem;
+  width: 100%;
   font-size: 0.4rem;
   line-height: 1.1rem;
   margin-bottom: 0.6rem;
@@ -341,7 +341,7 @@ export default {
 
 .register-3 {
   display: flex;
-  margin-top: 0.3rem;
+  margin-bottom:0.5rem;
 }
 
 .btn {
