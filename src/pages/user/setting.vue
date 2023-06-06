@@ -195,6 +195,7 @@ export default {
       }).then(async () => {
         // 得到图片
         const path = this.$refs.inputFileRef.files[0]
+        console.log("sssssssssssssss",path)
         // 发送图片对象
         let self = this;
         const fd = new FormData()

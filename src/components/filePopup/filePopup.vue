@@ -55,7 +55,7 @@ export default {
         const path = this.$refs.inputFileRef.files[0]
         // 发送图片对象
         const fd = new FormData()
-        fd.append("file", path)
+        fd.append('file', path)
         let self = this;
         console.log(123);
         axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/avatar/action/upload`, fd).then(function (response) {

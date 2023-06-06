@@ -22,7 +22,7 @@
           <van-switch @click="checknotice()" v-model="switchChecked" size="20" />
         </template>
       </van-field>
-      <van-button :loading="loading"  @click="release()" type="primary" block style="position: fixed;bottom: 0px;"
+      <van-button :loading="loading" @click="release()" type="primary" block style="position: fixed;bottom: 0px;"
         color=var(--mydarkblue)>发布</van-button>
     </div>
   </div>
@@ -39,10 +39,11 @@ export default {
   name: "postphoto",
   data() {
     return {
-      loading:true,
+      loading: true,
+      input:null,
       chartColumn: null,
-      checked:true,
-      switchChecked: localStorage.getItem("notice")=='true',
+      checked: true,
+      switchChecked: localStorage.getItem("notice") == 'true',
       clearable: true,
       message: '',
       emotion: 3,
@@ -52,7 +53,6 @@ export default {
       user: JSON.parse(localStorage.getItem("user")),
       headerLeftStatus: false,
       file: this.$route.query.file,
-      data:this.$route.query.data,
       date: "",
     };
   },
@@ -69,33 +69,37 @@ export default {
       const fd = new FormData()
       fd.append("pictrue", self.file)
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, {
-        "diary":{content:self.message,
-        emotion:self.emotion,
-        emotion_strength:self.emotion_strength,
-        picture:"",
-        post_time:self.date,
-        user_id:123}
+        "diary": {
+          content: self.message,
+          emotion: self.emotion,
+          emotion_strength: self.emotion_strength,
+          picture: "",
+          post_time: self.date,
+          user_id: 123
+        }
       }).then(function (response) {
         console.log("-------", response)
       }).catch(function (error) {
         console.log(error);
       });
     },
-    checknotice(){
+    checknotice() {
       console.log(this.switchChecked)
     },
     searchMoodData() {
       let self = this;
       let param = new FormData()
-      const config = {
-      headers: {
-        'Content-Type':  'application/json'
-      }
-    }
-      param.append('file', self.file)
-      console.log("localStorage.getItem",localStorage.getItem("notice"))
-      console.log('request')
-      axios.post('http://10.128.211.227:5000/predict', self.data,config).then(function (response) {
+      // const config = {
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // }
+      const time = (new Date()).valueOf()
+      const name = time
+      const fd=this.base64ToFile(this.file, name)
+      param.append('file', fd)
+      console.log("localStorage.getItem", localStorage.getItem("notice"))
+      axios.post('http://10.128.211.227:5000/predict', param).then(function (response) {
         //成功时服务器返回 response 数据
         console.log("1234", response.data)
         self.loading = false;
@@ -114,6 +118,33 @@ export default {
         ],
         closeable: true,
       });
+    },
+    base64ToFile(base64, fileName) {
+      // 将base64按照 , 进行分割 将前缀  与后续内容分隔开
+      const data = base64.split(',')
+      // 利用正则表达式 从前缀中获取图片的类型信息（image/png、image/jpeg、image/webp等）
+      const type = data[0].match(/:(.*?);/)[1]
+      // 从图片的类型信息中 获取具体的文件格式后缀（png、jpeg、webp）
+      const suffix = type.split('/')[1]
+      // 使用atob()对base64数据进行解码  结果是一个文件数据流 以字符串的格式输出
+      const bstr = window.atob(data[1])
+      // 获取解码结果字符串的长度
+      let n = bstr.length
+      // 根据解码结果字符串的长度创建一个等长的整形数字数组
+      // 但在创建时 所有元素初始值都为 0
+      const u8arr = new Uint8Array(n)
+      // 将整形数组的每个元素填充为解码结果字符串对应位置字符的UTF-16 编码单元
+      while (n--) {
+        // charCodeAt()：获取给定索引处字符对应的 UTF-16 代码单元
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      // 利用构造函数创建File文件对象
+      // new File(bits, name, options)
+      const file = new File([u8arr], `${fileName}.${suffix}`, {
+        type: type
+      })
+      // 将File文件对象返回给方法的调用者
+      return file
     },
     currentTime() {
       var date = new Date();
@@ -151,7 +182,7 @@ export default {
     },
 
   },
-  mounted(){
+  mounted() {
     this.searchMoodData();
   },
 

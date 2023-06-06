@@ -16,6 +16,7 @@
         <i class="iconfont icon-fabuguanli"></i>
         </van-button>
       </div>
+      <!-- <input @change="changImg" ref="inputFileRef" type="file" style="display: none;"> -->
       <!-- <div style="display:flex;flex-direction:row;justify-content: space-around;width: 100%;">
         <mt-button size="small" type="primary" @click="reset()">重拍</mt-button>
         <mt-button size="small" type="primary" @click="setImage()">拍照</mt-button>
@@ -43,7 +44,7 @@ export default {
       shareRange: false,
       complete_photo:false,
       fileUrl:null,
-      data:"",
+      data:null,
     }
   },
   mounted() {
@@ -106,24 +107,24 @@ export default {
       })
     },
     //  绘制图片（拍照功能）
-
     setImage() {
       var _this = this
-      this.thisCanvas.style.visibility = "visible";
+      _this.thisCanvas.style.visibility = "visible";
       // 点击，canvas画图
       _this.thisContext.drawImage(_this.thisVideo, 0, 0, _this.videoWidth, _this.videoHeight)
       // 获取图片base64链接
-      var image = this.thisCanvas.toDataURL('image/png')
+      var image = _this.thisCanvas.toDataURL('image/png')
+      console.log(image)
       _this.imgSrc = image
       const file = image
       const time = (new Date()).valueOf()
-      const name = time + '.png'
-      const conversions = this.base64ToFile(file, name)
+      const name = time
+      const conversions = _this.base64ToFile(file, name)
+      console.log("conversions",conversions)
       const data = new FormData()
       data.append('file', conversions)
-      this.data=data;
-      this.fileUrl = image
-      this.complete_photo = true;
+      _this.fileUrl = image
+      _this.complete_photo = true;
       // uploadImg(data).then(res => {
       //   if (res.data.code == 0) {
       //     this.$emit('refreshDataList', res.data.data.url)
@@ -165,7 +166,7 @@ export default {
     },
     // 发布内容
     aDiary() {
-      router.push({name:"postphoto",query: {file: this.fileUrl,data:this.data}});
+      router.push({name:"postphoto",query: {file: this.fileUrl}});
     },
     // 分享范围
     share() {
