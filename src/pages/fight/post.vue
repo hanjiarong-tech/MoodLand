@@ -172,7 +172,7 @@ export default {
 
 .postphoto {
   width: 100%;
-  height: 100vh;
+  height: 108vh;
   background-color: white;
 
   .container {
