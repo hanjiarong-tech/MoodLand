@@ -6,8 +6,6 @@
         <van-field v-model="message" rows="4" autosize type="textarea" placeholder="请输入留言" show-word-limit maxlength="150"
           :clearable="clearable" />
       </div>
-      <!-- <calendar-heatmap start-date="2023-03-01" :vert"ical="true" end-date="2023-04-01" :values="timeValue" :range-color='rangeColor' tooltip-unit="こんとりびゅーと" @day-click="someMethod"/> -->
-      <!-- <div ref="chartColumn" style="width:100%; height:400px;"></div> -->
       <div class="image_container">
         <van-badge :color="moodColor[emotion]">
           <van-image radius=6 :src="file" width="2.8rem" height="2.8rem" fit="cover" @click="preview()" />
@@ -43,9 +41,6 @@ export default {
       loading: true,
       input:null,
       chartColumn: null,
-      checked: true,
-      switchChecked: localStorage.getItem("notice") == 'true',
-      checked: true,
       switchChecked: localStorage.getItem("notice") == 'true',
       clearable: true,
       message: '',
@@ -71,17 +66,8 @@ export default {
     release() {
       let self = this;
       const fd = new FormData()
-      // "diary":{
-      //     content: self.message,
-      //     emotion: self.emotion,
-      //     emotion_strength: self.emotion_strength,
-      //     picture: "",
-      //     post_time: self.date,
-      //     user_id: 123
-      //   }
       console.log("param",self.param)
       fd.append("file", self.param)
-
       fd.append("diary",JSON.stringify({
           content: self.message,
           emotion: self.emotion,
@@ -92,6 +78,7 @@ export default {
         }))
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, fd).then(function (response) {
         console.log("-------", response)
+        this.$toast("发布成功")
         router.push("/photo")
       }).catch(function (error) {
         console.log(error);
@@ -103,11 +90,6 @@ export default {
     searchMoodData() {
       let self = this;
       let param = new FormData()
-      // const config = {
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   }
-      // }
       const time = (new Date()).valueOf()
       const name = time
       const fd=this.base64ToFile(this.file, name)
@@ -122,8 +104,8 @@ export default {
         self.emotion = response.data.class
         self.emotion_strength = Math.round(response.data.probability*100)
       }).catch(function (error) {
+
         console.log(error);
-        this.param=fd;
       });
     },
     jumpToOthers(link) {

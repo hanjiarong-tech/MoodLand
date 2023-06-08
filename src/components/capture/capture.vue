@@ -12,7 +12,7 @@
         <van-button round type="primary"  color=var(--mydarkblue) @click="reset()" style="height: 2rem;width: 2rem;">
         <i class="iconfont icon-guanbi"></i>
         </van-button>
-        <van-button round type="primary"  color=var(--mydarkblue)  @click="aDiary()" style="height: 2rem;width: 2rem;">
+        <van-button round type="primary"  color=var(--mydarkblue)  @click="$route.path ==='/photo'?aDiary():aChallgame()" style="height: 2rem;width: 2rem;">
         <i class="iconfont icon-fabuguanli"></i>
         </van-button>
       </div>
@@ -167,6 +167,9 @@ export default {
     // 发布内容
     aDiary() {
       router.push({name:"postphoto",query: {file: this.fileUrl}});
+    },
+    aChallgame(){
+      this.$emit('refreshDataList', this.fileUrl);
     },
     // 分享范围
     share() {
