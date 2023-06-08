@@ -30,7 +30,7 @@
         <!-- <div ref="chartColumn" style="width:100%; height:400px;"></div> -->
         <van-cell-group inset>
           <van-cell title="我的心情" is-link to="mydiary" icon="calendar-o"  style="font-weight: bold;" />
-          <calendar-heatmap tooltip-unit="" end-date="2023-05-22" :values="timeValue" :vertical="false" :range-color="colors" :max="28" style="margin:0.3rem 0"/>
+          <calendar-heatmap tooltip-unit="" :end-date="date" :values="timeValue" :vertical="false" :range-color="colors" :max="28" style="margin:0.3rem 0"/>
         </van-cell-group>
       </div>
     </div>
@@ -49,6 +49,7 @@ import { type } from 'os';
 export default {
   data() {
     return {
+      date:"",
       noticeNum:0,
       container: [
         {
@@ -145,6 +146,29 @@ export default {
     // CalendarHeatmap
   },
   methods: {
+    currentTime() {
+      var date = new Date();
+      var year = date.getFullYear(); //月份从0~11，所以加一
+      let month = date.getMonth();
+      var dateArr = [
+        date.getMonth() + 1,
+        date.getDate(),
+      ];
+      //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+      for (var i = 0; i < dateArr.length; i++) {
+        if (dateArr[i] >= 1 && dateArr[i] <= 9) {
+          dateArr[i] = "0" + dateArr[i];
+        }
+      }
+      var strDate =
+        year +
+        "-" +
+        dateArr[0] +
+        "-" +
+        dateArr[1] 
+      //此处可以拿外部的变量接收，也可直接返回  strDate:2022-05-01 13:25:30
+      this.date = strDate;
+    },
     searchInfoData() {
       let self = this;
       console.log(self.user.user_id)
@@ -211,6 +235,7 @@ export default {
     
   },
   mounted: function () {
+    this.currentTime();
     this.searchInfoData();
     this.searchNotice();
     this.searchMoodData();

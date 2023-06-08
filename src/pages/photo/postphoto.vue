@@ -12,8 +12,8 @@
         <van-badge :color="moodColor[emotion]">
           <van-image radius=6 :src="file" width="2.8rem" height="2.8rem" fit="cover" @click="preview()" />
           <template #content>
-            <i :class="moodIcon[emotion]" style="font-size:0.5rem;margin: 0.1rem 0.1rem;"></i>
-            <i style="font-size:0.4rem;font-style: inherit;"> {{ emotion_strength }}</i>
+            <i :class="loading?'iconfont icon-shalou':moodIcon[emotion]" style="font-size:0.5rem;margin: 0.1rem 0.1rem;"></i>
+            <i style="font-size:0.4rem;font-style: inherit;"> {{ loading?'···':emotion_strength }}</i>
           </template>
         </van-badge>
       </div>
@@ -35,6 +35,7 @@ import footer from '@/components/footer/index'
 import filePopup from '@/components/filePopup/filePopup'
 import { Dialog, ImagePreview } from 'vant';
 import axios from "axios";
+import router from '../../router'
 export default {
   name: "postphoto",
   data() {
@@ -48,14 +49,15 @@ export default {
       switchChecked: localStorage.getItem("notice") == 'true',
       clearable: true,
       message: '',
-      emotion: 3,
-      emotion_strength: 40,
+      emotion: 6,
+      emotion_strength: 50,
       moodColor: ['rgb(255,150,178)', 'rgb(75,167,133)', 'rgb(122,162,255)', 'rgb(255,202,43)', 'rgb(28,196,233)', 'rgb(243,109,66)', 'rgb(124,225,0)'],
       moodIcon: ['iconfont icon-surprise', 'iconfont icon-ghost-fill', 'iconfont icon-confused2', 'iconfont icon-happy-face', 'iconfont icon-sad-f', 'iconfont icon-angry2', 'iconfont icon-neutral-face'],
       user: JSON.parse(localStorage.getItem("user")),
       headerLeftStatus: false,
       file: this.$route.query.file,
       date: "",
+      param:null
     };
   },
   components: {
@@ -69,18 +71,28 @@ export default {
     release() {
       let self = this;
       const fd = new FormData()
-      fd.append("pictrue", self.file)
-      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, {
-        "diary": {
+      // "diary":{
+      //     content: self.message,
+      //     emotion: self.emotion,
+      //     emotion_strength: self.emotion_strength,
+      //     picture: "",
+      //     post_time: self.date,
+      //     user_id: 123
+      //   }
+      console.log("param",self.param)
+      fd.append("file", self.param)
+
+      fd.append("diary",JSON.stringify({
           content: self.message,
           emotion: self.emotion,
           emotion_strength: self.emotion_strength,
           picture: "",
           post_time: self.date,
-          user_id: 123
-        }
-      }).then(function (response) {
+          user_id: self.user.user_id
+        }))
+      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, fd).then(function (response) {
         console.log("-------", response)
+        router.push("/photo")
       }).catch(function (error) {
         console.log(error);
       });
@@ -100,13 +112,18 @@ export default {
       const name = time
       const fd=this.base64ToFile(this.file, name)
       param.append('file', fd)
+      this.param=fd;
+      console.log("ori_param",this.param)
       console.log("localStorage.getItem", localStorage.getItem("notice"))
       axios.post('http://10.128.211.227:5000/predict', param).then(function (response) {
         //成功时服务器返回 response 数据
-        console.log("1234", response.data)
+        console.log(response.data)
         self.loading = false;
+        self.emotion = response.data.class
+        self.emotion_strength = Math.round(response.data.probability*100)
       }).catch(function (error) {
         console.log(error);
+        this.param=fd;
       });
     },
     jumpToOthers(link) {
