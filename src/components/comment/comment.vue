@@ -62,7 +62,7 @@ export default {
       comment_type: 0,
       content: '',
       reply_id: "",
-      reviewed_id: "",
+      reviewed_id:this.diary_userid,
       date: '',
       placeholder:"输入评论",
       user: JSON.parse(localStorage.getItem("user")),
@@ -78,10 +78,12 @@ export default {
     },
     showComment: {
       required: true
-
     },
     diaryid: {
       required: true
+    },
+    diary_userid:{
+      required:true
     }
 
   },
@@ -168,8 +170,9 @@ export default {
         //成功时服务器返回 response 数据
         self.reply_id = '';
         self.comment_type = 0;
-        self.reviewed_id = '';
+        self.reviewed_id =self.diary_userid;
         self.$emit('update');
+        self.content="";
       }).catch(function (error) {
         console.log(error);
       });

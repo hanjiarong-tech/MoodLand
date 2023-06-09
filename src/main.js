@@ -25,6 +25,7 @@ import { Badge } from 'vant';
 import { ImagePreview} from 'vant';
 import { Skeleton } from 'vant';
 import { Calendar } from 'vant';
+import { GoodsAction, GoodsActionIcon, GoodsActionButton } from 'vant';
 
 
 import VueStarPlus from 'vue-star-plus' // same with vue3 version
@@ -32,6 +33,9 @@ import 'vue-star-plus/lib/style.css'  // same with vue3 version
 import md5 from 'js-md5';
 Vue.prototype.$md5 = md5;
 
+Vue.use(GoodsAction);
+Vue.use(GoodsActionButton);
+Vue.use(GoodsActionIcon);
 Vue.component('VueStarPlus', VueStarPlus)
 // Vue.component('VueStar', VueStar)
 Vue.use(Skeleton);

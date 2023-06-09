@@ -33,7 +33,7 @@
           <div class="comment">
             <!-- 点赞 -->
             <like :likeid="list.diary_id" :ilike="list.has_like" @change="likeAmount"></like>
-            <div class="like_count" @click="thisCommentData(list.diary_id)" >
+            <div class="like_count" @click="thisCommentData(list.diary_id,list.user_id)" >
               <!-- 评论 -->
               <svg t="1682595957005" class="icon" viewBox="0 0 1024 1024"
                 version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5639" width="30" height="30">
@@ -46,7 +46,7 @@
         </div>
       </div>
     <!-- 展开评论 -->
-      <comment class="ss" :showComment="showComment" :comments="commentData" :diaryid="diaryid" @update="addComment" @change="costPlannedAmountChange">
+      <comment class="ss" :showComment="showComment" :comments="commentData" :diaryid="diaryid" :diary_userid="diary_userid" @update="addComment" @change="costPlannedAmountChange">
       </comment>
   </div>
 </template>
@@ -60,6 +60,7 @@ export default {
     return {
       user: JSON.parse(localStorage.getItem("user")),
       diaryid:'',
+      diary_userid:'',
       commentData: [],
       friendlikes: [],
       serverUrl: process.env.VUE_APP_SERVER_URL,
@@ -87,9 +88,10 @@ export default {
     },
   
     // 获取评论列表
-    async thisCommentData(diaryid) {
+    async thisCommentData(diaryid,userid) {
       this.showComment = true;
       this.diaryid=diaryid;
+      this.diary_userid=userid
       console.log("this.diaryid",this.diaryid)
       const config = {
         headers: {

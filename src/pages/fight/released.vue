@@ -81,7 +81,7 @@ export default {
 
     jumpTo(challenge_id) {
       console.log(challenge_id);
-      router.push({ path: `/detail`, query: { challenge_id: challenge_id } })
+      router.push({ path: `/detail`, query: { challenge_id: challenge_id,show:false } })
     }
 
 

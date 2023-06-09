@@ -187,9 +187,6 @@ export default {
     this.searchMoodData();
   },
 
-  watch: {
-    '$route': 'searchInfoData'
-  }
 
 };
 </script>

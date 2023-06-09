@@ -3,7 +3,7 @@
     <!-- 挑战功能 -->
     <div class="container-order">
       <div class="container-order-2">
-        <div v-for="list in container" @click="jumpTo(list.link)" :style = "list.style">
+        <div v-for="list in container" @click="jumpTo(list.link)" :style="list.style">
           <i :class="list.img"></i>
           <span>{{ list.name }}</span>
         </div>
@@ -13,17 +13,21 @@
     <!-- <p style="font-size: 20px;">发现挑战</p> -->
     <!-- 发现挑战 -->
     <div class="container" v-for="list2 in detail">
-      <div class="container-bj" @click ="jumpTo2(list2.challenge_id)">
+      <div class="container-bj" @click="jumpTo2(list2.challenge_id)">
         <div class="bj-left">
-          <img :src="list2.img==null?'../../../static/img/avatar.jpg':list2.img">
+          <img :src="list2.img == null ? '../../../static/img/avatar.jpg' : list2.img">
         </div>
         <div class="bj-right">
-          <p class="title">{{ moodtype[list2.type] }}挑战</p>
-          <p>发起人：{{list2.initiator_id}}</p>
-          <p :v-if="list2.end_time!=null">截止时间：{{ list2.end_time }}</p>
+          <div>
+            <span class="title">{{ moodtype[list2.type] }}挑战</span>
+          </div>
+          <p>发起人：{{ list2.initiator_id }}</p>
+          <p :v-if="list2.end_time != null">截止时间：{{ list2.end_time }}</p>
         </div>
-        <div :v-if="list2.max_num!=null" class = "bj-action">
-          <van-tag :color="list2.join_num / list2.max_num>0.6?`orange`:`var(--light-yellow)`" :text-color="list2.join_num / list2.max_num>0.6?`white`:`orange`" round type="primary" size="large">{{ list2.join_num}} / {{ list2.max_num}}</van-tag>
+        <div :v-if="list2.max_num != null" class="bj-action">
+          <van-tag :color="list2.join_num / list2.max_num > 0.6 ? `orange` : `var(--light-yellow)`"
+            :text-color="list2.join_num / list2.max_num > 0.6 ? `white` : `orange`" round type="primary" size="large">{{
+              list2.join_num }} / {{ list2.max_num }}</van-tag>
         </div>
       </div>
     </div>
@@ -48,19 +52,19 @@ export default {
           img: "iconfont icon-fabuguanli",
           name: "发布挑战",
           style: "background-color:var(--light-yellow);color:orange",
-          link:"/post"
+          link: "/post"
         },
         {
           img: "iconfont icon-gongdanjilu",
           name: "我发布的",
           style: "background-color:var(--light-green);color:var(--mygreen)",
-          link:"/freleased"
+          link: "/freleased"
         },
         {
           img: "iconfont icon-hands-fill",
           name: "我参与的",
           style: "background-color:var(--light-blue);color:var(--mydarkblue)",
-          link:"/finvolved"
+          link: "/finvolved"
         },
       ],
       detail: [
@@ -71,13 +75,13 @@ export default {
     tryon() {
       router.push("/main");
     },
-    jumpTo(link){
+    jumpTo(link) {
       console.log(link);
-      router.push({path:link,query: {postType: 0}});
+      router.push({ path: link, query: { postType: 0 } });
     },
     jumpTo2(challenge_id) {
       console.log(challenge_id);
-      router.push({ path: `/detail`, query: { challenge_id: challenge_id+"" } })
+      router.push({ path: `/detail`, query: { challenge_id: challenge_id + "",show:true } })
     },
     getMyChallenge() {
       let self = this;
