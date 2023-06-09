@@ -207,6 +207,7 @@ export default {
       }).then(function (response) {
         self.$toast(response.data.msg)
         self.showGift = false;
+        self.getFriend();
       }).catch(function (error) {
         console.log(error);
       });

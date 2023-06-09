@@ -24,7 +24,8 @@
         <van-goods-action-icon icon="cart-o" text="购物车" @click="onClickIcon" />
         <van-goods-action-icon icon="shop-o" text="店铺" @click="onClickIcon" /> -->
         <!-- <van-goods-action-button :v-if="status==true" color=var(--mydarkblue) type="danger" text="参加挑战" @click="onClickButton" /> -->
-        <van-goods-action-button color=var(--mydarkblue) :disabled="!status" type="danger" :text="status==false?'人数已满，无法参加':'参加'" @click="onClickButton" />
+        <van-goods-action-button color=var(--mydarkblue) :disabled="!status" type="danger"
+          :text="status == false ? '人数已满，无法参加' : '参加'" @click="onClickButton" />
       </van-goods-action>
     </div>
   </div>
@@ -43,7 +44,7 @@ export default {
     return {
       challenge_id: this.$route.query.challenge_id,
       show: this.$route.query.show,
-      status:null,
+      status: null,
       detail: {},
       challengerList: [{
         challenge_id: 77777,
@@ -85,16 +86,9 @@ export default {
     // onClickIcon() {
     //   Toast('点击图标');
     // },
-    initStatus(){
-      if(this.detail.join_num<this.detail.max_num){
-        this.status=true;
-      }else{
-        this.status=false;
-      }
-    },
     onClickButton() {
-      if(this.status==true){
-        this.$router.back();
+      if (this.status == true) {
+        this.$router.push({ path: '/post', query: { postType: 2 ,challenge_id:this.challenge_id} });
       }
       this.$toast('点击按钮');
     },
@@ -106,10 +100,17 @@ export default {
           'Content-type': "application/json"
         }
       }
-      // `http://10.128.245.71:5000/moodland/${user.avatar}`
+
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}`, config).then(function (response) {
         //成功时服务器返回 response 数据
         self.detail = response.data;
+        if (self.detail.join_num < self.detail.max_num) {
+          self.status = true;
+          console.log('>>>>' + self.status)
+        } else {
+          self.status = false;
+          console.log('>>>>' + self.status)
+        }
         console.log(response.data);
         // 如果为空，将user头像改为login中存储的,不为空则处理一下传回的avatar路径
       }).catch(function (error) {
@@ -117,13 +118,12 @@ export default {
       });
     },
 
- 
+
 
   },
   mounted: function () {
     console.log(this.challenge_id);
     this.getMyChallenge();
-    this.initStatus();
   },
   watch: {
     '$route': 'getMyChallenge'

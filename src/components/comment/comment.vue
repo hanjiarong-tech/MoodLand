@@ -170,14 +170,14 @@ export default {
     send() {
       let self = this;
       self.currentTime();
-      console.log("self.comment_id",self.comment_id)
-      console.log("self.comment_text",self.content)
-      console.log("self.comment_time",self.date)
-      console.log("comment_type",self.comment_type)
-      console.log("commentator_id",self.user.user_id)
-      console.log("self.diary_id",self.diaryid)
-      console.log("self.reply_id",self.reply_id)
-      console.log("self.reviewed_id",self.reviewed_id)
+      // console.log("self.comment_id",self.comment_id)
+      // console.log("self.comment_text",self.content)
+      // console.log("self.comment_time",self.date)
+      // console.log("comment_type",self.comment_type)
+      // console.log("commentator_id",self.user.user_id)
+      // console.log("self.diary_id",self.diaryid)
+      // console.log("self.reply_id",self.reply_id)
+      // console.log("self.reviewed_id",self.reviewed_id)
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}/${self.diaryid}/comment/${self.reply_id}`, {
         "comment": {
           // 当前评论id，为null
