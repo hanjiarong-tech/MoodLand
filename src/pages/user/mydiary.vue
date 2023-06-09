@@ -142,28 +142,28 @@ export default {
     // CalendarHeatmap
   },
   methods: {
-    searchInfoData() {
-      let self = this;
-      console.log(self.user.user_id)
-      // `http://10.128.245.71:5000/moodland/${user.avatar}`
-      axios.get(process.env.VUE_APP_SERVER_URL +`/moodland/user/user/${self.user.user_id}`).then(function (response) {
-        //成功时服务器返回 response 数据
-        self.user = response.data;
-        console.log(self.user);
-        // 如果为空，将user头像改为login中存储的,不为空则处理一下传回的avatar路径
-        if(response.data.avatar===""){
-          self.user.avatar=localStorage.getItem("user").avatar;
-        }else{
-          self.user.avatar=process.env.VUE_APP_SERVER_URL +`/moodland/${self.user.avatar}`;
-        }
-        // 并将user的新数据保存
-        localStorage.setItem("user", JSON.stringify(self.user))
-        console.log("response.data",response.data)
-        // console.log("localStorage",localStorage.getItem("user"))
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
+    // searchInfoData() {
+    //   let self = this;
+    //   console.log(self.user.user_id)
+    //   // `http://10.128.245.71:5000/moodland/${user.avatar}`
+    //   axios.get(process.env.VUE_APP_SERVER_URL +`/moodland/user/user/${self.user.user_id}`).then(function (response) {
+    //     //成功时服务器返回 response 数据
+    //     self.user = response.data;
+    //     console.log(self.user);
+    //     // 如果为空，将user头像改为login中存储的,不为空则处理一下传回的avatar路径
+    //     if(response.data.avatar===""){
+    //       self.user.avatar=localStorage.getItem("user").avatar;
+    //     }else{
+    //       self.user.avatar=process.env.VUE_APP_SERVER_URL +`/moodland/${self.user.avatar}`;
+    //     }
+    //     // 并将user的新数据保存
+    //     localStorage.setItem("user", JSON.stringify(self.user))
+    //     console.log("response.data",response.data)
+    //     // console.log("localStorage",localStorage.getItem("user"))
+    //   }).catch(function (error) {
+    //     console.log(error);
+    //   });
+    // },
     refreshDataList(imgSrc) {
       // 这里返回服务器图片的地址
       console.log(imgSrc)
@@ -299,7 +299,7 @@ export default {
   },
   mounted: function () {
     this.currentTime();
-    this.searchInfoData();
+    // this.searchInfoData();
     this.myDiary();
     this.searchMoodData();
   },

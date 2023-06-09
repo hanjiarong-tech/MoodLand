@@ -5,7 +5,7 @@
     <div class="content">
       <van-cell @click="openFile" title="头像" is-link>
         <template #default>
-          <img :src="avatar" style="width:30px; height:30px;border-radius: 50%;" alt="用户头像">
+          <img :src="avatar" style="width:30px; height:30px;border-radius: 50%;object-fit: cover;" alt="用户头像">
         </template>
       </van-cell>
       <van-cell @click="nameshow = true" title="昵称" :value="namevalue" is-link />
@@ -58,7 +58,8 @@
 
     </div>
     <div class="down">
-      <van-button color="var(--mygreen)" @click="logout" type="primary" block style="margin-bottom: 0.5rem;">退出登录</van-button>
+      <van-button color="var(--mygreen)" @click="logout" type="primary" block
+        style="margin-bottom: 0.5rem;">退出登录</van-button>
       <van-button color="var(--mygreen)" @click="logoff" type="primary" block>注销账户</van-button>
     </div>
   </div>
@@ -130,7 +131,7 @@ export default {
     },
     // 修改密码
     confirmPwd() {
-      let self=this;
+      let self = this;
       if (!this.password || !this.nextpassword || !this.nextpassword1) {
         Toast({
           message: "输入内容不能为空",
@@ -149,20 +150,20 @@ export default {
       } else {
         // 修改密码接口
         var md5pwd1 = this.$md5(self.password)
-        var md5pwd2 = this.$md5(md5pwd1+self.user.user_id)
+        var md5pwd2 = this.$md5(md5pwd1 + self.user.user_id)
         var md5pwd3 = this.$md5(self.nextpassword)
-        var md5pwd4 = this.$md5(md5pwd3+self.user.user_id)
+        var md5pwd4 = this.$md5(md5pwd3 + self.user.user_id)
         axios.put(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/password/action/modify`, {
-        old_pwd:md5pwd2,
-        new_pwd:md5pwd4
+          old_pwd: md5pwd2,
+          new_pwd: md5pwd4
         }).then(function (response) {
           // self.showPwd=false
           Toast({
-          message: response.data.msg,
-          duration: 950,
-          position: 'bottom',
-          className: "toastIndex"
-        });
+            message: response.data.msg,
+            duration: 950,
+            position: 'bottom',
+            className: "toastIndex"
+          });
           console.log(response.data)
         }).catch(function (error) {
           console.log(error);
@@ -195,33 +196,32 @@ export default {
       }).then(async () => {
         // 得到图片
         const path = this.$refs.inputFileRef.files[0]
-        console.log("sssssssssssssss",path)
+        console.log("sssssssssssssss", path)
         // 发送图片对象
         let self = this;
         const fd = new FormData()
-        const lastavatar=self.user.avatar
-        const lastavatar2=lastavatar.split('/')[lastavatar.split('/').length-1]
-        console.log("avatar/"+lastavatar2)
-        if(lastavatar=="../../../static/img/avatardefault.png"){
-          fd.append('last_url',"",)
-        }else{
-          fd.append('last_url',"avatar/"+lastavatar2)
+        const lastavatar = self.user.avatar
+        const lastavatar2 = lastavatar.split('/')[lastavatar.split('/').length - 1]
+        console.log("avatar/" + lastavatar2)
+        if (lastavatar == "../../../static/img/avatardefault.png") {
+          fd.append('last_url', "",)
+        } else {
+          fd.append('last_url', "avatar/" + lastavatar2)
         }
         fd.append('file', path)
         console.log(123);
         axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}/avatar/action/upload`, fd)
-        .then(function (response) {
-          //成功时服务器返回 response 数据
-          console.log("info",response.data.info)
-          console.log(window.URL.createObjectURL(path))
-          self.avatar = window.URL.createObjectURL(path)
-          searchInfoData()
-          // self.user.avatar = window.URL.createObjectURL(path)
-          console.log(self.user.avatar)
-          // localStorage.setItem("user", self.user)
-        }).catch(function (error) {
-          
-        });
+          .then(function (response) {
+            //成功时服务器返回 response 数据
+            console.log("info", response.data.info)
+            console.log(window.URL.createObjectURL(path))
+            self.avatar = window.URL.createObjectURL(path)
+            console.log(self.user.avatar)
+            console.log("msg", response.data.msg)
+            self.$toast(response.data.msg)
+            searchInfoData()
+          }).catch(function (error) {
+          });
       })
     },
     searchInfoData() {
@@ -237,6 +237,7 @@ export default {
         self.gendervalue = response.data.sex
         //成功时服务器返回 response 数据
         console.log(response.data)
+
       }).catch(function (error) {
         console.log(error);
       });
@@ -343,7 +344,7 @@ export default {
 
 .register-3 {
   display: flex;
-  margin-bottom:0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .btn {
