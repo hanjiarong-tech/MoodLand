@@ -16,8 +16,7 @@
           <div class="content">
             <div class = "info">
                 <van-tag mark type="primary" size="large" :color="moodColor[list.emotion]">
-                <i :class="moodIcon[list.emotion]" style="font-size: 0.5rem;margin: 0 0.1rem;"></i>{{
-                  list.emotion_strength }}
+                <i :class="moodIcon[list.emotion]" style="font-size: 0.5rem;margin: 0 0.1rem;"></i>{{list.emotion_strength }}
               </van-tag>
               <!-- 点赞列表 -->
               <div class="portrait">
@@ -160,6 +159,7 @@ export default {
     width: 15vw;
     height: 15vw;
     border-radius: 50%;
+    object-fit: cover;
   }
 }
 

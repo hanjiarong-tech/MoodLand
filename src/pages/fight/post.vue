@@ -241,12 +241,7 @@ export default {
 
   },
   mounted: function () {
-    // this.searchInfoData();
   },
-
-  watch: {
-    '$route': 'searchInfoData'
-  }
 
 };
 </script>

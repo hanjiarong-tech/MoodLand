@@ -180,7 +180,7 @@ export default {
         if(response.data.avatar===null){
           self.user.avatar=JSON.parse(localStorage.getItem("user")).avatar
         }else{
-          self.user.avatar=process.env.VUE_APP_SERVER_URL+`/moodland/${self.user.avatar}`;
+          self.user.avatar=process.env.VUE_APP_SERVER_URL+`/moodland/${response.data.avatar}`;
         }
         // 并将user的新数据保存
         localStorage.setItem("user", JSON.stringify(self.user))
@@ -276,6 +276,7 @@ export default {
           width: 60%;
           height: 60%;
           border-radius: 50%;
+          object-fit: cover;
         }
       }
 
