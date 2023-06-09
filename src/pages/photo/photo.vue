@@ -75,7 +75,6 @@ export default {
       axios.get(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + self.user.user_id + '/friend', config).then(function (response) {
         //成功时服务器返回 response 数据
         self.frienddiarys = response.data;
-        console.log("resfrienddiarys ", self.frienddiarys);
       }).catch(function (error) {
         console.log(error);
       });

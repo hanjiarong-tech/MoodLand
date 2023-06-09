@@ -32,11 +32,10 @@ export default {
     // 获取点赞列表
     friendlike(diaryid) {
       let self = this;
-      console.log(this.likeid)
-      console.log(self.user.user_id)
+      // console.log(this.likeid)
+      // console.log(self.user.user_id)
       axios.get(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + self.user.user_id + '/' + self.likeid + '/like').then(function (response) {
         self.frienddiarys = response.data;
-        console.log("friendlikes ", response.data);
         self.$emit("change",self.frienddiarys)
         self.count = response.data.length
       }).catch(function (error) {
@@ -48,18 +47,18 @@ export default {
     active2: function (newVal) {
       if (newVal) {
         let self = this;
-        console.log(this.likeid)
+        // console.log(this.likeid)
         axios.post(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + this.user.user_id + '/' + this.likeid + '/like').then(function (response) {
-          console.log(response.data);
+          // console.log(response.data);
           self.friendlike(self.likeid)
         }).catch(function (error) {
           console.log(error);
         });
       } else {
         let self = this;
-        console.log(this.likeid)
+        // console.log(this.likeid)
         axios.delete(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + this.user.user_id + '/' + this.likeid + '/like').then(function (response) {
-          console.log(response.data);
+          // console.log(response.data);
           self.friendlike(self.likeid)
         }).catch(function (error) {
           console.log(error);

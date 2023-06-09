@@ -69,7 +69,7 @@ export default {
     };
   },
   created() {
-    console.log('123', this.comments)
+    // console.log('123', this.comments)
   },
   props: {
     comments: {
