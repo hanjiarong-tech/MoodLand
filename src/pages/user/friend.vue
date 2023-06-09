@@ -140,7 +140,8 @@ export default {
       });
     },
     setInfo(Info) {
-      self.giftInfo = Info;
+      this.giftInfo = Info;
+
     },
     // 获取当前时间
     currentTime() {
@@ -179,6 +180,7 @@ export default {
     sendGift(friend_id, intimacy) {
       let self = this;
       self.showGift = true;
+      self.friedid=friend_id
       self.intimacy = intimacy;
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/gift/type`).then(function (response) {
         self.giftlist = response.data;
@@ -190,6 +192,7 @@ export default {
     // 赠送礼物
     give() {
       let self = this;
+      console.log("self.giftInfo",self.giftInfo)
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/gift/${self.user.user_id}/send`, {
         "socialGift": {
           advice: self.advice,
@@ -202,6 +205,7 @@ export default {
           send_time: self.date
         }
       }).then(function (response) {
+        self.$toast(response.data.msg)
         self.showGift = false;
       }).catch(function (error) {
         console.log(error);
