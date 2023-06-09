@@ -210,7 +210,7 @@ export default {
         axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}/action/join`, fd).then(function (response) {
           console.log("-------", response)
           this.$toast("参与成功")
-          router.push('explore')
+          router.push('/explore')
         }).catch(function (error) {
           console.log(error);
         });
