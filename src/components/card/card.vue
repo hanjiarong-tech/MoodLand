@@ -33,7 +33,7 @@
           
           <div class="comment">
             <!-- 点赞 -->
-            <like :likeid="list.diary_id" :ilike="list.has_like" @change="likeAmount"></like>
+            <like :likeid="list.diary_id" :ilike="list.has_like" @change="likeAmount" :user_id = "list.user_id"></like>
             <div class="like_count" @click="thisCommentData(list.diary_id)" >
               <!-- 评论 -->
               <svg t="1682595957005" class="icon" viewBox="0 0 1024 1024"

@@ -139,6 +139,32 @@ export default {
         console.log(error);
       });
     },
+    noticeFriend:function(diaryid,reviewed_id) {
+      let self = this;
+      let notice = {
+        action: 0,
+        content: "给你评论啦",
+        has_read: 0,
+        notice_id: 0,
+        notice_type: 2,
+        notice_url: diaryid,
+        friend_id:self.user.user_id,
+        user_id: reviewed_id
+      }
+      console.log(notice)
+      const config = {
+        headers: {
+          'Content-type': "application/json"
+        }
+      }
+      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/notice/${reviewed_id}`, notice, config).then(function (response) {
+        //成功时服务器返回 response 数据
+        console.log(response.data)
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
     send() {
       let self = this;
       self.currentTime();
@@ -166,6 +192,7 @@ export default {
         }
       }).then(function (response) {
         //成功时服务器返回 response 数据
+        self.noticeFriend(self.diaryid,self.reviewed_id);
         self.reply_id = '';
         self.comment_type = 0;
         self.reviewed_id = '';

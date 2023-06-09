@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <van-nav-bar title="消息通知" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="消息通知" left-arrow @click-left="back" />
     <div class="container" v-for="(list2,index) in detail">
       <div class="container-bj" :style = "list2.has_read==0?'background-color: var(--background-gray);':''">
         <div class="bj-left">
@@ -91,7 +91,7 @@ export default {
 
       var notice_id = this.detail[index].notice_id
       var notice = this.detail[index]
-      notice.action = 1;
+      
 
       let self = this;
       const config = {
@@ -102,11 +102,37 @@ export default {
       axios.post(process.env.VUE_APP_SERVER_URL+`/moodland/notice/${self.user.user_id}/${notice_id}/action/answer`,notice,config).then(function (response) {
         //成功时服务器返回 response 数据
         console.log(response.data)
+        if(response.data.success){
+          notice.action = 1;
+        }
 
       }).catch(function (error) {
         console.log(error);
       });
-    }
+    },
+    back(){
+      this.readNotice();
+      this.$router.back();
+    },
+    readNotice(){
+
+
+      let self = this;
+      const config = {
+        headers: {
+          'Content-type': "application/json"
+        }
+      }
+      
+      axios.put(process.env.VUE_APP_SERVER_URL+`/moodland/notice/${self.user.user_id}/hasRead`,config).then(function (response) {
+        //成功时服务器返回 response 数据
+        console.log(response.data)
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+
     
   },
   components: {

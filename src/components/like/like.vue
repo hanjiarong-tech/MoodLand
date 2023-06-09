@@ -5,7 +5,7 @@
       <template v-slot:icon>{{ active2 ? '❤' : '❤' }}<span style="font-size: 0.5rem;">{{ count }}</span></template>
     </VueStarPlus>
     <div v-for="(list, index) in friendlikes" :key="index">
-      <img :src="list.avatar" alt="用户avatar">
+      <img :src="list.avatar" alt="用户头像">
     </div>
   </div>
 </template>
@@ -42,6 +42,33 @@ export default {
         console.log(error);
       });
     },
+
+    noticeFriend:function(user_id) {
+      let self = this;
+      let notice = {
+        action: 0,
+        content: "给你点赞啦",
+        has_read: 0,
+        notice_id: 0,
+        notice_type: 2,
+        notice_url: self.likeid,
+        friend_id:self.user.user_id,
+        user_id: user_id
+      }
+      console.log(notice)
+      const config = {
+        headers: {
+          'Content-type': "application/json"
+        }
+      }
+      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/notice/${user_id}`, notice, config).then(function (response) {
+        //成功时服务器返回 response 数据
+        console.log(response.data)
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
   },
   watch: {
     active2: function (newVal) {
@@ -51,9 +78,15 @@ export default {
         axios.post(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + this.user.user_id + '/' + this.likeid + '/like').then(function (response) {
           // console.log(response.data);
           self.friendlike(self.likeid)
+
+          if(self.user.user_id!=self.user_id){//自己点的赞就不要提醒了
+            self.noticeFriend(self.user_id)
+          }
+          
         }).catch(function (error) {
           console.log(error);
         });
+        
       } else {
         let self = this;
         // console.log(this.likeid)
@@ -65,11 +98,16 @@ export default {
         });
       }
       newVal ? this.count++ : this.count--;
-    }
+    },
+
+    
   },
   props: {
     likeid: {
       required: true
+    },
+    user_id: {
+      user_id: 0
     },
     ilike:{
       required: true

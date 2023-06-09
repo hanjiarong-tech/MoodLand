@@ -251,7 +251,7 @@ export default {
         has_read: 0,
         notice_id: 0,
         notice_type: 1,
-        notice_url: self.user.user_id,
+        friend_id:self.user.user_id,
         user_id: user_id
       }
       console.log(notice)

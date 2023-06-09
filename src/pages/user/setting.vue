@@ -220,6 +220,7 @@ export default {
           console.log(self.user.avatar)
           // localStorage.setItem("user", self.user)
         }).catch(function (error) {
+          
         });
       })
     },
