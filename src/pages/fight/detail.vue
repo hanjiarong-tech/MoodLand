@@ -14,7 +14,7 @@
             <van-cell :border=false>
               <span class="tip_title">
                 发起人</span>
-              <span class="tip_content">{{ detail.initiator_id }}</span>
+              <span class="tip_content">{{ detail.initiator_name }}</span>
             </van-cell>
             <van-cell :border=false>
               <span class="tip_title">
@@ -52,6 +52,7 @@
           :text="status == false ? '人数已满，无法参加' : '参加'" @click="onClickButton" />
       </van-goods-action>
     </div>
+  </div>
   </div>
 </template>
 
@@ -135,7 +136,7 @@ export default {
     },
     onClickButton() {
       if (this.status == true) {
-        this.$router.push({ path: '/post', query: { postType: 2, challenge_id: this.challenge_id } });
+        this.$router.push({ path: '/post', query: { postType: 2, challenge_id: this.challenge_id,challenge_type:this.detail.type } });
       }
       this.$toast('点击按钮');
     },
@@ -210,15 +211,18 @@ export default {
   mounted: function () {
     console.log("show", this.show)
     this.initGameType();
+    console.log(this.challenge_id);
     if (this.challenge_id) {
       this.getMyChallenge();
-      this.getScore();
     }
     if (this.game_id) {
       this.getMyGame();
     }
 
   },
+  watch: {
+    '$route': 'getMyChallenge'
+  }
 
 };
 </script>
@@ -238,8 +242,8 @@ export default {
 
   .container {
     width: 100%;
-    height: 80vh;
-    border-radius: 30px 30px 0 0;
+    height: 100vh;
+    border-radius: 30px;
     background-color: #fff;
     position: relative;
     overflow: hidden;

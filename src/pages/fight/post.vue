@@ -50,6 +50,7 @@ import { CalendarHeatmap } from "vue-calendar-heatmap";
 import header from '@/components/header/index'
 import footer from '@/components/footer/index'
 import capture from '@/components/capture/capture';
+import router from '../../router';
 import filePopup from '@/components/filePopup/filePopup'
 import { Dialog, ImagePreview } from 'vant';
 import axios from "axios";
@@ -85,6 +86,7 @@ export default {
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       person: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       fightvalue: 0,
+      challenge_type:this.$route.query.challenge_type,
       gamevalue: 0,
       param: null,
       diary_id: null,
@@ -226,28 +228,43 @@ export default {
           }
         }).then(function (response) {
           console.log("-------", response)
-          const fd = new FormData()
-          self.currentTime();
-          fd.append("file", self.param)
-          fd.append("diary", JSON.stringify({
-            content: self.message,
-            emotion: self.emotion,
-            emotion_strength: self.emotion_strength,
-            picture: "",
-            post_time: self.date,
-            user_id: self.user.user_id
-          }))
-          axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, fd).then(function (response) {
-            console.log(response.data.info)
-            self.diary_id = response.data.info
-            axios.put(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/setDiaryForChallenge/${self.challenge_id}/${self.diary_id}`).then(function (response) {
-              console.log("-------", response)
+          if(response.data.success){
+
+            self.challenge_id = JSON.parse(response.data.info).challenge_id
+
+            const fd = new FormData()
+            self.currentTime();
+            fd.append("file", self.param)
+            fd.append("diary", JSON.stringify({
+              content: self.message,
+              emotion: self.emotion,
+              emotion_strength: self.emotion_strength,
+              picture: "",
+              post_time: self.date,
+              user_id: self.user.user_id
+            }))
+            axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, fd).then(function (response) {
+              console.log(response.data.info)
+              self.diary_id = JSON.parse(response.data.info).diary_id
+              if(response.data.success){
+                  let score = self.fightvalue==self.emotion?self.emotion_strength:0
+
+                  axios.put(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/setDiaryForChallenge/${self.challenge_id}/${self.diary_id}/${score}`).then(function (response) {
+                  console.log("-------", response)
+                  if(response.data.success){
+                    self.$toast("发布成功")
+                    self.$router.push({ path: `/detail`, query: { challenge_id: self.challenge_id,show:false} })
+                  }
+                }).catch(function (error) {
+                  console.log(error);
+                });
+              }
+              
             }).catch(function (error) {
               console.log(error);
             });
-          }).catch(function (error) {
-            console.log(error);
-          });
+          }
+          
         }).catch(function (error) {
           console.log(error);
         });
@@ -272,18 +289,21 @@ export default {
         }))
         axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social//${self.user.user_id}`, fd).then(function (response) {
           console.log("-------", response)
-          this.$toast("发布成功")
-          router.back()
+          // if(response.data.success){
+          //   self.$toast("发布成功")
+          //   self.$router.push({ path: `/detail`, query: { challenge_id: self.challenge_id,show:false} })
+          // }
+          
         }).catch(function (error) {
           console.log(error);
         });
-      } else if (this.postType == 2) {
+      } else if (self.postType == 2) {
         //参与挑战
         fd.append("socialChallenge", JSON.stringify({
           challenge_id: self.challenge_id,
           identity: 0,
           participant_id: self.user.user_id,
-          score: self.emotion_strength
+          score: self.challenge_type==self.emotion?self.emotion_strength:0
         }))
         axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}/action/join`, fd).then(function (response) {
           console.log("-------", response)
@@ -296,11 +316,7 @@ export default {
     },
     // 选择日期
     formatDate(date) {
-      let month=date.getMonth()+1;
-      if(month<10){
-        month='0'+month
-      }
-      return `${date.getFullYear()}/${month}/${date.getDate()} 23:59:59`;
+      return `${date.getMonth() + 1}/${date.getDate()}`;
     },
     onConfirm(date) {
       this.show = false;
