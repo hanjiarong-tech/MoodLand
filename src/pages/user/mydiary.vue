@@ -16,7 +16,6 @@
         <card :list="list"></card>
       </swiper-slide>
     </swiper>
-
     </div>
   </template>
 
@@ -107,14 +106,17 @@ export default {
       user: JSON.parse(localStorage.getItem('user')),
       mydiarys: [],
       swiperOptions: {
+        noSwiping: true,
+        noSwipingClass: "ss",
+        touchMoveStopPropagation: true,
         direction: 'vertical', // 滑动方向
-        grabCursor: true, // 小手掌抓取滑动
+        grabCursor: false, // 小手掌抓取滑动
         setWrapperSize: true,
         autoHeight: true, // 当autoHeight为启用状态，设置更新swiper高度的时间。
         slidesPerView: 1, // 设置slider容器能够同时显示的slides数量(carousel模式)。
         mousewheel: true, // 开启鼠标滚轮控制Swiper切换。可设置鼠标选项，或true使用默认值。
         mousewheelControl: true,
-        height: window.innerHeight - 70,
+        height: window.innerHeight - 60,
         resistanceRatio: 0, // 抵抗率。边缘抵抗力的大小比例。值越小抵抗越大越难将slide拖离边缘，0时完全无法拖离。
         observeParents: true, // 将observe应用于Swiper的祖先元素。当Swiper的祖先元素变化时，例如window.resize，Swiper更新。
         on: {

@@ -93,7 +93,6 @@ export default {
   position: absolute;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
   padding: 0 0 100px 0;
 }
 

@@ -220,6 +220,7 @@ export default {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   transition: height 0.2s ease;
+  
 
   .comment-body {
     height: 100%;
@@ -255,7 +256,7 @@ export default {
   }
 
   .comment-body {
-    max-height: 400px;
+    max-height: 45vh;
 
     .comment-item {
       display: flex;

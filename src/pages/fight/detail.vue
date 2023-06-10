@@ -1,12 +1,11 @@
 <template>
   <div class="mydiary">
-    <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" safe-area-inset-top/>
+    <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" safe-area-inset-top />
     <!-- <div :class="'pure_top '+moodtype[detail.type]">
     </div> -->
-    <img class="bgImg" :src="'../../../static/scene/'+detail.type+'.svg'" >
+    <img class="bgImg" :src="'../../static/scene/' + detail.type + '.svg'">
     <div class="container">
       <div class="bg">
-        
         <div class="bj-right">
           <p class="title" style="font-size:28px;font-weight: bold;">{{ this.challenge_id ? moodtype[detail.type] + '挑战' :
             gameType[detail.type_id - 1] + '游戏'
@@ -37,14 +36,14 @@
         <van-cell :key="challenger.participant_id">
           <span class="index">
             <i :class="index < 1 ? 'iconfont icon-ranking-list-fill' : ''">
-              </i><span>{{ index + 1 }}</span>
+            </i><span>{{ index + 1 }}</span>
           </span>
           <span class="name">{{ challenger.participant_name }}</span>
           <span class="score">{{ challenger.score }}</span>
         </van-cell>
       </div>
-      <div v-if="show">
-      <van-goods-action v-if="show">
+      <!-- :style="$route.matched[0].path=='/explore' ? 'color: var(--theme-color) ': 'color: var(--mydarkblue)'" -->
+      <van-goods-action v-if="show === 'true'">
         <!-- <van-goods-action-icon icon="chat-o" text="客服" @click="onClickIcon" />
         <van-goods-action-icon icon="cart-o" text="购物车" @click="onClickIcon" />
         <van-goods-action-icon icon="shop-o" text="店铺" @click="onClickIcon" /> -->
@@ -52,7 +51,6 @@
         <van-goods-action-button color=var(--mydarkblue) :disabled="!status" type="danger"
           :text="status == false ? '人数已满，无法参加' : '参加'" @click="onClickButton" />
       </van-goods-action>
-    </div>
     </div>
   </div>
 </template>
@@ -167,7 +165,7 @@ export default {
       });
     },
     // 获取得分结果
-    getScore(){
+    getScore() {
       let self = this;
       console.log(self.user.user_id)
       const config = {
@@ -178,7 +176,6 @@ export default {
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/scoreRange/${self.challenge_id}`, config).then(function (response) {
         //成功时服务器返回 response 数据
         self.challengerList = response.data;
-        console.log(response.data.msg);
       }).catch(function (error) {
         console.log(error);
       });
@@ -211,6 +208,7 @@ export default {
 
   },
   mounted: function () {
+    console.log("show", this.show)
     this.initGameType();
     if (this.challenge_id) {
       this.getMyChallenge();
@@ -230,13 +228,13 @@ export default {
   width: 100%;
   height: 100vh;
 
-  .bgImg{
-      z-index: 0;
-      position: fixed;
-      width: 100vw;
-      height: 100vw;
-      top: -20vw;
-    }
+  .bgImg {
+    z-index: 0;
+    position: fixed;
+    width: 100vw;
+    height: 100vw;
+    top: -20vw;
+  }
 
   .container {
     width: 100%;
@@ -254,7 +252,7 @@ export default {
       height: 150px;
     }
 
-    
+
 
     .bj-right {
       width: 80%;
@@ -316,9 +314,10 @@ export default {
 }
 
 .rank {
- span{
-  font-size: 16px;
- }
+  span {
+    font-size: 16px;
+  }
+
   .index {
     width: 12%;
     color: orange;
@@ -338,4 +337,5 @@ export default {
 
 /deep/ .van-cell__value {
   display: flex;
-}</style>
+}
+</style>

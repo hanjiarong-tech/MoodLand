@@ -59,10 +59,11 @@ export default {
     return {
       challenge_id: this.$route.query.challenge_id,
       showPerson: false,
-      personvalue: 0,
+      personvalue: 1,
       enddate: '',
       loading: true,
       date: '',
+      // defaultDate:new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()),
       show: false,
       chartColumn: null,
       switchChecked: false,
@@ -98,6 +99,27 @@ export default {
     // CalendarHeatmap
   },
   methods: {
+    // 设置默认enddate
+    endTime(){
+      var date = new Date();
+      var year = date.getFullYear(); //月份从0~11，所以加一
+      let month = date.getMonth();
+      console.log("month", month);
+      var dateArr = [
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+      ];
+      //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+      for (var i = 0; i < dateArr.length; i++) {
+        if (dateArr[i] >= 1 && dateArr[i] <= 9) {
+          dateArr[i] = "0" + dateArr[i];
+        }
+      }
+      this.enddate =  year +"/" +dateArr[0] +"/" +dateArr[1] +" " +"23:59:59"
+    },
     // 获取当前时间
     currentTime() {
       var date = new Date();
@@ -194,7 +216,7 @@ export default {
           "socialChallenge": {
             challenge_id: "",
             challengerList: [],
-            end_time: self.end_time,
+            end_time: self.enddate,
             init_time: self.date,
             initiator_id: self.user.user_id,
             join_num: 0,
@@ -205,7 +227,7 @@ export default {
         }).then(function (response) {
           console.log("-------", response)
           const fd = new FormData()
-          this.currentTime();
+          self.currentTime();
           fd.append("file", self.param)
           fd.append("diary", JSON.stringify({
             content: self.message,
@@ -274,7 +296,11 @@ export default {
     },
     // 选择日期
     formatDate(date) {
-      return `${date.getMonth() + 1}/${date.getDate()}`;
+      let month=date.getMonth()+1;
+      if(month<10){
+        month='0'+month
+      }
+      return `${date.getFullYear()}/${month}/${date.getDate()} 23:59:59`;
     },
     onConfirm(date) {
       this.show = false;
@@ -336,6 +362,7 @@ export default {
 
   },
   mounted: function () {
+    this.endTime()
     console.log(this.postType)
     console.log(this.challenge_id)
     this.initGameType()

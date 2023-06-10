@@ -70,7 +70,12 @@ export default {
 <style lang="less" scoped>
 
 
-
+// .fight {
+//   position: absolute;
+//   width: 100%;
+//   height: 100vh;
+//   padding: 0 0 100px 0;
+// }
 .container {
   width: 95%;
   height: 2.5rem;
