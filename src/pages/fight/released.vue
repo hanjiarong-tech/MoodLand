@@ -62,6 +62,9 @@ export default {
       axios.delete(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${challenge_id}`).then(function (response) {
         //成功时服务器返回 response 数据
         console.log(response.data);
+        if(response.data.success){
+          self.getMyChallenge();
+        }
       }).catch(function (error) {
         console.log(error);
       });
@@ -93,7 +96,6 @@ export default {
   position: absolute;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
   padding: 0 0 100px 0;
 }
 
