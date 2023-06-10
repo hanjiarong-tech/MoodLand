@@ -15,7 +15,7 @@
     <div class="container" v-for="list2 in detail">
       <div class="container-bj" @click="jumpTo2(list2.challenge_id)">
         <div class="bj-left">
-          <img :src="'../../../static/challenge/'+list2.type+'.svg'">
+          <img :src="'../../static/challenge/'+list2.type+'.svg'">
         </div>
         <div class="bj-right">
           <div>
@@ -91,7 +91,7 @@ export default {
           'Content-type': "application/json"
         }
       }
-      axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/friend`, config).then(function (response) {
+      axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/myNotJoin`, config).then(function (response) {
         //成功时服务器返回 response 数据
         self.detail = response.data;
         console.log(response.data);

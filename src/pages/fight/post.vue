@@ -17,7 +17,7 @@
           </template>
         </van-badge>
       </div>
-      <div :v-if="postType != 2">
+      <div v-if="postType!= 2&&postType!= 3">
         <van-cell title="截止日期" :value="enddate" @click="show = true" />
         <van-calendar v-model="show" @confirm="onConfirm" />
         <van-cell title="参与人数" :value="personvalue + '人'" @click="showPerson = true" is-link />
@@ -255,7 +255,7 @@ export default {
         }).catch(function (error) {
           console.log(error);
         });
-      } else {
+      } else if (this.postType == 2) {
         //参与挑战
         fd.append("socialChallenge", JSON.stringify({
           challenge_id: self.challenge_id,

@@ -4,7 +4,7 @@
     <div class="container" v-for="list2 in detail">
       <div class="container-bj" @click="jumpTo(list2.challenge_id)">
         <div class="bj-left">
-          <img :src="list2.img == null ? '../../static/img/avatar.jpg' : list2.img">
+          <img :src="'../../static/challenge/'+list2.type+'.svg'">
         </div>
         <div class="bj-right">
           <p class="title">{{ moodtype[list2.type] }}挑战</p>

@@ -4,7 +4,7 @@
     <div class="container" v-for="list2 in detail">
       <div class="container-bj" @click="jumpTo(list2.challenge_id)">
         <div class="bj-left">
-          <img :src="list2.img == null ? '../../../static/img/avatar.jpg' : list2.img">
+          <img :src="'../../static/challenge/'+list2.type+'.svg'">
         </div>
         <div class="bj-right">
           <p class="title">{{ moodtype[list2.type] }}挑战</p>
@@ -17,7 +17,7 @@
           <van-tag :color="list2.join_num / list2.max_num > 0.6 ? `orange` : `var(--light-yellow)`"
             :text-color="list2.join_num / list2.max_num > 0.6 ? `white` : `orange`" round type="primary" size="large">{{
               list2.join_num }} / {{ list2.max_num }}</van-tag>
-          <p style="position:relative;top:14%;" @click="deleteThis(list2.challenge_id)">删除</p>
+          <p style="position:relative;top:14%;z-index:999;" @click.stop="deleteThis(list2.challenge_id)">删除</p>
         </div>
       </div>
     </div>
@@ -58,7 +58,8 @@ export default {
       });
     },
     deleteThis(challenge_id){
-      axios.delete(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}`, config).then(function (response) {
+      let self=this;
+      axios.delete(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${challenge_id}`).then(function (response) {
         //成功时服务器返回 response 数据
         console.log(response.data);
       }).catch(function (error) {
