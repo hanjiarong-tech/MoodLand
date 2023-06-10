@@ -2,7 +2,7 @@
   <div class="setting">
     <van-nav-bar title="我参与的" left-arrow @click-left="$router.back()" />
     <div class="container" v-for="list2 in detail">
-      <div class="container-bj" @click="jumpTo(list2.challenge_id)">
+      <div class="container-bj" @click="jumpTo2(list2.game_id)">
         <div class="bj-left">
           <img :src="list2.img == null ? '../../../static/img/avatar.jpg' : list2.img">
         </div>
@@ -31,8 +31,8 @@ export default {
     return {
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       user: JSON.parse(localStorage.getItem("user")),
-      detail: [
-      ],
+      detail: [],
+      gameType: [],
     };
   },
   mounted() {
@@ -63,9 +63,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
-
-
 .container {
   width: 95%;
   height: 2.5rem;

@@ -24,10 +24,18 @@
         <van-popup v-model:show="showPerson" round position="bottom">
           <van-picker show-toolbar :columns="person" @cancel="showPerson = false" @confirm="savePerson" />
         </van-popup>
+      </div>
+      <div v-if="postType == 0">
         <van-cell title="挑战类型" :value="moodtype[fightvalue]" @click="showPicker = true" is-link />
+      </div>
+      <div v-if="postType == 1">
+        <van-cell title="游戏类型" :value="gameType[gamevalue]" @click="showGame = true" is-link />
       </div>
       <van-popup v-model:show="showPicker" round position="bottom">
         <van-picker show-toolbar :columns="moodtype" @cancel="showPicker = false" @confirm="saveFightType" />
+      </van-popup>
+      <van-popup v-model:show="showGame" round position="bottom">
+        <van-picker show-toolbar :columns="gameType" @cancel="showGame = false" @confirm="saveGameType" />
       </van-popup>
       <van-field>
       </van-field>
@@ -69,21 +77,21 @@ export default {
       headerLeftStatus: false,
       file: "",
       showPicker: false,
+      showGame: false,
       titleList: ["发布挑战", "发布游戏"],
       //挑战
       postType: this.$route.query.postType,
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       person: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       fightvalue: 0,
-      param: null
+      gamevalue: 0,
+      param: null,
       //游戏
-
+      gameType: [],
+      gameType_id: 0,
     };
   },
   components: {
-    "v-header": header,
-    "v-footer": footer,
-    CalendarHeatmap,
     capture,
     [ImagePreview.Component.name]: ImagePreview.Component,
     // CalendarHeatmap
@@ -173,13 +181,13 @@ export default {
         console.log(error);
       });
     },
-    // 发布挑战
+    // 发布
     release() {
       let self = this;
       const fd = new FormData()
       this.currentTime();
       fd.append("file", self.param)
-
+      // 发布挑战
       if (this.postType == 0) {
         fd.append("socialChallenge", JSON.stringify({
           challenge_id: "",
@@ -200,7 +208,33 @@ export default {
           console.log(error);
         });
       } else if (this.postType == 1) {
+        // 发布游戏
+        fd.append("socialGame", JSON.stringify({
+          end_time: self.end_time,
+          gameInfo: {
+            game_info: "",
+            game_name: this.gameType[this.gamevalue],
+            game_picture: "",
+            game_type_id: this.gamevalue + 1,
+          },
+          game_id: "",
+          init_time: self.date,
+          initiator_id: self.user.user_id,
+          join_num: 0,//?
+          max_num: self.personvalue,
+          playerList: [],//?         
+          status: 0,//?
+          type_id: self.gamevalue + 1,
+        }))
+        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social//${self.user.user_id}`, fd).then(function (response) {
+          console.log("-------", response)
+          this.$toast("发布成功")
+          router.back()
+        }).catch(function (error) {
+          console.log(error);
+        });
       } else {
+        //参与挑战
         fd.append("socialChallenge", JSON.stringify({
           challenge_id: self.challenge_id,
           identity: 0,
@@ -246,6 +280,28 @@ export default {
       }
       this.showPicker = false;
     },
+    // 游戏类型
+    initGameType() {
+      let self = this;
+      axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/game/type`).then(function (response) {
+        console.log("123:", response.data)
+        for (let i = 0; i < response.data.length; i++) {
+          self.gameType.push(response.data[i].game_name)
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    saveGameType(value) {
+      console.log(value);
+      for (var i = 0; i < this.gameType.length; i++) {
+        if (value == this.gameType[i]) {
+          this.gamevalue = i;
+          break;
+        }
+      }
+      this.showGame = false;
+    },
 
     preview() {
       ImagePreview({
@@ -260,6 +316,7 @@ export default {
   mounted: function () {
     console.log(this.postType)
     console.log(this.challenge_id)
+    this.initGameType()
   },
 
 };

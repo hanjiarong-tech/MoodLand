@@ -25,7 +25,7 @@
           <div v-for="reply in item.reply">
             <div class="sub-comment-item" @click="sendMessage(reply.reply_id, 1, reply.commentator_id,reply.commentator_name)">
               <img class="user-pic"
-                :src="reply.reviewed_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + reply.reviewed_avatar"
+                :src="reply.reviewed_avatar == null ? '../../../static/img/avatardefault.png' : serverUrl + '/moodland/' + reply.commentator_avatar"
                 alt="头像" />
               <div class="item-info">
                 <div class="replay">

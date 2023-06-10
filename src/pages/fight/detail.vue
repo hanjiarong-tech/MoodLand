@@ -1,20 +1,42 @@
 <template>
   <div class="mydiary">
     <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" />
+    <!-- <div :class="'pure_top '+moodtype[detail.type]">
+    </div> -->
     <div class="container">
-      <!-- <calendar-heatmap start-date="2023-03-01" :vertical="true" end-date="2023-04-01" :values="timeValue" :range-color='rangeColor' tooltip-unit="こんとりびゅーと" @day-click="someMethod"/> -->
-      <!-- <div ref="chartColumn" style="width:100%; height:400px;"></div> -->
-      <van-card :desc="detail.initiator_id" :title="moodtype[detail.type]" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg">
-        <template #tags>
-          <van-tag round type="primary">{{ detail.join_num }} / {{ detail.max_num }}</van-tag>
-        </template>
-      </van-card>
+      <div class="bg">
+        <div class="bj-right">
+          <p class="title" style="font-size:28px;font-weight: bold;">{{ this.challenge_id ? moodtype[detail.type] + '挑战' :
+            gameType[detail.type_id - 1] + '游戏'
+          }}</p>
+          <div class="tip">
+            <van-cell :border=false>
+              <span class="tip_title">
+                发起人</span>
+              <span class="tip_content">{{ detail.initiator_id }}</span>
+            </van-cell>
+            <van-cell :border=false>
+              <span class="tip_title">
+                截止时间</span>
+              <span class="tip_content">{{ detail.end_time }}</span>
+            </van-cell>
+          </div>
+        </div>
+        <div :v-if="detail.max_num != null" class="bj-action">
+          <van-tag :color="detail.join_num / detail.max_num > 0.6 ? `orange` : `var(--light-yellow)`"
+            :text-color="detail.join_num / detail.max_num > 0.6 ? `white` : `orange`" style="width: 120px;
+    height: 60px;text-align: center;" round type="primary" size="large">{{
+      detail.join_num }} / {{ detail.max_num }}</van-tag>
+        </div>
+      </div>
+      <van-divider />
       <van-cell title="最终结果" icon="flag-o" style="font-weight: bold;background-color: transparent;" />
       <div class="rank" v-for="(challenger, index) in challengerList">
         <van-cell :key="challenger.participant_id">
           <span class="index">
-            <i class="iconfont icon-ranking-list-fill">
-              {{ index + 1 }}</i></span>
+            <i :class="index < 1 ? 'iconfont icon-ranking-list-fill' : ''">
+              </i><span>{{ index + 1 }}</span>
+          </span>
           <span class="name">{{ challenger.participant_name }}</span>
           <span class="score">{{ challenger.score }}</span>
         </van-cell>
@@ -42,10 +64,12 @@ import axios from "axios";
 export default {
   data() {
     return {
+      // 挑战
       challenge_id: this.$route.query.challenge_id,
       show: this.$route.query.show,
       status: null,
       detail: {},
+      color: {},
       challengerList: [{
         challenge_id: 77777,
         identity: 0,
@@ -59,19 +83,28 @@ export default {
         participant_id: 123,
         participant_name: 'momo',
         score: 80
+      },
+      {
+        challenge_id: 77777,
+        identity: 0,
+        participant_id: 123,
+        participant_name: 'momo',
+        score: 60
+      },
+      {
+        challenge_id: 77777,
+        identity: 0,
+        participant_id: 123,
+        participant_name: 'momo',
+        score: 80
       }],
-
-      chartColumn: null,
-
-      headerLeftStatus: false,
-      serverUrl: '',
-      showComment: false,
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       moodColor: ['rgb(255,150,178)', 'rgb(75,167,133)', 'rgb(122,162,255)', 'rgb(255,202,43)', 'rgb(28,196,233)', 'rgb(243,109,66)', 'rgb(124,225,0)'],
       moodIcon: ['iconfont icon-surprise', 'iconfont icon-ghost-fill', 'iconfont icon-confused2', 'iconfont icon-happy-face', 'iconfont icon-sad-f', 'iconfont icon-angry2', 'iconfont icon-neutral-face'],
       user: JSON.parse(localStorage.getItem('user')),
-      mydiarys: [],
-      page: 1, // 标识翻页
+      // 游戏
+      game_id: this.$route.query.game_id,
+      gameType: [],
     };
   },
   components: {
@@ -86,12 +119,25 @@ export default {
     // onClickIcon() {
     //   Toast('点击图标');
     // },
+    // 游戏类型
+    initGameType() {
+      let self = this;
+      axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/game/type`).then(function (response) {
+        console.log("123:", response.data)
+        for (let i = 0; i < response.data.length; i++) {
+          self.gameType.push(response.data[i].game_name)
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
     onClickButton() {
       if (this.status == true) {
-        this.$router.push({ path: '/post', query: { postType: 2 ,challenge_id:this.challenge_id} });
+        this.$router.push({ path: '/post', query: { postType: 2, challenge_id: this.challenge_id } });
       }
       this.$toast('点击按钮');
     },
+    // 查看挑战详情
     getMyChallenge() {
       let self = this;
       console.log(self.user.user_id)
@@ -100,7 +146,6 @@ export default {
           'Content-type': "application/json"
         }
       }
-
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}`, config).then(function (response) {
         //成功时服务器返回 response 数据
         self.detail = response.data;
@@ -117,13 +162,43 @@ export default {
         console.log(error);
       });
     },
-
-
+    // 查看游戏详情
+    getMyGame() {
+      let self = this;
+      console.log(self.user.user_id)
+      const config = {
+        headers: {
+          'Content-type': "application/json"
+        }
+      }
+      axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/game/${self.user.user_id}/${self.game_id}`, config).then(function (response) {
+        //成功时服务器返回 response 数据
+        self.detail = response.data;
+        if (self.detail.join_num < self.detail.max_num) {
+          self.status = true;
+          console.log('>>>>' + self.status)
+        } else {
+          self.status = false;
+          console.log('>>>>' + self.status)
+        }
+        console.log(response.data);
+        // 如果为空，将user头像改为login中存储的,不为空则处理一下传回的avatar路径
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
 
   },
   mounted: function () {
+    this.initGameType();
     console.log(this.challenge_id);
-    this.getMyChallenge();
+    if (this.challenge_id) {
+      this.getMyChallenge();
+    }
+    if (this.game_id) {
+      this.getMyGame();
+    }
+
   },
   watch: {
     '$route': 'getMyChallenge'
@@ -139,15 +214,88 @@ export default {
 
   .container {
     width: 100%;
-    height: 3.6rem;
-    position: absolute;
+    height: 100vh;
+    border-radius: 30px;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+    top: 15%;
+    padding: 20px;
+    box-shadow: 0px -2px 5px #9191912e;
+
+    .bg {
+      width: 100%;
+      height: 150px;
+    }
+
+    .bj-right {
+      width: 80%;
+      height: 100%;
+      float: left;
+      padding: 0.1rem;
+
+      .title {
+        margin: 0 0 20px 0;
+        bottom: 10px;
+
+      }
+
+      p {
+        font-size: 12px;
+        margin: 10px 0;
+        color: rgba(0, 0, 0, 0.573);
+      }
+    }
+
+    .bj-action {
+      float: right;
+      height: 100%;
+      width: 19%;
+      align-content: center;
+      position: relative;
+      align-items: center;
+      top: -30px;
+      justify-content: center;
+    }
+
   }
 }
 
+.van-tag--round {
+  border-radius: 15px;
+}
+
+.van-tag--large {
+  padding: 10px 20px 2px;
+  font-size: 18px;
+}
+
+.tip {
+  width: 100vw;
+
+  .tip_title {
+    width: 30%;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.501);
+  }
+
+  .tip_content {
+    width: 70%;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.763);
+  }
+
+}
+
 .rank {
+ span{
+  font-size: 16px;
+ }
   .index {
-    width: 20%;
+    width: 12%;
     color: orange;
+    text-align: end;
+    margin: 0 10px 0 0;
   }
 
   .name {
@@ -162,5 +310,4 @@ export default {
 
 /deep/ .van-cell__value {
   display: flex;
-}
-</style>
+}</style>
