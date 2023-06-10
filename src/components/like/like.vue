@@ -2,10 +2,10 @@
   <div class="like">
     <!-- 设置颜色可以控制显示的颜色 -->
     <VueStarPlus v-model="active2" :color="active2 ? '#ff0000' : '#565656'">
-      <template v-slot:icon>{{ active2 ? '❤' : '❤' }}<span style="font-size: 12px;">{{ count }}</span></template>
+      <template v-slot:icon><i class="iconfont icon-xiai"></i><span style="font-size: 12px;">{{ count }}</span></template>
     </VueStarPlus>
     <div v-for="(list, index) in friendlikes" :key="index">
-      <img :src="list.avatar" alt="用户头像">
+      <img style="object-fit: cover;" :src="list.avatar" alt="用户头像">
     </div>
   </div>
 </template>

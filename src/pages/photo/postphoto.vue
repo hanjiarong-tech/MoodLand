@@ -33,6 +33,7 @@ import footer from '@/components/footer/index'
 import filePopup from '@/components/filePopup/filePopup'
 import { Dialog, ImagePreview } from 'vant';
 import axios from "axios";
+import { Toast } from 'vant';
 import router from '../../router'
 export default {
   name: "postphoto",
@@ -78,7 +79,8 @@ export default {
         }))
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, fd).then(function (response) {
         console.log("-------", response)
-        self.$toast(response.data.msg)
+        Toast(response.data.msg);
+        // self.$toast(response.data.msg)
         router.push("/photo")
       }).catch(function (error) {
         console.log(error);
