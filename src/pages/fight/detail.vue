@@ -181,9 +181,7 @@ export default {
 
   },
   mounted: function () {
-    console.log("show", this.show)
     this.initGameType();
-    console.log(this.challenge_id);
     if (this.challenge_id) {
       this.getMyChallenge();
       this.getScore();
@@ -193,9 +191,6 @@ export default {
     }
 
   },
-  watch: {
-    '$route': 'getMyChallenge'
-  }
 
 };
 </script>

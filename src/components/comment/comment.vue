@@ -287,6 +287,7 @@ export default {
       width: 33px;
       height: 33px;
       border-radius: 50%;
+      object-fit: cover;
     }
 
     .item-info {

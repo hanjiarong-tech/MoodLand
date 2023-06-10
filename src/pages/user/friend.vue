@@ -431,6 +431,7 @@ export default {
         width: 15vw;
         height: 15vw;
         border-radius: 10%;
+        object-fit: cover;
       }
     }
 
