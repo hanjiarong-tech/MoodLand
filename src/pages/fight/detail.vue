@@ -53,7 +53,6 @@
       </van-goods-action>
     </div>
   </div>
-  </div>
 </template>
 
 <script>
@@ -209,20 +208,16 @@ export default {
 
   },
   mounted: function () {
-    console.log("show", this.show)
     this.initGameType();
-    console.log(this.challenge_id);
     if (this.challenge_id) {
       this.getMyChallenge();
+      this.getScore();
     }
     if (this.game_id) {
       this.getMyGame();
     }
 
   },
-  watch: {
-    '$route': 'getMyChallenge'
-  }
 
 };
 </script>

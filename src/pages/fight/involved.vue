@@ -8,7 +8,7 @@
         </div>
         <div class="bj-right">
           <p class="title">{{ moodtype[list2.type] }}挑战</p>
-          <p>发起人：{{ list2.initiator_id }}</p>
+          <p>发起人：{{ list2.initiator_name }}</p>
           <p :v-if="list2.end_time != null">截止时间：{{ list2.end_time }}</p>
         </div>
         <div :v-if="list2.max_num != null" class="bj-action">
