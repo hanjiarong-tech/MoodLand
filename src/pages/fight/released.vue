@@ -18,7 +18,6 @@
             :text-color="list2.join_num / list2.max_num > 0.6 ? `white` : `orange`" round type="primary" size="large">{{
               list2.join_num }} / {{ list2.max_num }}</van-tag>
           <p style="position:relative;top:14%;" @click="deleteThis(list2.challenge_id)">删除</p>
-
         </div>
       </div>
     </div>

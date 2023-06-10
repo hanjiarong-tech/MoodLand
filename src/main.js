@@ -26,8 +26,6 @@ import { ImagePreview} from 'vant';
 import { Skeleton } from 'vant';
 import { Calendar } from 'vant';
 import { GoodsAction, GoodsActionIcon, GoodsActionButton } from 'vant';
-
-
 import VueStarPlus from 'vue-star-plus' // same with vue3 version
 import 'vue-star-plus/lib/style.css'  // same with vue3 version
 import md5 from 'js-md5';

@@ -7,7 +7,7 @@
           <img :src="list2.img == null ? '../../../static/img/avatar.jpg' : list2.img">
         </div>
         <div class="bj-right">
-          <p class="title">{{ moodtype[list2.type_id] }}游戏</p>
+          <p class="title">{{ gameType[list2.type_id-1] }}游戏</p>
           <p>发起人：{{ list2.initiator_id }}</p>
           <p :v-if="list2.end_time != null">截止时间：{{ list2.end_time }}</p>
         </div>
@@ -15,6 +15,7 @@
           <van-tag :color="list2.join_num / list2.max_num > 0.6 ? `orange` : `var(--light-yellow)`"
             :text-color="list2.join_num / list2.max_num > 0.6 ? `white` : `orange`" round type="primary" size="large">{{
               list2.join_num }} / {{ list2.max_num }}</van-tag>
+          <p style="position:relative;top:14%;" @click="deleteThis(list2.game_id)">删除</p>
         </div>
       </div>
     </div>
@@ -29,27 +30,14 @@ export default {
   name: 'greleased',
   data() {
     return {
-      
-      detail: [
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
-          describe: "挑战描述"
-        },
-        {
-          img: "../../../static/img/avatar.jpg",
-          name: "挑战名称",
-          describe: "挑战描述"
-        },
-
-      ],
+      detail: [],
+      gameType: [],
       user: JSON.parse(localStorage.getItem("user")),
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
     };
   },
 
   methods: {
-
     getMyChallenge() {
       let self = this;
       console.log(self.user.user_id)
@@ -71,8 +59,28 @@ export default {
     },
     jumpTo(challenge_id) {
       console.log(challenge_id);
-      router.push({ path: `/detail`, query: { challenge_id: challenge_id } })
-    }
+      router.push({ path: `/detail`, query: { game_id: challenge_id } })
+    },
+    deleteThis(challenge_id) {
+      axios.delete(process.env.VUE_APP_SERVER_URL + `/moodland/social/game/${self.user.user_id}/${challenge_id}`, config).then(function (response) {
+        //成功时服务器返回 response 数据
+        console.log(response.data);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    // 游戏类型
+    initGameType() {
+      let self = this;
+      axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/game/type`).then(function (response) {
+        console.log("123:", response.data)
+        for (let i = 0; i < response.data.length; i++) {
+          self.gameType.push(response.data[i].game_name)
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
 
 
 
@@ -88,6 +96,8 @@ export default {
     //     //改变img的路径
     //         document.querySelector("van-image").src = this.result;
     //     };
+
+    this.initGameType()
     this.getMyChallenge();
 
   },
@@ -199,8 +209,14 @@ export default {
       height: 100%;
       width: 19%;
       align-content: center;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+
+      p {
+        font-size: 0.35rem;
+        color: var(--middlegray);
+      }
     }
 
     img {
@@ -220,5 +236,6 @@ export default {
       color: var(--middlegray);
     }
   }
-}</style>
+}
+</style>
 

@@ -2,7 +2,7 @@
   <div class="postphoto">
     <van-nav-bar :title=titleList[postType] left-arrow @click-left="$router.back()" />
     <div class="container">
-      <capture @refreshDataList="refreshDataList"/>
+      <capture @refreshDataList="refreshDataList" />
       <div class="content_container">
         <van-field v-model="message" rows="4" autosize type="textarea" placeholder="请输入留言" show-word-limit maxlength="150"
           :clearable="clearable" />
@@ -11,26 +11,32 @@
         <van-badge :color="moodColor[emotion]">
           <van-image radius=6 :src="file" width="2.8rem" height="2.8rem" fit="cover" @click="preview()" />
           <template #content>
-            <i :class="loading?'iconfont icon-shalou':moodIcon[emotion]" style="font-size:0.5rem;margin: 0.1rem 0.1rem;"></i>
-            <i style="font-size:0.4rem;font-style: inherit;"> {{ loading?'···':emotion_strength }}</i>
+            <i :class="loading ? 'iconfont icon-shalou' : moodIcon[emotion]"
+              style="font-size:0.5rem;margin: 0.1rem 0.1rem;"></i>
+            <i style="font-size:0.4rem;font-style: inherit;"> {{ loading ? '···' : emotion_strength }}</i>
           </template>
         </van-badge>
       </div>
-      <van-cell title="截止日期" :value="enddate" @click="show = true" />
-      <van-calendar v-model="show" @confirm="onConfirm" />
-      <van-cell title="参与人数" :value="personvalue+'人'" @click="showPerson = true" is-link />
-      <van-popup v-model:show="showPerson" round position="bottom">
-        <van-picker show-toolbar :columns="person" @cancel="showPerson = false" @confirm="savePerson" />
-      </van-popup>
-      <van-cell title="挑战类型" :value="moodtype[fightvalue]" @click="showPicker = true" is-link />
+      <div v-if="postType != 2">
+        <van-cell title="截止日期" :value="enddate" @click="show = true" />
+        <van-calendar v-model="show" @confirm="onConfirm" />
+        <van-cell title="参与人数" :value="personvalue + '人'" @click="showPerson = true" is-link />
+        <van-popup v-model:show="showPerson" round position="bottom">
+          <van-picker show-toolbar :columns="person" @cancel="showPerson = false" @confirm="savePerson" />
+        </van-popup>
+      </div>
+      <div v-if="postType == 0">
+        <van-cell title="挑战类型" :value="moodtype[fightvalue]" @click="showPicker = true" is-link />
+      </div>
+      <div v-if="postType == 1">
+        <van-cell title="游戏类型" :value="gameType[gamevalue]" @click="showGame = true" is-link />
+      </div>
       <van-popup v-model:show="showPicker" round position="bottom">
         <van-picker show-toolbar :columns="moodtype" @cancel="showPicker = false" @confirm="saveFightType" />
       </van-popup>
-      <van-field name="switch" label="提醒好友">
-        <template #input>
-          <van-switch v-model="switchChecked" size="20" />
-        </template>
-      </van-field>
+      <van-popup v-model:show="showGame" round position="bottom">
+        <van-picker show-toolbar :columns="gameType" @cancel="showGame = false" @confirm="saveGameType" />
+      </van-popup>
       <van-field>
       </van-field>
       <van-button :loading="loading" @click="release()" type="primary" block style="position: fixed;bottom: 0px;"
@@ -51,11 +57,12 @@ export default {
   name: "postphoto",
   data() {
     return {
+      challenge_id: this.$route.query.challenge_id,
       showPerson: false,
       personvalue: 0,
       enddate: '',
       loading: true,
-      date:'',
+      date: '',
       show: false,
       chartColumn: null,
       switchChecked: false,
@@ -68,23 +75,23 @@ export default {
       moodIcon: ['iconfont icon-surprise', 'iconfont icon-ghost-fill', 'iconfont icon-confused2', 'iconfont icon-happy-face', 'iconfont icon-sad-f', 'iconfont icon-angry2', 'iconfont icon-neutral-face'],
       user: JSON.parse(localStorage.getItem("user")),
       headerLeftStatus: false,
-      file:"",
+      file: "",
       showPicker: false,
+      showGame: false,
       titleList: ["发布挑战", "发布游戏"],
       //挑战
       postType: this.$route.query.postType,
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       person: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       fightvalue: 0,
-      param:null
+      gamevalue: 0,
+      param: null,
       //游戏
-
+      gameType: [],
+      gameType_id: 0,
     };
   },
   components: {
-    "v-header": header,
-    "v-footer": footer,
-    CalendarHeatmap,
     capture,
     [ImagePreview.Component.name]: ImagePreview.Component,
     // CalendarHeatmap
@@ -159,45 +166,89 @@ export default {
       let param = new FormData()
       const time = (new Date()).valueOf()
       const name = time
-      const fd=this.base64ToFile(this.file, name)
+      const fd = this.base64ToFile(this.file, name)
       param.append('file', fd)
-      this.param=fd;
-      console.log("ori_param",this.param)
+      this.param = fd;
+      console.log("ori_param", this.param)
       console.log("localStorage.getItem", localStorage.getItem("notice"))
       axios.post('http://10.128.211.227:5000/predict', param).then(function (response) {
         //成功时服务器返回 response 数据
         console.log(response.data)
         self.loading = false;
         self.emotion = response.data.class
-        self.emotion_strength = Math.round(response.data.probability*100)
+        self.emotion_strength = Math.round(response.data.probability * 100)
       }).catch(function (error) {
         console.log(error);
       });
     },
-    // 发布挑战
+    // 发布
     release() {
       let self = this;
       const fd = new FormData()
       this.currentTime();
       fd.append("file", self.param)
-      fd.append("socialChallenge",JSON.stringify({
-        challenge_id:"",
-        challengerList:[],//?
-        end_time:self.end_time,
-        init_time:self.date,
-        initiator_id:self.user.user_id,
-        join_num:0,//?
-        max_num:self.personvalue,
-        status:0,//?
-        type:self.fightvalue,
+      // 发布挑战
+      if (this.postType == 0) {
+        fd.append("socialChallenge", JSON.stringify({
+          challenge_id: "",
+          challengerList: [],//?
+          end_time: self.end_time,
+          init_time: self.date,
+          initiator_id: self.user.user_id,
+          join_num: 0,//?
+          max_num: self.personvalue,
+          status: 0,//?
+          type: self.fightvalue,
         }))
-      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}`, fd).then(function (response) {
-        console.log("-------", response)
-        this.$toast("发布成功")
-        router.back()
-      }).catch(function (error) {
-        console.log(error);
-      });
+        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}`, fd).then(function (response) {
+          console.log("-------", response)
+          this.$toast("发布成功")
+          router.back()
+        }).catch(function (error) {
+          console.log(error);
+        });
+      } else if (this.postType == 1) {
+        // 发布游戏
+        fd.append("socialGame", JSON.stringify({
+          end_time: self.end_time,
+          gameInfo: {
+            game_info: "",
+            game_name: this.gameType[this.gamevalue],
+            game_picture: "",
+            game_type_id: this.gamevalue + 1,
+          },
+          game_id: "",
+          init_time: self.date,
+          initiator_id: self.user.user_id,
+          join_num: 0,//?
+          max_num: self.personvalue,
+          playerList: [],//?         
+          status: 0,//?
+          type_id: self.gamevalue + 1,
+        }))
+        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social//${self.user.user_id}`, fd).then(function (response) {
+          console.log("-------", response)
+          this.$toast("发布成功")
+          router.back()
+        }).catch(function (error) {
+          console.log(error);
+        });
+      } else {
+        //参与挑战
+        fd.append("socialChallenge", JSON.stringify({
+          challenge_id: self.challenge_id,
+          identity: 0,
+          participant_id: self.user.user_id,
+          score: self.emotion_strength
+        }))
+        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}/action/join`, fd).then(function (response) {
+          console.log("-------", response)
+          this.$toast("参与成功")
+          router.push('/explore')
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
     },
     // 选择日期
     formatDate(date) {
@@ -229,6 +280,28 @@ export default {
       }
       this.showPicker = false;
     },
+    // 游戏类型
+    initGameType() {
+      let self = this;
+      axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/game/type`).then(function (response) {
+        console.log("123:", response.data)
+        for (let i = 0; i < response.data.length; i++) {
+          self.gameType.push(response.data[i].game_name)
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    saveGameType(value) {
+      console.log(value);
+      for (var i = 0; i < this.gameType.length; i++) {
+        if (value == this.gameType[i]) {
+          this.gamevalue = i;
+          break;
+        }
+      }
+      this.showGame = false;
+    },
 
     preview() {
       ImagePreview({
@@ -241,6 +314,9 @@ export default {
 
   },
   mounted: function () {
+    console.log(this.postType)
+    console.log(this.challenge_id)
+    this.initGameType()
   },
 
 };

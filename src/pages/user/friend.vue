@@ -224,6 +224,7 @@ export default {
         if(response.data.success){
           self.noticeFriend(self.giftInfo.gift_id,self.friendid,"送你【"+self.giftInfo.gift_name+"】，并说："+self.advice);
         }
+        self.getFriend();
       }).catch(function (error) {
         console.log(error);
       });

@@ -11,7 +11,7 @@
     </div>
     <van-cell title="发现游戏" icon="search" style="font-weight: bold;background-color: transparent;" />
     <div class="container" v-for="list2 in detail">
-      <div class="container-bj" @click ="jumpTo(list2.challenge_id)">
+      <div class="container-bj" @click ="jumpTo2(list2.game_id)">
         <div class="bj-left">
           <img :src="list2.img==null?'../../../static/img/avatar.jpg':list2.img">
         </div>
@@ -45,7 +45,7 @@ export default {
           img: "iconfont icon-fabuguanli",
           name: "发布游戏",
           style: "background-color:var(--light-yellow);color:orange",
-          link:"/gtorelease"
+          link: "/post"
         },
         {
           img: "iconfont icon-gongdanjilu",
@@ -61,36 +61,6 @@ export default {
         },
       ],
       detail: [
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   game_id:0,
-        //   name: "猜猜我的心情",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   game_id:1,
-        //   name: "猜猜我的心情",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   game_id:2,
-        //   name: "猜猜我的心情",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   game_id:3,
-        //   name: "猜猜我的心情",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   game_id:4,
-        //   name: "猜猜我的心情",
-        //   describe: "挑战描述"
-        // },
       ],
     };
   },
@@ -102,7 +72,11 @@ export default {
       console.log(link);
       router.push({path:link,query: {postType: 1}});
     },
-    getMyChallenge() {
+    jumpTo2(game_id) {
+      console.log(game_id);
+      router.push({ path: `/detail`, query: { game_id: 11111 + "",show:true } })
+    },
+    getMyGame() {
       let self = this;
       console.log(self.user.user_id)
       const config = {
@@ -120,7 +94,7 @@ export default {
     },
   },
   mounted() {
-    this.getMyChallenge()
+    this.getMyGame()
   },
   components: {
     "v-header": header,
