@@ -61,10 +61,20 @@
               </van-badge>
             </van-grid-item>
           </van-grid>
-            <input v-model="advice" type="text"/>
+            <van-field
+              class="advice"
+              v-model="advice"
+              left-icon="edit"
+              rows="2"
+              autosize
+              type="textarea"
+              placeholder="输入你的祝福吧~"
+            />
+            <!-- <input class="advice" v-model="advice" type="text"/> -->
+
         </div>
         <div class="register-3">
-          <input type="button" class="btn" @click="give()" value="确认赠送" />
+          <input type="button" :disabled="isdisbled" :style="isdisbled?'opacity:0.3':''" class="btn" @click="give()" value="确认赠送" />
         </div>
       </div>
     </van-popup>
@@ -79,12 +89,13 @@ export default {
   data() {
     return {
       search: false,
+      isdisbled:true,
       serverUrl: process.env.VUE_APP_SERVER_URL,
       user: JSON.parse(localStorage.getItem("user")),
       searchId: null,
       giftlist: [],
       intimacy: 0,
-      friedid: null,
+      friendid: null,
       giftInfo: {},
       date: "",
       // giftInfo: {
@@ -141,6 +152,7 @@ export default {
     },
     setInfo(Info) {
       this.giftInfo = Info;
+      this.isdisbled=false;
 
     },
     // 获取当前时间
@@ -180,10 +192,11 @@ export default {
     sendGift(friend_id, intimacy) {
       let self = this;
       self.showGift = true;
-      self.friedid=friend_id
+      self.friendid=friend_id
       self.intimacy = intimacy;
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/gift/type`).then(function (response) {
         self.giftlist = response.data;
+        self.isdisbled=true;
         console.log(self.giftlist)
       }).catch(function (error) {
         console.log(error);
@@ -200,13 +213,17 @@ export default {
           gift_id: self.giftInfo.gift_id,
           gift_num: 1,
           giver_id: self.user.user_id,
-          recipient_id: self.friedid,
+          recipient_id: self.friendid,
           send_id: '',
           send_time: self.date
         }
       }).then(function (response) {
         self.$toast(response.data.msg)
         self.showGift = false;
+
+        if(response.data.success){
+          self.noticeFriend(self.giftInfo.gift_id,self.friendid,"送你【"+self.giftInfo.gift_name+"】，并说："+self.advice);
+        }
         self.getFriend();
       }).catch(function (error) {
         console.log(error);
@@ -243,6 +260,32 @@ export default {
     },
     onCancel() {
       this.search = false
+    },
+    noticeFriend:function(gift_id,friend_id,content) {
+      let self = this;
+      let notice = {
+        action: 0,
+        content: content,
+        has_read: 0,
+        notice_id: 0,
+        notice_type: 4,
+        notice_url: gift_id,
+        friend_id:self.user.user_id,
+        user_id: friend_id
+      }
+      console.log(notice)
+      const config = {
+        headers: {
+          'Content-type': "application/json"
+        }
+      }
+      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/notice/${friend_id}`, notice, config).then(function (response) {
+        //成功时服务器返回 response 数据
+        console.log(response.data)
+
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
     addFriend(user_id) {
       let self = this;
@@ -338,7 +381,7 @@ export default {
   font-size: 0.45rem;
   color: #fff;
   border-radius: 0.2rem;
-  background-color: var(--mydarkblue);
+  background-color: orange;
 
   /* background-image: linear-gradient(90deg, #418eff, #4566ff); */
 }
@@ -443,6 +486,18 @@ export default {
   top: auto;
   position: absolute;
   width: 100%;
+}
+.advice{
+  font-size: 0.4rem;
+  width: 100%;
+  background-color: #fdf0d6;
+  
+}
+/deep/ .van-field__control {
+  color: #a57e2a;
+}
+/deep/ .van-cell {
+  color: #a57e2a;
 }
 
 .setting {

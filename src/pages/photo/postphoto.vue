@@ -78,7 +78,7 @@ export default {
         }))
       axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, fd).then(function (response) {
         console.log("-------", response)
-        this.$toast("发布成功")
+        self.$toast(response.data.msg)
         router.push("/photo")
       }).catch(function (error) {
         console.log(error);
