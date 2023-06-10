@@ -194,10 +194,15 @@ export default {
         }
       }).then(function (response) {
         //成功时服务器返回 response 数据
-        self.noticeFriend(self.diaryid,self.reviewed_id);
+        
         self.reply_id = '';
         self.comment_type = 0;
         self.reviewed_id =self.diary_userid;
+        if(self.reviewed_id != self.user.user_id){
+          self.noticeFriend(self.diaryid,self.reviewed_id);
+        }
+        
+
         self.$emit('update');
         self.content="";
       }).catch(function (error) {
