@@ -3,8 +3,10 @@
     <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <!-- <div :class="'pure_top '+moodtype[detail.type]">
     </div> -->
+    <img class="bgImg" :src="'../../../static/scene/'+detail.type+'.svg'" >
     <div class="container">
       <div class="bg">
+        
         <div class="bj-right">
           <p class="title" style="font-size:28px;font-weight: bold;">{{ this.challenge_id ? moodtype[detail.type] + '挑战' :
             gameType[detail.type_id - 1] + '游戏'
@@ -228,6 +230,14 @@ export default {
   width: 100%;
   height: 100vh;
 
+  .bgImg{
+      z-index: 0;
+      position: fixed;
+      width: 100vw;
+      height: 100vw;
+      top: -20vw;
+    }
+
   .container {
     width: 100%;
     height: 80vh;
@@ -243,6 +253,8 @@ export default {
       width: 100%;
       height: 150px;
     }
+
+    
 
     .bj-right {
       width: 80%;
