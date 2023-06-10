@@ -3,7 +3,7 @@
       <div class="card">
         <div class="title">
           <div class="bj-left">
-            <img :src="list.avatar == null ? '../../../static/img/avatar.jpg' : serverUrl + '/moodland/' + list.avatar" alt="portrait">
+            <img :src="list.avatar == null ? '../../static/img/avatar.jpg' : serverUrl + '/moodland/' + list.avatar" alt="portrait">
           </div>
           <div class="bj-right">
             <span style="font-size: 0.4rem;font-weight: bold;">{{ list.user_name }}</span>
@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="container">
-          <img :src="list.picture == null ? '../../../static/img/avatar.jpg' : serverUrl + '/moodland/' + list.picture"
+          <img :src="list.picture == null ? '../../static/img/avatar.jpg' : serverUrl + '/moodland/' + list.picture"
             alt="mood image" />
           <div class="content">
             <div class = "info">
@@ -21,7 +21,7 @@
               <!-- 点赞列表 -->
               <div class="portrait">
                 <img v-for="(list, index) in friendlikes" :key="index"
-                  :src="list.avatar == null ? '../../../static/img/avatar.jpg' : serverUrl + '/moodland/' + list.avatar"
+                  :src="list.avatar == null ? '../../static/img/avatar.jpg' : serverUrl + '/moodland/' + list.avatar"
                   alt="用户avatar">
               </div>
             </div>

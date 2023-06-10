@@ -1,6 +1,6 @@
 <template>
   <div class="fight">
-    <van-nav-bar title="我发布的" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="我发布的" left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <div class="container" v-for="list2 in detail">
       <div class="container-bj" @click="jumpTo(list2.challenge_id)">
         <div class="bj-left">
@@ -33,17 +33,6 @@ export default {
   data() {
     return {
       detail: [
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
-
       ],
       user: JSON.parse(localStorage.getItem("user")),
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
@@ -69,7 +58,7 @@ export default {
       });
     },
     deleteThis(challenge_id){
-      axios.delete(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${challenge_id}`, config).then(function (response) {
+      axios.delete(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}`, config).then(function (response) {
         //成功时服务器返回 response 数据
         console.log(response.data);
       }).catch(function (error) {
@@ -80,7 +69,7 @@ export default {
 
     jumpTo(challenge_id) {
       console.log(challenge_id);
-      router.push({ path: `/detail`, query: { challenge_id: challenge_id,show:false } })
+      router.push({ path: `/detail`, query: { challenge_id: challenge_id,show:false} })
     }
 
 

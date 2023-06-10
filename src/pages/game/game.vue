@@ -13,7 +13,7 @@
     <div class="container" v-for="list2 in detail">
       <div class="container-bj" @click ="jumpTo2(list2.game_id)">
         <div class="bj-left">
-          <img :src="list2.img==null?'../../../static/img/avatar.jpg':list2.img">
+          <img :src="list2.img==null?'../../static/img/avatar.jpg':list2.img">
         </div>
         <div class="bj-right">
           <p class="title">{{ moodtype[list2.type] }}游戏</p>

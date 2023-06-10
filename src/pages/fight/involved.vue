@@ -1,10 +1,10 @@
 <template>
   <div class="setting">
-    <van-nav-bar title="我参与的" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="我参与的" left-arrow @click-left="$router.back()"  safe-area-inset-top/>
     <div class="container" v-for="list2 in detail">
       <div class="container-bj" @click="jumpTo(list2.challenge_id)">
         <div class="bj-left">
-          <img :src="list2.img == null ? '../../../static/img/avatar.jpg' : list2.img">
+          <img :src="list2.img == null ? '../../static/img/avatar.jpg' : list2.img">
         </div>
         <div class="bj-right">
           <p class="title">{{ moodtype[list2.type] }}挑战</p>
@@ -25,6 +25,7 @@
 <script>
 import footer from '@/components/footer/index'
 import axios from "axios";
+import router from '../../router';
 export default {
   name: 'freleased',
   data() {
@@ -32,46 +33,6 @@ export default {
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       user: JSON.parse(localStorage.getItem("user")),
       detail: [
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
-        // {
-        //   img: "../../../static/img/avatar.jpg",
-        //   name: "挑战名称",
-        //   describe: "挑战描述"
-        // },
       ],
     };
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="mydiary">
-    <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" safe-area-inset-top/>
 
         <div class = "container">
         <!-- <calendar-heatmap start-date="2023-03-01" :vertical="true" end-date="2023-04-01" :values="timeValue" :range-color='rangeColor' tooltip-unit="こんとりびゅーと" @day-click="someMethod"/> -->
@@ -61,7 +61,7 @@ data() {
       }],
 
     chartColumn: null,
-
+    involved:this.$route.query.involved,
     headerLeftStatus: false,
     commentData: [],
     serverUrl:'',
@@ -107,24 +107,6 @@ methods: {
     // 这里返回服务器图片的地址
     console.log(imgSrc)
   },
-  // 获取点赞列表
-  // async friendDiary() {
-  //   const config = {
-  //     headers: {
-  //       'Content-type': "application/json"
-  //     }
-  //   }
-  //   let self = this;
-  //   let user_id = localStorage.getItem('user').user_id;
-  //   // 先用我的日志替代一下
-  //   axios.get(process.env.VUE_APP_SERVER_URL + '/moodland/diary/' + user_id + '/my', config).then(function (response) {
-  //     //成功时服务器返回 response 数据
-  //     self.mydiarys = response.data;
-  //     console.log("resmydiarys ", self.mydiarys);
-  //   }).catch(function (error) {
-  //     console.log(error);
-  //   });
-  // },
   // 获取我的日志
   async myDiary() {
     const config = {

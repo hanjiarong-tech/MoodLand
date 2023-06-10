@@ -1,8 +1,6 @@
 <template>
   <div class="register">
     <div class="register-1">
-      <!-- <img src="https://accountstatic.vivo.com.cn/accountstatic.vivo.com.cn/static/img/logo.3c33210.png.webp" alt> -->
-      <!-- <p>账号登陆</p> -->
     </div>
     <div class="register-2">
       <label>
@@ -31,7 +29,7 @@ export default {
       user: {
         user_id: null,
         password: "",
-        avatar:"../../../static/img/avatardefault.png"
+        avatar:"../../static/img/avatardefault.png"
       }
     };
   },

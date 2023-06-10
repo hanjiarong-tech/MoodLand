@@ -1,6 +1,6 @@
 <template>
   <div class="postphoto">
-    <van-nav-bar title="发布心情" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="发布心情" left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <div class="container">
       <div class="content_container">
         <van-field v-model="message" rows="4" autosize type="textarea" placeholder="请输入留言" show-word-limit maxlength="150"

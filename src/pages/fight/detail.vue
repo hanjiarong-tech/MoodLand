@@ -1,6 +1,6 @@
 <template>
   <div class="mydiary">
-    <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <!-- <div :class="'pure_top '+moodtype[detail.type]">
     </div> -->
     <div class="container">
@@ -41,7 +41,8 @@
           <span class="score">{{ challenger.score }}</span>
         </van-cell>
       </div>
-      <van-goods-action :v-if="show">
+      <div v-if="show">
+      <van-goods-action>
         <!-- <van-goods-action-icon icon="chat-o" text="客服" @click="onClickIcon" />
         <van-goods-action-icon icon="cart-o" text="购物车" @click="onClickIcon" />
         <van-goods-action-icon icon="shop-o" text="店铺" @click="onClickIcon" /> -->
@@ -49,6 +50,7 @@
         <van-goods-action-button color=var(--mydarkblue) :disabled="!status" type="danger"
           :text="status == false ? '人数已满，无法参加' : '参加'" @click="onClickButton" />
       </van-goods-action>
+    </div>
     </div>
   </div>
 </template>
@@ -162,6 +164,23 @@ export default {
         console.log(error);
       });
     },
+    // 获取得分结果
+    getScore(){
+      let self = this;
+      console.log(self.user.user_id)
+      const config = {
+        headers: {
+          'Content-type': "application/json"
+        }
+      }
+      axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/scoreRange/${self.challenge_id}`, config).then(function (response) {
+        //成功时服务器返回 response 数据
+        self.challengerList = response.data;
+        console.log(response.data.msg);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
     // 查看游戏详情
     getMyGame() {
       let self = this;
@@ -191,18 +210,15 @@ export default {
   },
   mounted: function () {
     this.initGameType();
-    console.log(this.challenge_id);
     if (this.challenge_id) {
       this.getMyChallenge();
+      this.getScore();
     }
     if (this.game_id) {
       this.getMyGame();
     }
 
   },
-  watch: {
-    '$route': 'getMyChallenge'
-  }
 
 };
 </script>
@@ -214,8 +230,8 @@ export default {
 
   .container {
     width: 100%;
-    height: 100vh;
-    border-radius: 30px;
+    height: 80vh;
+    border-radius: 30px 30px 0 0;
     background-color: #fff;
     position: relative;
     overflow: hidden;

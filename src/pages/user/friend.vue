@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <van-nav-bar title="好友列表" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="好友列表" left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <form action="/">
       <van-search v-model="searchId" shape="round" show-action placeholder="搜索好友id添加新好友" @search="onSearch"
         @cancel="onCancel" />
@@ -9,7 +9,7 @@
     <div v-show="!search" class="container" v-for="list2 in detail">
       <div class="container-bj">
         <div class="bj-left">
-          <img :src="list2.avatar == null ? '../../../static/img/avatar.jpg' : serverUrl + '/moodland/' + list2.avatar">
+          <img :src="list2.avatar == null ? '../../static/img/avatar.jpg' : serverUrl + '/moodland/' + list2.avatar">
         </div>
         <div class="bj-right">
           <p class="title">{{ list2.friend_name }}</p>
@@ -31,7 +31,7 @@
       <div class="container-bj">
         <div class="bj-left">
           <img
-            :src="listRes.avatar == null ? '../../../static/img/avatar.jpg' : serverUrl + '/moodland/' + listRes.avatar">
+            :src="listRes.avatar == null ? '../../static/img/avatar.jpg' : serverUrl + '/moodland/' + listRes.avatar">
         </div>
         <div class="bj-right">
           <p class="title">{{ listRes.user_name }}</p>

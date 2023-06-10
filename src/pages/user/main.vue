@@ -185,7 +185,7 @@ export default {
         // 并将user的新数据保存
         localStorage.setItem("user", JSON.stringify(self.user))
       }).catch(function (error) {
-        self.user.avatar='../../../static/img/avatardefault.png';
+        self.user.avatar='../../static/img/avatardefault.png';
         console.log(error);
       });
     },

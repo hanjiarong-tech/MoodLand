@@ -20,7 +20,6 @@ import ginvolved from '@/pages/game/involved'
 import greleased from '@/pages/game/released'
 import gtorelease from '@/pages/game/torelease'
 import game from '@/pages/game/game'
-import gift from '@/pages/gift/gift'
 
 Vue.use(Router)
 

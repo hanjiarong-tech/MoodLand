@@ -57,42 +57,42 @@ export default {
       ],
       detail: [
         {
-          img: "../../../static/img/avatar.jpg",
+          img: "../../static/img/avatar.jpg",
           name: "挑战名称",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/avatar.jpg",
+          img: "../../static/img/avatar.jpg",
           name: "挑战名称",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/avatar.jpg",
+          img: "../../static/img/avatar.jpg",
           name: "挑战名称",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/avatar.jpg",
+          img: "../../static/img/avatar.jpg",
           name: "挑战名称",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/avatar.jpg",
+          img: "../../static/img/avatar.jpg",
           name: "挑战名称",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/avatar.jpg",
+          img: "../../static/img/avatar.jpg",
           name: "挑战名称",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/avatar.jpg",
+          img: "../../static/img/avatar.jpg",
           name: "挑战名称",
           describe: "挑战描述"
         },
         {
-          img: "../../../static/img/avatar.jpg",
+          img: "../../static/img/avatar.jpg",
           name: "挑战名称",
           describe: "挑战描述"
         },

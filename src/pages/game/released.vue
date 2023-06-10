@@ -1,10 +1,10 @@
 <template>
   <div class="fight">
-    <van-nav-bar title="我发布的" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="我发布的" left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <div class="container" v-for="list2 in detail">
       <div class="container-bj" @click="jumpTo(list2.game_id)">
         <div class="bj-left">
-          <img :src="list2.img == null ? '../../../static/img/avatar.jpg' : list2.img">
+          <img :src="list2.img == null ? '../../static/img/avatar.jpg' : list2.img">
         </div>
         <div class="bj-right">
           <p class="title">{{ gameType[list2.type_id-1] }}游戏</p>

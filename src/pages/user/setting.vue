@@ -1,7 +1,7 @@
 <template>
   <div class="setting">
     <!-- <v-header title="设置" :headerLeftStatus="headerLeftStatus" :save="save" /> -->
-    <van-nav-bar title="个人信息" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="个人信息" left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <div class="content">
       <van-cell @click="openFile" title="头像" is-link>
         <template #default>
@@ -203,7 +203,7 @@ export default {
         const lastavatar = self.user.avatar
         const lastavatar2 = lastavatar.split('/')[lastavatar.split('/').length - 1]
         console.log("avatar/" + lastavatar2)
-        if (lastavatar == "../../../static/img/avatardefault.png") {
+        if (lastavatar == "../../static/img/avatardefault.png") {
           fd.append('last_url', "",)
         } else {
           fd.append('last_url', "avatar/" + lastavatar2)
@@ -230,7 +230,7 @@ export default {
       console.log(process.env.VUE_APP_SERVER_URL);
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}`, {
       }).then(function (response) {
-        response.data.avatar = response.data.avatar == null ? '../../../static/img/avatardefault.png' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
+        response.data.avatar = response.data.avatar == null ? '../../static/img/avatardefault.png' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
         console.log("response.data.avatar", response.data.avatar)
         self.avatar = response.data.avatar
         self.namevalue = response.data.user_name;
