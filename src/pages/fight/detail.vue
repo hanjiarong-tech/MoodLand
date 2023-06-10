@@ -53,7 +53,6 @@
       </van-goods-action>
     </div>
   </div>
-  </div>
 </template>
 
 <script>
@@ -73,34 +72,7 @@ export default {
       status: null,
       detail: {},
       color: {},
-      challengerList: [{
-        challenge_id: 77777,
-        identity: 0,
-        participant_id: 123,
-        participant_name: 'momo',
-        score: 100
-      },
-      {
-        challenge_id: 77777,
-        identity: 0,
-        participant_id: 123,
-        participant_name: 'momo',
-        score: 80
-      },
-      {
-        challenge_id: 77777,
-        identity: 0,
-        participant_id: 123,
-        participant_name: 'momo',
-        score: 60
-      },
-      {
-        challenge_id: 77777,
-        identity: 0,
-        participant_id: 123,
-        participant_name: 'momo',
-        score: 80
-      }],
+      challengerList: [],
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       moodColor: ['rgb(255,150,178)', 'rgb(75,167,133)', 'rgb(122,162,255)', 'rgb(255,202,43)', 'rgb(28,196,233)', 'rgb(243,109,66)', 'rgb(124,225,0)'],
       moodIcon: ['iconfont icon-surprise', 'iconfont icon-ghost-fill', 'iconfont icon-confused2', 'iconfont icon-happy-face', 'iconfont icon-sad-f', 'iconfont icon-angry2', 'iconfont icon-neutral-face'],
@@ -214,6 +186,7 @@ export default {
     console.log(this.challenge_id);
     if (this.challenge_id) {
       this.getMyChallenge();
+      this.getScore();
     }
     if (this.game_id) {
       this.getMyGame();

@@ -58,7 +58,7 @@ export default {
   name: "postphoto",
   data() {
     return {
-      challenge_id: this.$route.query.challenge_id,
+      challenge_id: parseInt(this.$route.query.challenge_id),
       showPerson: false,
       personvalue: 1,
       enddate: '',
@@ -298,20 +298,49 @@ export default {
           console.log(error);
         });
       } else if (self.postType == 2) {
+
+            const fd = new FormData()
+            self.currentTime();
+            fd.append("file", self.param)
+            fd.append("diary", JSON.stringify({
+              content: self.message,
+              emotion: self.emotion,
+              emotion_strength: self.emotion_strength,
+              picture: "",
+              post_time: self.date,
+              user_id: self.user.user_id
+            }))
+
         //参与挑战
-        fd.append("socialChallenge", JSON.stringify({
-          challenge_id: self.challenge_id,
-          identity: 0,
-          participant_id: self.user.user_id,
-          score: self.challenge_type==self.emotion?self.emotion_strength:0
-        }))
-        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}/action/join`, fd).then(function (response) {
-          console.log("-------", response)
-          this.$toast("参与成功")
-          router.push('/explore')
-        }).catch(function (error) {
-          console.log(error);
-        });
+        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, fd).then(function (response) {
+              console.log(response.data.info)
+              self.diary_id = JSON.parse(response.data.info).diary_id
+              if(response.data.success){
+                  let score = self.challenge_type==self.emotion?self.emotion_strength:0
+
+                  axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}/action/join`,{
+                    "challenger":{
+                    challenge_id: self.challenge_id,
+                    identity: 0,
+                    participant_id: self.user.user_id,
+                    mood_diary: self.diary_id,
+                    score: score
+                  }
+                  }).then(function (response) {
+                    console.log("-------", response)
+                    self.$toast(response.data.msg)
+                    self.$router.push({ path: `/detail`, query: { challenge_id: self.challenge_id,show:false} })
+                  }).catch(function (error) {
+                    console.log(error);
+                  });
+
+              }
+              
+            }).catch(function (error) {
+              console.log(error);
+            });
+        
+        
       }
     },
     // 选择日期
