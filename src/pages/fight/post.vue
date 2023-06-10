@@ -17,7 +17,7 @@
           </template>
         </van-badge>
       </div>
-      <div v-if="postType!= 2&&postType!= 3">
+      <div v-if="postType != 2 && postType != 3">
         <van-cell title="截止日期" :value="enddate" @click="show = true" />
         <van-calendar v-model="show" @confirm="onConfirm" />
         <van-cell title="参与人数" :value="personvalue + '人'" @click="showPerson = true" is-link />
@@ -204,31 +204,31 @@ export default {
           }
         }).then(function (response) {
           console.log("-------", response)
-          // this.$toast("发布成功")
-          // router.back()
+          const fd = new FormData()
+          this.currentTime();
+          fd.append("file", self.param)
+          fd.append("diary", JSON.stringify({
+            content: self.message,
+            emotion: self.emotion,
+            emotion_strength: self.emotion_strength,
+            picture: "",
+            post_time: self.date,
+            user_id: self.user.user_id
+          }))
+          axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, fd).then(function (response) {
+            console.log(response.data.info)
+            self.diary_id = response.data.info
+            axios.put(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/setDiaryForChallenge/${self.challenge_id}/${self.diary_id}`).then(function (response) {
+              console.log("-------", response)
+            }).catch(function (error) {
+              console.log(error);
+            });
+          }).catch(function (error) {
+            console.log(error);
+          });
         }).catch(function (error) {
           console.log(error);
         });
-        fd.append("diary", JSON.stringify({
-          content: self.message,
-          emotion: self.emotion,
-          emotion_strength: self.emotion_strength,
-          picture: "",
-          post_time: self.date,
-          user_id: self.user.user_id
-        }))
-        axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/diary/${self.user.user_id}`, fd).then(function (response) {
-          console.log(response.data.info)
-          self.diary_id=response.data.info
-        }).catch(function (error) {
-          console.log(error);
-        });
-        axios.put(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/setDiaryForChallenge/${self.challenge_id}/${self.diary_id}`).then(function (response) {
-          console.log("-------", response)
-        }).catch(function (error) {
-          console.log(error);
-        });
-
       } else if (this.postType == 1) {
         // 发布游戏
         fd.append("socialGame", JSON.stringify({
