@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant'
 import { CalendarHeatmap } from "vue-calendar-heatmap";
 import header from '@/components/header/index'
 import footer from '@/components/footer/index'
@@ -113,7 +114,7 @@ export default {
       if (this.status == true) {
         this.$router.push({ path: '/post', query: { postType: 2, challenge_id: this.challenge_id,challenge_type:this.detail.type } });
       }
-      this.$toast('点击按钮');
+      // this.$toast('点击按钮');
     },
     // 查看挑战详情
     getMyChallenge() {

@@ -53,8 +53,8 @@
           <van-grid :column-num="3">
             <van-grid-item v-for="gift in giftlist">
               <van-badge :content="gift.min_intimacy" max="99" color="orange">
-              <div class="div2" :style="intimacy < gift.min_intimacy ? 'opacity:0.5;pointer-events:none;' : ''"
-                @click="setInfo(gift)">
+              <div class="div2" :style="intimacy < gift.min_intimacy ? 'opacity:0.5;background:none' : ''"
+                @click="setInfo(gift,intimacy<gift.min_intimacy)">
                 <van-image :src="serverUrl + '/moodland/' + gift.gift_picture" />
                 <p>{{ gift.gift_name }}</p>
               </div>
@@ -84,6 +84,7 @@
 
 <script>
 import axios from "axios";
+import { Toast } from 'vant';
 import footer from '@/components/footer/index'
 export default {
   data() {
@@ -150,9 +151,9 @@ export default {
         console.log(error);
       });
     },
-    setInfo(Info) {
+    setInfo(Info,status) {
       this.giftInfo = Info;
-      this.isdisbled=false;
+      this.isdisbled=status;
 
     },
     // 获取当前时间

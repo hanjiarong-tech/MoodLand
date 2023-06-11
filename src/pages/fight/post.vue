@@ -51,6 +51,7 @@ import header from '@/components/header/index'
 import footer from '@/components/footer/index'
 import capture from '@/components/capture/capture';
 import router from '../../router';
+import { Toast } from 'vant'
 import filePopup from '@/components/filePopup/filePopup'
 import { Dialog, ImagePreview } from 'vant';
 import axios from "axios";
