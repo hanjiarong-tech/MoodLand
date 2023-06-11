@@ -49,10 +49,13 @@ export default {
         name: "",
         password: "",
         user_id:null,
-        avatar:"../../static/img/avatar.svg"
+        avatar:"../../../static/img/avatar.svg"
       },
       nextpassword: ""
     };
+  },
+  mounted(){
+    this.user.avatar=process.env.VUE_APP_SERVER_URL + '/moodland/vue/'+'img/avatar.svg'
   },
   methods: {
     regusterUser() {

@@ -4,7 +4,7 @@
     <div class="container" v-for="list2 in detail">
       <div class="container-bj" @click="jumpTo(list2.challenge_id)">
         <div class="bj-left">
-          <img :src="'../../static/challenge/'+list2.type+'.svg'">
+          <img :src="serverUrl + '/moodland/vue'+'/challenge/'+list2.type+'.svg'">
         </div>
         <div class="bj-right">
           <p class="title">{{ moodtype[list2.type] }}挑战</p>
@@ -12,8 +12,8 @@
           <p :v-if="list2.end_time != null">截止时间：{{ list2.end_time }}</p>
         </div>
         <div :v-if="list2.max_num != null" class="bj-action">
-          <van-tag :color="list2.join_num / list2.max_num > 0.6 ? `orange` : `var(--light-yellow)`"
-            :text-color="list2.join_num / list2.max_num > 0.6 ? `white` : `orange`" round type="primary" size="large">{{
+          <van-tag :color="list2.join_num / list2.max_num >= 1 ? `orange` : `var(--light-yellow)`"
+            :text-color="list2.join_num / list2.max_num >= 1 ? `white` : `orange`" round type="primary" size="large">{{
               list2.join_num }} / {{ list2.max_num }}</van-tag>
         </div>
       </div>
@@ -32,6 +32,7 @@ export default {
   name: 'freleased',
   data() {
     return {
+      serverUrl: process.env.VUE_APP_SERVER_URL,
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       user: JSON.parse(localStorage.getItem("user")),
       detail: [

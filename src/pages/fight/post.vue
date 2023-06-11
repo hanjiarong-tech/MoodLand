@@ -365,7 +365,7 @@ export default {
     },
     // 选择日期
     formatDate(date) {
-      return `${date.getMonth() + 1}/${date.getDate()}`;
+      return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} 23:59:59`;
     },
     onConfirm(date) {
       this.show = false;

@@ -110,6 +110,7 @@ export default {
         title: '提醒',
         message: '是否退出登录？',
       }).then(() => {
+        localStorage.clear();
         this.$router.push("/")
       });
     },
@@ -203,7 +204,7 @@ export default {
         const lastavatar = self.user.avatar
         const lastavatar2 = lastavatar.split('/')[lastavatar.split('/').length - 1]
         console.log("avatar/" + lastavatar2)
-        if (lastavatar == "../../static/img/avatar.svg") {
+        if (lastavatar == process.env.VUE_APP_SERVER_URL + '/moodland/vue/'+'img/avatar.svg') {
           fd.append('last_url', "",)
         } else {
           fd.append('last_url', "avatar/" + lastavatar2)
@@ -230,7 +231,7 @@ export default {
       console.log(process.env.VUE_APP_SERVER_URL);
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}`, {
       }).then(function (response) {
-        response.data.avatar = response.data.avatar == null ? '../../static/img/avatar.svg' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
+        response.data.avatar = response.data.avatar == null ? process.env.VUE_APP_SERVER_URL + '/moodland/vue/'+'img/avatar.svg' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
         console.log("response.data.avatar", response.data.avatar)
         self.avatar = response.data.avatar
         self.namevalue = response.data.user_name;

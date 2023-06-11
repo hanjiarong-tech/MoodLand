@@ -9,7 +9,7 @@
     <div v-show="!search" class="container" v-for="list2 in detail">
       <div class="container-bj">
         <div class="bj-left">
-          <img :src="list2.avatar == null ? '../../static/img/avatar.svg' : serverUrl + '/moodland/' + list2.avatar">
+          <img :src="list2.avatar == null ? serverUrl + '/moodland/vue'+'/img/avatar.svg' : serverUrl + '/moodland/' + list2.avatar">
         </div>
         <div class="bj-right">
           <p class="title">{{ list2.friend_name }}</p>
@@ -34,7 +34,7 @@
       <div class="container-bj">
         <div class="bj-left">
           <img
-            :src="listRes.avatar == null ? '../../static/img/avatar.svg' : serverUrl + '/moodland/' + listRes.avatar">
+            :src="listRes.avatar == null ? serverUrl + '/moodland/vue'+'/img/avatar.svg' : serverUrl + '/moodland/' + listRes.avatar">
         </div>
         <div class="bj-right">
           <p class="title">{{ listRes.user_name }}</p>

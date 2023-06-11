@@ -29,13 +29,14 @@ export default {
       user: {
         user_id: null,
         password: "",
-        avatar:"../../static/img/avatar.svg"
+        avatar:"../../../static/img/avatar.svg"
       }
     };
   },
   mounted() {
+    this.user.avatar=process.env.VUE_APP_SERVER_URL + '/moodland/vue/'+'img/avatar.svg'
     //保存登录状态，记得打包后取消注释
-    // this.judge();
+    this.judge();
   },
   methods: {
     login() {

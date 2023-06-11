@@ -3,7 +3,7 @@
     <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" safe-area-inset-top />
     <!-- <div :class="'pure_top '+moodtype[detail.type]">
     </div> -->
-    <img class="bgImg" :src="'../../static/scene/' + detail.type + '.svg'">
+    <img class="bgImg" :src="serverUrl + '/moodland/vue'+'/scene/' + detail.type + '.svg'">
     <div class="container">
       <div class="bg">
         <div class="bj-right">
@@ -24,8 +24,8 @@
           </div>
         </div>
         <div :v-if="detail.max_num != null" class="bj-action">
-          <van-tag :color="detail.join_num / detail.max_num > 0.6 ? `orange` : `var(--light-yellow)`"
-            :text-color="detail.join_num / detail.max_num > 0.6 ? `white` : `orange`" style="width: 120px;
+          <van-tag :color="detail.join_num / detail.max_num >= 1 ? `orange` : `var(--light-yellow)`"
+            :text-color="detail.join_num / detail.max_num >= 1 ? `white` : `orange`" style="width: 120px;
     height: 60px;text-align: center;" round type="primary" size="large">{{
       detail.join_num }} / {{ detail.max_num }}</van-tag>
         </div>
