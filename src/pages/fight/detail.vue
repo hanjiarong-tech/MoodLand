@@ -48,8 +48,10 @@
         <van-goods-action-icon icon="cart-o" text="购物车" @click="onClickIcon" />
         <van-goods-action-icon icon="shop-o" text="店铺" @click="onClickIcon" /> -->
         <!-- <van-goods-action-button :v-if="status==true" color=var(--mydarkblue) type="danger" text="参加挑战" @click="onClickButton" /> -->
-        <van-goods-action-button color=var(--mydarkblue) :disabled="!status" type="danger"
-          :text="status == false ? '人数已满，无法参加' : '参加'" @click="onClickButton" />
+        <!-- <van-goods-action-button color=var(--mydarkblue) :disabled="!" type="danger"
+          :text="status == false ? '人数已满，无法参加' : '参加'" @click="onClickButton" /> -->
+          <van-goods-action-button color=var(--mydarkblue) :disabled="!status" type="danger"
+          :text="text" @click="onClickButton" />
       </van-goods-action>
     </div>
   </div>
@@ -70,6 +72,7 @@ export default {
       challenge_id: this.$route.query.challenge_id,
       show: this.$route.query.show,
       status: null,
+      text:"",
       detail: {},
       color: {},
       challengerList: [],
@@ -124,11 +127,17 @@ export default {
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}`, config).then(function (response) {
         //成功时服务器返回 response 数据
         self.detail = response.data;
-        if (self.detail.join_num < self.detail.max_num) {
-          self.status = true;
-          console.log('>>>>' + self.status)
-        } else {
+        if(self.detail.status==0&&self.detail.join_num >= self.detail.max_num){
+          console.log("status",self.detail.status)
+          self.status=false;
+          self.text="人数已满，无法参加"
+        }else if (self.detail.status==0) {
           self.status = false;
+          self.text="已结束"
+          console.log('>>>>' + self.status)
+        }else{
+          self.status = true;
+          self.text="参加"
           console.log('>>>>' + self.status)
         }
         console.log(response.data);
