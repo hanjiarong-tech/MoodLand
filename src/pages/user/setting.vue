@@ -222,7 +222,6 @@ export default {
             self.$toast(response.data.msg)
             searchInfoData()
           }).catch(function (error) {
-            self.$toast("上传失败")
           });
       })
     },
