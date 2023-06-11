@@ -4,7 +4,7 @@
     <div class="container" v-for="(list2,index) in detail">
       <div class="container-bj" :style = "list2.has_read==0?'background-color: var(--background-gray);':''">
         <div class="bj-left">
-          <img :src="list2.picture==null?'../../static/img/avatar.jpg':serverUrl+'/moodland/'+list2.picture">
+          <img :src="list2.picture==null?'../../static/img/avatar.svg':serverUrl+'/moodland/'+list2.picture">
         </div>
         <div class="bj-right">
           <p class="title">{{ list2.name }}</p>
@@ -16,6 +16,9 @@
           </div>
       </div>
       <van-divider :style="{margin:0,padding: '0 16px'}"/>
+    </div>
+    <div v-if="detail.length==0" style="display: flex;">
+      <img src = "../../../static/img/noticeDefault.svg" alt="缺省" style="width: 80vw;margin:10vh auto;"/>
     </div>
   </div>
 </template>

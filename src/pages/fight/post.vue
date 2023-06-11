@@ -87,10 +87,11 @@ export default {
       moodtype: ["Surprise", "Fear", "Disgusted", "Happy", "Sad", "Angry", "Neutral"],
       person: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       fightvalue: 0,
-      challenge_type:this.$route.query.challenge_type,
+      challenge_type:parseInt(this.$route.query.challenge_type),
       gamevalue: 0,
       param: null,
       diary_id: null,
+      myEmotion:{},
       //游戏
       gameType: [],
       gameType_id: 0,
@@ -201,8 +202,26 @@ export default {
         //成功时服务器返回 response 数据
         console.log(response.data)
         self.loading = false;
-        self.emotion = response.data.class
-        self.emotion_strength = Math.round(response.data.probability * 100)
+        if(self.postType==0){//发布
+          self.emotion = response.data[0].class
+          self.emotion_strength = Math.round(response.data[0].probability * 100)
+          for(var i=0;i<response.data.length;i++){
+            self.myEmotion[response.data[i].class]=response.data[i].probability
+          }
+          console.log(self.myEmotion)
+        }else{
+          var myEmotion ={}
+          
+          for(var i=0;i<response.data.length;i++){
+            myEmotion[response.data[i].class]=response.data[i].probability
+          }
+          self.emotion = self.challenge_type
+          self.emotion_strength = Math.round(myEmotion[self.challenge_type] * 100)
+          self.myEmotion = myEmotion
+          console.log(self.myEmotion)
+          console.log(self.emotion_strength)
+        }
+        
       }).catch(function (error) {
         console.log(error);
       });
@@ -239,7 +258,7 @@ export default {
             fd.append("diary", JSON.stringify({
               content: self.message,
               emotion: self.emotion,
-              emotion_strength: self.emotion_strength,
+              emotion_strength:self.emotion_strength,
               picture: "",
               post_time: self.date,
               user_id: self.user.user_id
@@ -248,7 +267,7 @@ export default {
               console.log(response.data.info)
               self.diary_id = JSON.parse(response.data.info).diary_id
               if(response.data.success){
-                  let score = self.fightvalue==self.emotion?self.emotion_strength:0
+                  let score = Math.round(self.myEmotion[self.fightvalue] * 100)
 
                   axios.put(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/setDiaryForChallenge/${self.challenge_id}/${self.diary_id}/${score}`).then(function (response) {
                   console.log("-------", response)
@@ -317,7 +336,7 @@ export default {
               console.log(response.data.info)
               self.diary_id = JSON.parse(response.data.info).diary_id
               if(response.data.success){
-                  let score = self.challenge_type==self.emotion?self.emotion_strength:0
+                  let score = self.emotion_strength
 
                   axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/social/challenge/${self.user.user_id}/${self.challenge_id}/action/join`,{
                     "challenger":{

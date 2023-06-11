@@ -49,7 +49,7 @@ export default {
         name: "",
         password: "",
         user_id:null,
-        avatar:"../../static/img/avatardefault.png"
+        avatar:"../../static/img/avatar.svg"
       },
       nextpassword: ""
     };

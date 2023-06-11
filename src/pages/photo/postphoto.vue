@@ -103,8 +103,8 @@ export default {
         //成功时服务器返回 response 数据
         console.log(response.data)
         self.loading = false;
-        self.emotion = response.data.class
-        self.emotion_strength = Math.round(response.data.probability*100)
+        self.emotion = response.data[0].class
+        self.emotion_strength = Math.round(response.data[0].probability*100)
       }).catch(function (error) {
 
         console.log(error);

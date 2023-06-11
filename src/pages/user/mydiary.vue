@@ -7,13 +7,21 @@
           <!-- <calendar-heatmap start-date="2023-03-01" :vertical="true" end-date="2023-04-01" :values="timeValue" :range-color='rangeColor' tooltip-unit="こんとりびゅーと" @day-click="someMethod"/> -->
           <!-- <div ref="chartColumn" style="width:100%; height:400px;"></div> -->
           <van-cell-group inset>
-            <van-cell title="我的心情" is-link to="mydiary" icon="calendar-o"  style="font-weight: bold;" />
+            <van-cell title="我的心情" icon="calendar-o"  style="font-weight: bold;" />
             <calendar-heatmap tooltip-unit="" :end-date="date" :values="timeValue" :vertical="false" :range-color="colors" :max="28" style="margin:0.3rem 0"/>
           </van-cell-group>
+          <div class = "hint">
+          <i>查看我的心情 ↓</i>
+        </div>
       </div>
     </swiper-slide>
       <swiper-slide v-for="(list, index) in mydiarys" :key="index">
         <card :list="list"></card>
+      </swiper-slide>
+      <swiper-slide>
+        <div v-if="mydiarys.length==0" style="display: flex;width: 100vw;">
+          <img src = "../../../static/img/default.svg" alt="缺省" style="width: 80vw;margin:10vh auto;"/>
+        </div>
       </swiper-slide>
     </swiper>
     </div>
@@ -278,7 +286,7 @@ export default {
           var item = res[i]
           var timev = {}
           timev.date=item.post_time.split(" ")[0]
-          var add = Math.floor(item.emotion_strength/20)-2
+          var add = Math.ceil(item.emotion_strength/20)-2
           if(add<0){
             add = 0
           }
@@ -320,9 +328,19 @@ export default {
 
   .container{
     width: 100%;
-    height: 3.6rem;
+    height: 80vh;
     position: absolute;
     top: 1rem;
+   
+  }
+  .hint{
+    position: absolute;
+    display: flex;
+    bottom: 6vh;
+    width: 100%;
+    font-size: 0.4rem;
+    color: var(--mygreen);
+    justify-content: center;
   }
 }
 

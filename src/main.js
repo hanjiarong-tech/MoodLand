@@ -59,7 +59,7 @@ Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$toast = Toast
 Vue.use(VueLazyLoad,{
-  loading:require("../static/img/avatar.jpg")
+  loading:require("../static/img/avatar.svg")
 })
 
 //引入UI组件

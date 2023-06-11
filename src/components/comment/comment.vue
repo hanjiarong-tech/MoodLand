@@ -11,7 +11,7 @@
         <div class="comment-box" v-for="item in comments">
           <div class="comment-item" @click="sendMessage(item.comment_id, 0, item.commentator_id,item.commentator_name)">
             <img class="user-pic"
-              :src="item.commentator_avatar == null ? '../../static/img/avatardefault.png' : serverUrl + '/moodland/' + item.commentator_avatar"
+              :src="item.commentator_avatar == null ? '../../static/img/avatar.svg' : serverUrl + '/moodland/' + item.commentator_avatar"
               alt="头像" />
             <div class="item-info">
               <div class="replay">
@@ -25,7 +25,7 @@
           <div v-for="reply in item.reply">
             <div class="sub-comment-item" @click="sendMessage(reply.reply_id, 1, reply.commentator_id,reply.commentator_name)">
               <img class="user-pic"
-                :src="reply.commentator_avatar == null ? '../../static/img/avatardefault.png' : serverUrl + '/moodland/' + reply.commentator_avatar"
+                :src="reply.commentator_avatar == null ? '../../static/img/avatar.svg' : serverUrl + '/moodland/' + reply.commentator_avatar"
                 alt="头像" />
               <div class="item-info">
                 <div class="replay">

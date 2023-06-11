@@ -185,7 +185,7 @@ export default {
         // 并将user的新数据保存
         localStorage.setItem("user", JSON.stringify(self.user))
       }).catch(function (error) {
-        self.user.avatar='../../static/img/avatardefault.png';
+        self.user.avatar='../../static/img/avatar.svg';
         console.log(error);
       });
     },
@@ -201,7 +201,7 @@ export default {
           var item = res[i]
           var timev = {}
           timev.date=item.post_time.split(" ")[0]
-          var add = Math.floor(item.emotion_strength/20)-2
+          var add = Math.ceil(item.emotion_strength/20)-2
           if(add<0){
             add = 0
           }
