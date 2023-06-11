@@ -32,16 +32,24 @@
       </div>
       <van-divider />
       <van-cell title="最终结果" icon="flag-o" style="font-weight: bold;background-color: transparent;" />
+      <van-collapse v-model="activeName" accordion>
       <div class="rank" v-for="(challenger, index) in challengerList">
-        <van-cell :key="challenger.participant_id">
+
+      
+        <van-collapse-item :key="challenger.participant_id">
+          <template #title>
           <span class="index">
             <i :class="index < 1 ? 'iconfont icon-ranking-list-fill' : ''">
             </i><span>{{ index + 1 }}</span>
           </span>
           <span class="name">{{ challenger.participant_name }}</span>
           <span class="score">{{ challenger.score }}</span>
-        </van-cell>
+          </template>
+          <img />
+        </van-collapse-item>
+      
       </div>
+    </van-collapse>
       <!-- :style="$route.matched[0].path=='/explore' ? 'color: var(--theme-color) ': 'color: var(--mydarkblue)'" -->
       <van-goods-action v-if="show === 'true'">
         <!-- <van-goods-action-icon icon="chat-o" text="客服" @click="onClickIcon" />
@@ -80,6 +88,7 @@ export default {
       // 游戏
       game_id: this.$route.query.game_id,
       gameType: [],
+      activeName:0,
     };
   },
   components: {
@@ -308,6 +317,9 @@ export default {
 }
 
 /deep/ .van-cell__value {
+  display: flex;
+}
+/deep/ .van-cell__title, .van-cell__value {
   display: flex;
 }
 </style>
