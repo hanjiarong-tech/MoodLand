@@ -45,7 +45,7 @@
           <span class="name">{{ challenger.participant_name }}</span>
           <span class="score">{{ challenger.score }}</span>
           </template>
-          <img />
+          <img :src="serverUrl+'/moodland/'+challenger.picture"/>
         </van-collapse-item>
       
       </div>
@@ -75,6 +75,7 @@ export default {
   data() {
     return {
       // 挑战
+      serverUrl: process.env.VUE_APP_SERVER_URL,
       challenge_id: this.$route.query.challenge_id,
       show: this.$route.query.show,
       status: null,
@@ -208,6 +209,7 @@ export default {
 .mydiary {
   width: 100%;
   height: 100vh;
+  background-color: white;
 
   .bgImg {
     z-index: 0;
@@ -219,13 +221,12 @@ export default {
 
   .container {
     width: 100%;
-    height: 100vh;
     border-radius: 30px;
     background-color: #fff;
     position: relative;
     overflow: hidden;
     top: 15%;
-    padding: 20px;
+    padding: 20px 20px 60px 20px;
     box-shadow: 0px -2px 5px #9191912e;
 
     .bg {

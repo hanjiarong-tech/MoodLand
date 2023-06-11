@@ -1,15 +1,25 @@
 <template>
   <div class='home'>
     <swiper :options="swiperOptions">
+      
+
       <swiper-slide @mousemove.stop style="height: calc( 100vh - 60px );">
         <capture @refreshDataList="refreshDataList" />
         <div class = "hint">
           <i>查看好友的心情 ↓</i>
         </div>
       </swiper-slide>
+      
       <swiper-slide v-for="(list, index) in frienddiarys" :key="index">
         <card :list="list"></card>
       </swiper-slide>
+
+      <swiper-slide v-if="frienddiarys.length==0" style="height: calc( 100vh - 60px );width: 100vw;">
+        <div v-if="frienddiarys.length==0" style="display: flex;">
+          <img src = "../../../static/img/default.svg" alt="缺省" style="width: 80vw;margin:10vh auto;"/>
+        </div>
+      </swiper-slide>
+      
     </swiper>
     <v-footer></v-footer>
   </div>

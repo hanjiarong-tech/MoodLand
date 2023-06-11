@@ -18,7 +18,9 @@
         </div>
       </div>
     </div>
-    <v-footer></v-footer>
+    <div v-if="detail.length==0" style="display: flex;">
+      <img src = "../../../static/img/default.svg" alt="缺省" style="width: 80vw;margin: 10vh auto;"/>
+    </div>
   </div>
 </template>
 
@@ -62,7 +64,6 @@ export default {
     },
   },
   components: {
-    "v-footer": footer,
   },
 }
 </script>

@@ -33,10 +33,10 @@ export default {
           title:'情绪挑战',
           path:'/explore/fight'
         },
-        {
-          title:'社交游戏',
-          path:'/explore/game'
-        },
+        // {
+        //   title:'社交游戏',
+        //   path:'/explore/game'
+        // },
       ]
     };
   },

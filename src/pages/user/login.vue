@@ -29,7 +29,7 @@ export default {
       user: {
         user_id: null,
         password: "",
-        avatar:"../../static/img/avatardefault.png"
+        avatar:"../../static/img/avatar.svg"
       }
     };
   },

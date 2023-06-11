@@ -43,7 +43,7 @@
       <van-popup v-model="nameshow" position="bottom" :style="{ height: '30%' }">
         <van-field v-model="namevalue" center clearable label="用户名" placeholder="请输入用户名">
           <template #button>
-            <van-button size="small" @click="saveName()" type="primary">保存</van-button> </template>
+            <van-button color="var(--mydarkblue)" size="small" @click="saveName()" type="primary">保存</van-button> </template>
         </van-field>
       </van-popup>
       <!-- 导入修改avatar子组件 -->
@@ -203,7 +203,7 @@ export default {
         const lastavatar = self.user.avatar
         const lastavatar2 = lastavatar.split('/')[lastavatar.split('/').length - 1]
         console.log("avatar/" + lastavatar2)
-        if (lastavatar == "../../static/img/avatardefault.png") {
+        if (lastavatar == "../../static/img/avatar.svg") {
           fd.append('last_url', "",)
         } else {
           fd.append('last_url', "avatar/" + lastavatar2)
@@ -230,7 +230,7 @@ export default {
       console.log(process.env.VUE_APP_SERVER_URL);
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}`, {
       }).then(function (response) {
-        response.data.avatar = response.data.avatar == null ? '../../static/img/avatardefault.png' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
+        response.data.avatar = response.data.avatar == null ? '../../static/img/avatar.svg' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
         console.log("response.data.avatar", response.data.avatar)
         self.avatar = response.data.avatar
         self.namevalue = response.data.user_name;
