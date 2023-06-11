@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <van-nav-bar title="好友列表" left-arrow @click-left="$router.back()" safe-area-inset-top/>
+    <van-nav-bar title="好友列表" fixed placeholder left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <form action="/">
       <van-search v-model="searchId" type="digit" shape="round" show-action placeholder="搜索好友id添加新好友" @search="onSearch"
         @cancel="onCancel" />

@@ -1,6 +1,6 @@
 <template>
   <div class="mydiary">
-    <van-nav-bar title="详情页" left-arrow @click-left="$router.back()" safe-area-inset-top />
+    <van-nav-bar title="详情页" fixed placeholder left-arrow @click-left="$router.back()" safe-area-inset-top />
     <!-- <div :class="'pure_top '+moodtype[detail.type]">
     </div> -->
     <img class="bgImg" :src="serverUrl + '/moodland/vue'+'/scene/' + detail.type + '.svg'">

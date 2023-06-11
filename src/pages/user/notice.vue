@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <van-nav-bar title="消息通知" left-arrow @click-left="back" safe-area-inset-top/>
+    <van-nav-bar title="消息通知" fixed placeholder left-arrow @click-left="back" safe-area-inset-top/>
     <div class="container" v-for="(list2,index) in detail">
       <div class="container-bj" :style = "list2.has_read==0?'background-color: var(--background-gray);':''">
         <div class="bj-left">

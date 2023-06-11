@@ -1,7 +1,7 @@
 <template>
   <div class="setting">
     <!-- <v-header title="设置" :headerLeftStatus="headerLeftStatus" :save="save" /> -->
-    <van-nav-bar title="个人信息" left-arrow @click-left="$router.back()" safe-area-inset-top/>
+    <van-nav-bar title="个人信息" fixed placeholder  left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <div class="content">
       <van-cell @click="openFile" title="头像" is-link>
         <template #default>

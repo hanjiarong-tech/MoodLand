@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <van-nav-bar title="我参与的" left-arrow @click-left="$router.back()"  safe-area-inset-top/>
+    <van-nav-bar title="我参与的" fixed placeholder left-arrow @click-left="$router.back()"  safe-area-inset-top/>
     <div class="container" v-for="list2 in detail">
       <div class="container-bj" @click="jumpTo(list2.challenge_id)">
         <div class="bj-left">

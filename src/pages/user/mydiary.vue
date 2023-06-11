@@ -1,6 +1,6 @@
 <template>
     <div class="mydiary">
-      <van-nav-bar title="我的心情" left-arrow @click-left="$router.back()" safe-area-inset-top/>
+      <van-nav-bar title="我的心情" fixed placeholder left-arrow @click-left="$router.back()" safe-area-inset-top/>
       <swiper :options="swiperOptions">
         <swiper-slide>
           <div class = "container">

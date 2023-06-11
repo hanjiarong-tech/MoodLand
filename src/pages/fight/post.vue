@@ -1,6 +1,6 @@
 <template>
   <div class="postphoto">
-    <van-nav-bar :title=titleList[postType] left-arrow @click-left="$router.back()" safe-area-inset-top />
+    <van-nav-bar :title=titleList[postType] fixed placeholder left-arrow @click-left="$router.back()" safe-area-inset-top />
     <div class="container">
       <capture @refreshDataList="refreshDataList" />
       <div class="content_container">
