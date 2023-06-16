@@ -310,7 +310,7 @@ export default {
           'Content-type': "application/json"
         }
       }
-      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/notice/${user_id}`, notice, config).then(function (response) {
+      axios.post(process.env.VUE_APP_SERVER_URL + `/moodland/notice/${user_id}`, notice).then(function (response) {
         //成功时服务器返回 response 数据
         console.log(response.data)
         self.$toast("已发送申请")
