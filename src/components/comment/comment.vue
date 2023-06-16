@@ -141,11 +141,11 @@ export default {
         console.log(error);
       });
     },
-    noticeFriend:function(diaryid,reviewed_id) {
+    noticeFriend:function(diaryid,reviewed_id,content) {
       let self = this;
       let notice = {
         action: 0,
-        content: "给你评论啦",
+        content: "给你评论:  "+content,
         has_read: 0,
         notice_id: 0,
         notice_type: 2,
@@ -191,7 +191,7 @@ export default {
         self.comment_type = 0;
         self.reviewed_id =self.diary_userid;
         if(self.reviewed_id != self.user.user_id){
-          self.noticeFriend(self.diaryid,self.reviewed_id);
+          self.noticeFriend(self.diaryid,self.reviewed_id,self.content);
         }
         
 

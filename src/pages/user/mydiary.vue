@@ -18,8 +18,8 @@
       <swiper-slide v-for="(list, index) in mydiarys" :key="index">
         <card :list="list"></card>
       </swiper-slide>
-      <swiper-slide>
-        <div v-if="mydiarys.length==0" style="display: flex;width: 100vw;">
+      <swiper-slide v-if="mydiarys.length==0">
+        <div style="display: flex;width: 100vw;">
           <img src = "../../../static/img/default.svg" alt="缺省" style="width: 80vw;margin:10vh auto;"/>
         </div>
       </swiper-slide>

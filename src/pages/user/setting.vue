@@ -158,13 +158,14 @@ export default {
           old_pwd: md5pwd2,
           new_pwd: md5pwd4
         }).then(function (response) {
-          // self.showPwd=false
+          self.showPwd=false
           Toast({
             message: response.data.msg,
             duration: 950,
             position: 'bottom',
             className: "toastIndex"
           });
+
           console.log(response.data)
         }).catch(function (error) {
           console.log(error);
@@ -283,6 +284,7 @@ export default {
   },
   mounted: function () {
     this.searchInfoData();
+    console.log("notice",localStorage.getItem("notice"))
   }
 }
 </script>

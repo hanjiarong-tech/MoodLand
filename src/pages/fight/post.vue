@@ -430,7 +430,7 @@ export default {
     this.endTime()
     console.log(this.postType)
     console.log(this.challenge_id)
-    this.initGameType()
+    // this.initGameType()
   },
 
 };
