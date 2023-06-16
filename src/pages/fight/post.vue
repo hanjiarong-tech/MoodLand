@@ -1,6 +1,6 @@
 <template>
   <div class="postphoto">
-    <van-nav-bar :title=titleList[postType] left-arrow @click-left="$router.back()" safe-area-inset-top />
+    <van-nav-bar :title=titleList[postType] fixed placeholder left-arrow @click-left="$router.back()" safe-area-inset-top />
     <div class="container">
       <capture @refreshDataList="refreshDataList" />
       <div class="content_container">
@@ -51,6 +51,7 @@ import header from '@/components/header/index'
 import footer from '@/components/footer/index'
 import capture from '@/components/capture/capture';
 import router from '../../router';
+import { Toast } from 'vant'
 import filePopup from '@/components/filePopup/filePopup'
 import { Dialog, ImagePreview } from 'vant';
 import axios from "axios";
@@ -364,7 +365,7 @@ export default {
     },
     // 选择日期
     formatDate(date) {
-      return `${date.getMonth() + 1}/${date.getDate()}`;
+      return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} 23:59:59`;
     },
     onConfirm(date) {
       this.show = false;
@@ -429,7 +430,7 @@ export default {
     this.endTime()
     console.log(this.postType)
     console.log(this.challenge_id)
-    this.initGameType()
+    // this.initGameType()
   },
 
 };

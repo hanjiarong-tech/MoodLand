@@ -11,7 +11,7 @@
         <div class="comment-box" v-for="item in comments">
           <div class="comment-item" @click="sendMessage(item.comment_id, 0, item.commentator_id,item.commentator_name)">
             <img class="user-pic"
-              :src="item.commentator_avatar == null ? '../../static/img/avatar.svg' : serverUrl + '/moodland/' + item.commentator_avatar"
+              :src="item.commentator_avatar == null ? serverUrl + '/moodland/vue'+'/img/avatar.svg' : serverUrl + '/moodland/' + item.commentator_avatar"
               alt="头像" />
             <div class="item-info">
               <div class="replay">
@@ -25,7 +25,7 @@
           <div v-for="reply in item.reply">
             <div class="sub-comment-item" @click="sendMessage(reply.reply_id, 1, reply.commentator_id,reply.commentator_name)">
               <img class="user-pic"
-                :src="reply.commentator_avatar == null ? '../../static/img/avatar.svg' : serverUrl + '/moodland/' + reply.commentator_avatar"
+                :src="reply.commentator_avatar == null ? serverUrl + '/moodland/vue'+'/img/avatar.svg' : serverUrl + '/moodland/' + reply.commentator_avatar"
                 alt="头像" />
               <div class="item-info">
                 <div class="replay">
@@ -141,11 +141,11 @@ export default {
         console.log(error);
       });
     },
-    noticeFriend:function(diaryid,reviewed_id) {
+    noticeFriend:function(diaryid,reviewed_id,content) {
       let self = this;
       let notice = {
         action: 0,
-        content: "给你评论啦",
+        content: "给你评论:  "+content,
         has_read: 0,
         notice_id: 0,
         notice_type: 2,
@@ -191,7 +191,7 @@ export default {
         self.comment_type = 0;
         self.reviewed_id =self.diary_userid;
         if(self.reviewed_id != self.user.user_id){
-          self.noticeFriend(self.diaryid,self.reviewed_id);
+          self.noticeFriend(self.diaryid,self.reviewed_id,self.content);
         }
         
 

@@ -36,7 +36,7 @@ body{
 }
          
          
-.van-nav-bar__content {
+/* .van-nav-bar__content {
     position: relative;
     display: -webkit-box;
     display: -webkit-flex;
@@ -50,7 +50,7 @@ body{
 .van-nav-bar .van-icon {
     color: #1989fa;
     padding: 16px 0 0 0;
-}
+} */
 .mint-swipe-indicator{
   background: #000;
   border: 1px solid black

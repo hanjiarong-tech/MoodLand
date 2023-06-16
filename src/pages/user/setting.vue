@@ -1,7 +1,7 @@
 <template>
   <div class="setting">
     <!-- <v-header title="设置" :headerLeftStatus="headerLeftStatus" :save="save" /> -->
-    <van-nav-bar title="个人信息" left-arrow @click-left="$router.back()" safe-area-inset-top/>
+    <van-nav-bar title="个人信息" fixed placeholder  left-arrow @click-left="$router.back()" safe-area-inset-top/>
     <div class="content">
       <van-cell @click="openFile" title="头像" is-link>
         <template #default>
@@ -110,6 +110,7 @@ export default {
         title: '提醒',
         message: '是否退出登录？',
       }).then(() => {
+        localStorage.clear();
         this.$router.push("/")
       });
     },
@@ -157,13 +158,14 @@ export default {
           old_pwd: md5pwd2,
           new_pwd: md5pwd4
         }).then(function (response) {
-          // self.showPwd=false
+          self.showPwd=false
           Toast({
             message: response.data.msg,
             duration: 950,
             position: 'bottom',
             className: "toastIndex"
           });
+
           console.log(response.data)
         }).catch(function (error) {
           console.log(error);
@@ -203,7 +205,7 @@ export default {
         const lastavatar = self.user.avatar
         const lastavatar2 = lastavatar.split('/')[lastavatar.split('/').length - 1]
         console.log("avatar/" + lastavatar2)
-        if (lastavatar == "../../static/img/avatar.svg") {
+        if (lastavatar == process.env.VUE_APP_SERVER_URL + '/moodland/vue/'+'img/avatar.svg') {
           fd.append('last_url', "",)
         } else {
           fd.append('last_url', "avatar/" + lastavatar2)
@@ -221,7 +223,6 @@ export default {
             self.$toast(response.data.msg)
             searchInfoData()
           }).catch(function (error) {
-            self.$toast("上传失败")
           });
       })
     },
@@ -230,7 +231,7 @@ export default {
       console.log(process.env.VUE_APP_SERVER_URL);
       axios.get(process.env.VUE_APP_SERVER_URL + `/moodland/user/user/${self.user.user_id}`, {
       }).then(function (response) {
-        response.data.avatar = response.data.avatar == null ? '../../static/img/avatar.svg' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
+        response.data.avatar = response.data.avatar == null ? process.env.VUE_APP_SERVER_URL + '/moodland/vue/'+'img/avatar.svg' : process.env.VUE_APP_SERVER_URL + '/moodland/' + response.data.avatar;
         console.log("response.data.avatar", response.data.avatar)
         self.avatar = response.data.avatar
         self.namevalue = response.data.user_name;
@@ -283,6 +284,7 @@ export default {
   },
   mounted: function () {
     this.searchInfoData();
+    console.log("notice",localStorage.getItem("notice"))
   }
 }
 </script>

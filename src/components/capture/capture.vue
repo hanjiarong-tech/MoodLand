@@ -89,7 +89,7 @@ export default {
           })
         }
       }
-      var constraints = { audio: false, video: { width: this.videoWidth, height: this.videoHeight, transform: 'scaleX(-1)' } }
+      var constraints = { audio: false, video: { width: this.videoWidth, height: this.videoHeight, facingMode:'user', transform: 'scaleX(-1)' } }
       navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
         // 旧的浏览器可能没有srcObject
         if ('srcObject' in _this.thisVideo) {

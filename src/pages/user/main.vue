@@ -185,7 +185,7 @@ export default {
         // 并将user的新数据保存
         localStorage.setItem("user", JSON.stringify(self.user))
       }).catch(function (error) {
-        self.user.avatar='../../static/img/avatar.svg';
+        self.user.avatar=process.env.VUE_APP_SERVER_URL+'/moodland/vue'+'/img/avatar.svg';
         console.log(error);
       });
     },
